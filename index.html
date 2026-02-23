@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Genuíno Burguer | Delivery</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-color: #ea1d2c; /* Vermelho iFood */
+            --background-color: #f7f7f7;
+            --text-color: #3e3e3e;
+            --text-light: #717171;
+            --white: #ffffff;
+            --border-color: #f2f2f2;
+            --shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            padding-bottom: 80px; /* Espaço para menu inferior */
+        }
+
+        /* Container Mobile Centralizado no Desktop */
+        #app-container {
+            max-width: 480px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        /* Header */
+        header {
+            padding: 15px;
+            background: var(--white);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 1px 0 rgba(0,0,0,0.05);
+        }
+
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .location {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .location span {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Banner Loja */
+        .store-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+        }
+
+        .store-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--border-color);
+        }
+
+        .store-info h1 {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .store-badges {
+            display: flex;
+            gap: 5px;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 3px;
+            align-items: center;
+        }
+
+        .partner-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #fdf2f2;
+            color: var(--primary-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .partner-badge img {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Categorias Scroll */
+        .categories {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 15px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .categories::-webkit-scrollbar { display: none; }
+
+        .cat-item {
+            min-width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .cat-img {
+            width: 70px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            filter: brightness(0.9);
+        }
+
+        .cat-name {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .cat-item.active .cat-name {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        /* Lista de Produtos */
+        .menu-section {
+            padding: 0 15px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            margin: 20px 0 15px 0;
+            font-weight: 700;
+        }
+
+        .product-card {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            cursor: pointer;
+        }
+
+        .prod-info {
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .prod-title {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .prod-desc {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            line-height: 1.3;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .prod-price {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .prod-price span {
+            color: #3c3c3c; /* Verde dinheiro ou preto */
+        }
+
+        .prod-img-container {
+            width: 100px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .prod-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Modal de Produto */
+        #product-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            justify-content: flex-end;
+            flex-direction: column;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: 20px 20px 0 0;
+            padding: 20px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #eee;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .modal-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .modal-title { font-size: 1.3rem; margin-bottom: 10px; font-weight: 700; }
+        .modal-desc { color: var(--text-light); font-size: 0.9rem; margin-bottom: 20px; }
+        
+        .addons-section { margin-bottom: 20px; }
+        .addons-title { font-weight: 600; color: var(--text-light); font-size: 0.9rem; margin-bottom: 10px; background: #f0f0f0; padding: 5px 10px; }
+        
+        .addon-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .addon-info label { font-size: 0.95rem; }
+        .addon-price { color: var(--text-light); font-size: 0.9rem; }
+
+        .modal-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+        
+        .qty-btn { font-size: 1.2rem; color: var(--primary-color); cursor: pointer; font-weight: bold; }
+
+        .add-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 4px;
+            font-weight: 500;
+            flex: 1;
+            margin-left: 15px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Floating Cart Bar */
+        #cart-bar {
+            position: fixed;
+            bottom: 60px; /* Acima do menu inferior */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 460px;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 90;
+            box-shadow: 0 4px 10px rgba(234, 29, 44, 0.4);
+            cursor: pointer;
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #eee;
+            z-index: 95;
+            max-width: 480px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            cursor: pointer;
+        }
+
+        .nav-item i { font-size: 1.2rem; margin-bottom: 4px; }
+        .nav-item.active { color: var(--text-color); font-weight: bold; }
+
+        /* Checkout Page (Overlay) */
+        #checkout-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            z-index: 200;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .checkout-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .checkout-body { padding: 20px; flex: 1; overflow-y: auto; }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .total-row {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin: 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        /* Profile Section */
+        #profile-screen {
+            display: none;
+            padding: 20px;
+        }
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .profile-avatar {
+            width: 60px;
+            height: 60px;
+            background: #eee;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 1.5rem;
+        }
+        .profile-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .profile-menu-item i { color: var(--text-light); width: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div id="app-container">
+        
+        <div id="home-screen">
+            <header>
+                <div class="header-top">
+                    <div class="location">
+                        <span>BH Shopping</span> <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    </div>
+                    <i class="far fa-bell" style="color: var(--primary-color);"></i>
+                </div>
+                
+                <div class="store-header">
+                    <img src="https://files.catbox.moe/9d367j.png" alt="Genuíno Logo" class="store-logo">
+                    <div class="store-info">
+                        <h1>Genuíno Burguer</h1>
+                        <div class="store-badges">
+                            <span><i class="fas fa-star" style="color: #fcbb00;"></i> 4.9</span>
+                            <span>• Lanches</span>
+                            <span>• 30-40 min</span>
+                        </div>
+                        <div class="partner-badge" style="margin-top: 5px; width: fit-content;">
+                            <img src="https://files.catbox.moe/g7f173.webp" alt="iFood">
+                            <span>Entrega Parceira</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="categories">
+                <div class="cat-item active" onclick="filterMenu('all')">
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500" class="cat-img" alt="Tudo">
+                    <span class="cat-name">Destaques</span>
+                </div>
+                <div class="cat-item" onclick="filterMenu('burgers')">
+                    <img src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=500" class="cat-img" alt="Burgers">
+                    <span class="cat-name">Burgers</span>
+                </div>
+                <div class="cat-item" onclick="filterMenu('drinks')">
+                    <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?w=500" class="cat-img" alt="Bebidas">
+                    <span class="cat-name">Bebidas</span>
+                </div>
+                <div class="cat-item" onclick="filterMenu('fries')">
+                    <img src="https://images.unsplash.com/photo-1630384060421-a431e4fb256c?w=500" class="cat-img" alt="Batatas">
+                    <span class="cat-name">Porções</span>
+                </div>
+            </div>
+
+            <div id="menu-list" class="menu-section">
+                </div>
+            
+            <div style="height: 50px;"></div>
+        </div>
+
+        <div id="profile-screen">
+            <h2 style="margin-bottom: 20px;">Perfil</h2>
+            <div class="profile-header">
+                <div class="profile-avatar"><i class="fas fa-user"></i></div>
+                <div>
+                    <h3>Visitante Genuíno</h3>
+                    <span style="color: #717171; font-size: 0.9rem;">Editar perfil</span>
+                </div>
+            </div>
+            <div class="profile-menu-item">
+                <i class="far fa-comments"></i> Chats
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-wallet"></i> Carteira
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-ticket-alt"></i> Cupons
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-map-marker-alt"></i> Meus Endereços
+            </div>
+            <div class="profile-menu-item">
+                <i class="fas fa-heart"></i> Favoritos
+            </div>
+        </div>
+
+        <div id="cart-bar" onclick="openCheckout()">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span style="background: rgba(255,255,255,0.2); width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.8rem;" id="cart-count">0</span>
+                <span>Ver sacola</span>
+            </div>
+            <span id="cart-total-bar">R$ 0,00</span>
+        </div>
+
+        <nav class="bottom-nav">
+            <div class="nav-item active" onclick="switchTab('home')">
+                <i class="fas fa-home"></i>
+                <span>Início</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-search"></i>
+                <span>Busca</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-receipt"></i>
+                <span>Pedidos</span>
+            </div>
+            <div class="nav-item" onclick="switchTab('profile')">
+                <i class="far fa-user"></i>
+                <span>Perfil</span>
+            </div>
+        </nav>
+
+        <div id="product-modal">
+            <div class="modal-content">
+                <div class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></div>
+                <img src="" id="modal-img" class="modal-img">
+                <div id="modal-title" class="modal-title"></div>
+                <div id="modal-desc" class="modal-desc"></div>
+                <div id="modal-price" style="display:none"></div> <div class="addons-section">
+                    <div class="addons-title">Adicionais</div>
+                    <div id="addons-list">
+                        </div>
+                </div>
+
+                <div class="addons-section">
+                    <div class="addons-title">Observações</div>
+                    <textarea id="modal-obs" placeholder="Ex: Tirar a cebola, maionese à parte..." style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; resize: none;"></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="qty-control">
+                        <div class="qty-btn" onclick="changeQty(-1)">-</div>
+                        <span id="modal-qty" style="font-weight: bold; width: 20px; text-align: center;">1</span>
+                        <div class="qty-btn" onclick="changeQty(1)">+</div>
+                    </div>
+                    <button class="add-btn" onclick="addToCart()">
+                        <span>Adicionar</span>
+                        <span id="modal-btn-price">R$ 0,00</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="checkout-screen">
+            <div class="checkout-header">
+                <i class="fas fa-arrow-left" style="font-size: 1.2rem; cursor: pointer; color: var(--primary-color);" onclick="closeCheckout()"></i>
+                <h2 style="margin-left: 15px; font-size: 1.2rem;">Sua Sacola</h2>
+            </div>
+            <div class="checkout-body">
+                <div style="background: #fdf2f2; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h4 style="color: var(--text-color); margin-bottom: 5px;">Entrega em BH Shopping</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-light);">Belo Horizonte, MG</p>
+                </div>
+
+                <div id="cart-items-list">
+                    </div>
+
+                <div style="margin-top: 30px; border-top: 1px dashed #ddd; padding-top: 15px;">
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="subtotal-display">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Taxa de entrega</span>
+                        <span style="color: var(--primary-color);">Grátis</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Total</span>
+                        <span id="total-display">R$ 0,00</span>
+                    </div>
+                </div>
+            </div>
+            <div onclick="finalizeOrder()" class="whatsapp-btn">
+                Fazer Pedido pelo WhatsApp
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Dados do Menu
+        const menuData = [
+            {
+                id: 1,
+                category: 'burgers',
+                title: 'Genuíno Classic',
+                description: 'Pão brioche, blend 160g, queijo cheddar, alface americana, tomate e maionese da casa.',
+                price: 28.00,
+                image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500'
+            },
+            {
+                id: 2,
+                category: 'burgers',
+                title: 'Double Bacon Smash',
+                description: 'Dois smash burgers 80g, muito bacon crocante, dobro de cheddar e molho barbecue.',
+                price: 34.90,
+                image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?w=500'
+            },
+            {
+                id: 3,
+                category: 'burgers',
+                title: 'Chicken Crispy',
+                description: 'Pão australiano, frango empanado crocante, cream cheese e cebola caramelizada.',
+                price: 25.50,
+                image: 'https://images.unsplash.com/photo-1615557960916-5f4791effe9d?w=500'
+            },
+            {
+                id: 4,
+                category: 'drinks',
+                title: 'Coca-Cola Lata',
+                description: '350ml gelada.',
+                price: 6.00,
+                image: 'https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=500'
+            },
+            {
+                id: 5,
+                category: 'fries',
+                title: 'Batata Rústica',
+                description: 'Batatas com alecrim e páprica. Acompanha maionese de alho.',
+                price: 18.00,
+                image: 'https://images.unsplash.com/photo-1630384060421-a431e4fb256c?w=500'
+            }
+        ];
+
+        const addonsData = [
+            { id: 'bacon', name: 'Bacon Extra', price: 4.00 },
+            { id: 'cheese', name: 'Queijo Extra', price: 3.00 },
+            { id: 'sauce', name: 'Molho Especial', price: 2.00 }
+        ];
+
+        // Estado da Aplicação
+        let cart = [];
+        let currentModalProduct = null;
+        let currentQty = 1;
+        let selectedAddons = [];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu('all');
+        });
+
+        // Funções de Renderização
+        function renderMenu(filter) {
+            const container = document.getElementById('menu-list');
+            container.innerHTML = `<h3 class="section-title">${filter === 'all' ? 'Destaques' : 'Cardápio'}</h3>`;
+            
+            menuData.forEach(item => {
+                if(filter === 'all' || item.category === filter) {
+                    const card = document.createElement('div');
+                    card.className = 'product-card';
+                    card.onclick = () => openModal(item);
+                    card.innerHTML = `
+                        <div class="prod-info">
+                            <div class="prod-title">${item.title}</div>
+                            <div class="prod-desc">${item.description}</div>
+                            <div class="prod-price"><span>R$ ${item.price.toFixed(2).replace('.', ',')}</span></div>
+                        </div>
+                        <div class="prod-img-container">
+                            <img src="${item.image}" class="prod-img" alt="${item.title}">
+                        </div>
+                    `;
+                    container.appendChild(card);
+                }
+            });
+        }
+
+        function filterMenu(category) {
+            // Atualizar UI das categorias
+            document.querySelectorAll('.cat-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            renderMenu(category);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            if(tab === 'home') {
+                document.getElementById('home-screen').style.display = 'block';
+                document.getElementById('profile-screen').style.display = 'none';
+            } else if (tab === 'profile') {
+                document.getElementById('home-screen').style.display = 'none';
+                document.getElementById('profile-screen').style.display = 'block';
+            }
+        }
+
+        // Lógica do Modal
+        function openModal(product) {
+            currentModalProduct = product;
+            currentQty = 1;
+            selectedAddons = [];
+            
+            document.getElementById('modal-img').src = product.image;
+            document.getElementById('modal-title').innerText = product.title;
+            document.getElementById('modal-desc').innerText = product.description;
+            document.getElementById('modal-price').innerText = product.price; // Valor base referência
+            document.getElementById('modal-qty').innerText = 1;
+            document.getElementById('modal-obs').value = '';
+
+            // Renderizar Adicionais
+            const addonList = document.getElementById('addons-list');
+            addonList.innerHTML = '';
+            addonsData.forEach(addon => {
+                addonList.innerHTML += `
+                    <div class="addon-item">
+                        <div class="addon-info">
+                            <input type="checkbox" id="addon-${addon.id}" onchange="toggleAddon('${addon.id}', ${addon.price})">
+                            <label for="addon-${addon.id}">${addon.name}</label>
+                        </div>
+                        <div class="addon-price">+ R$ ${addon.price.toFixed(2).replace('.',',')}</div>
+                    </div>
+                `;
+            });
+
+            updateModalTotal();
+            document.getElementById('product-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
+        function changeQty(delta) {
+            if (currentQty + delta > 0) {
+                currentQty += delta;
+                document.getElementById('modal-qty').innerText = currentQty;
+                updateModalTotal();
+            }
+        }
+
+        function toggleAddon(id, price) {
+            const index = selectedAddons.findIndex(a => a.id === id);
+            if (index > -1) {
+                selectedAddons.splice(index, 1);
+            } else {
+                selectedAddons.push({ id, price, name: addonsData.find(a => a.id === id).name });
+            }
+            updateModalTotal();
+        }
+
+        function updateModalTotal() {
+            let basePrice = currentModalProduct.price;
+            let addonsPrice = selectedAddons.reduce((sum, item) => sum + item.price, 0);
+            let total = (basePrice + addonsPrice) * currentQty;
+            
+            document.getElementById('modal-btn-price').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        // Lógica do Carrinho
+        function addToCart() {
+            const obs = document.getElementById('modal-obs').value;
+            const itemTotal = (currentModalProduct.price + selectedAddons.reduce((sum, item) => sum + item.price, 0)) * currentQty;
+
+            const cartItem = {
+                product: currentModalProduct,
+                qty: currentQty,
+                addons: [...selectedAddons],
+                obs: obs,
+                total: itemTotal
+            };
+
+            cart.push(cartItem);
+            updateCartUI();
+            closeModal();
+            
+            // Feedback visual simples
+            const btn = document.getElementById('cart-bar');
+            btn.classList.add('pulse');
+            setTimeout(() => btn.classList.remove('pulse'), 300);
+        }
+
+        function updateCartUI() {
+            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + item.total, 0);
+
+            document.getElementById('cart-count').innerText = totalQty;
+            document.getElementById('cart-total-bar').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+            
+            const cartBar = document.getElementById('cart-bar');
+            if (totalQty > 0) {
+                cartBar.style.display = 'flex';
+            } else {
+                cartBar.style.display = 'none';
+            }
+        }
+
+        function openCheckout() {
+            document.getElementById('checkout-screen').style.display = 'flex';
+            renderCartItems();
+        }
+
+        function closeCheckout() {
+            document.getElementById('checkout-screen').style.display = 'none';
+        }
+
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-list');
+            container.innerHTML = '';
+            
+            let finalTotal = 0;
+
+            cart.forEach((item, index) => {
+                finalTotal += item.total;
+                
+                let addonsHtml = '';
+                if(item.addons.length > 0) {
+                    addonsHtml = `<div style="font-size: 0.8rem; color: #717171;">+ ${item.addons.map(a => a.name).join(', ')}</div>`;
+                }
+                
+                let obsHtml = '';
+                if(item.obs) {
+                    obsHtml = `<div style="font-size: 0.8rem; color: #ea1d2c;">Obs: ${item.obs}</div>`;
+                }
+
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div>
+                            <span style="font-weight: bold; color: var(--primary-color); margin-right: 5px;">${item.qty}x</span>
+                            <span style="font-weight: 500;">${item.product.title}</span>
+                            ${addonsHtml}
+                            ${obsHtml}
+                        </div>
+                        <div style="font-weight: 500;">R$ ${item.total.toFixed(2).replace('.', ',')}</div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('subtotal-display').innerText = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
+            document.getElementById('total-display').innerText = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
+        }
+
+        function finalizeOrder() {
+            if(cart.length === 0) return;
+
+            // Construir mensagem do WhatsApp
+            let text = "*NOVO PEDIDO - GENUÍNO BURGUER* 🍔\n\n";
+            text += "--------------------------------\n";
+            
+            cart.forEach(item => {
+                text += `*${item.qty}x ${item.product.title}*\n`;
+                if(item.addons.length > 0) {
+                    text += `   + Adicionais: ${item.addons.map(a => a.name).join(', ')}\n`;
+                }
+                if(item.obs) {
+                    text += `   Obs: ${item.obs}\n`;
+                }
+                text += `   Valor: R$ ${item.total.toFixed(2)}\n\n`;
+            });
+            
+            const total = cart.reduce((sum, item) => sum + item.total, 0);
+            text += "--------------------------------\n";
+            text += `*TOTAL: R$ ${total.toFixed(2)}*\n\n`;
+            text += "📍 *Entrega:* BH Shopping - Belo Horizonte\n";
+            text += "💳 *Pagamento:* A combinar";
+
+            // Encodar URL
+            const msg = encodeURIComponent(text);
+            const phone = "5531999999999"; // Substitua pelo seu número real
+
+            window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+        }
+
+    </script>
+</body>
+</html>
