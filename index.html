@@ -6,7 +6,7 @@
     <title>Genuíno Burguer - Delivery</title>
     <style>
         :root {
-            --primary: #ea1d2c; /* Cor estilo iFood */
+            --primary: #ea1d2c;
             --background: #f7f7f7;
             --text-dark: #3e3e3e;
             --text-light: #717171;
@@ -19,6 +19,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
@@ -84,14 +85,12 @@
             padding: 15px 20px;
             display: flex;
             overflow-x: auto;
-            gap: 15px;
+            gap: 10px;
             white-space: nowrap;
-            margin-bottom: 10px;
-            scrollbar-width: none; /* Firefox */
+            scrollbar-width: none;
+            border-bottom: 1px solid var(--border);
         }
-        .categories-nav::-webkit-scrollbar {
-            display: none; /* Chrome */
-        }
+        .categories-nav::-webkit-scrollbar { display: none; }
 
         .category-chip {
             padding: 8px 16px;
@@ -101,6 +100,7 @@
             font-weight: 600;
             color: var(--text-dark);
             text-decoration: none;
+            transition: 0.2s;
         }
 
         .category-chip.active {
@@ -108,32 +108,76 @@
             color: var(--white);
         }
 
-        /* Menu Section */
+        /* Os Mais Pedidos - Horizontal Scroll */
+        .highlights-section {
+            background: var(--white);
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+            padding: 0 20px;
+        }
+
+        .horizontal-scroll {
+            display: flex;
+            overflow-x: auto;
+            gap: 15px;
+            padding: 0 20px;
+            scrollbar-width: none;
+            scroll-snap-type: x mandatory;
+        }
+        .horizontal-scroll::-webkit-scrollbar { display: none; }
+
+        .highlight-card {
+            min-width: 260px;
+            max-width: 260px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 15px;
+            scroll-snap-align: start;
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .highlight-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .highlight-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        /* Vertical Menu Section */
         .menu-section {
             background: var(--white);
             margin-bottom: 10px;
             padding: 20px;
         }
 
-        .menu-section h2 {
-            font-size: 18px;
-            margin-bottom: 15px;
-            color: var(--text-dark);
-        }
-
-        /* Product Card */
         .product-card {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
             padding: 15px 0;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
         }
 
-        .product-card:last-child {
-            border-bottom: none;
-        }
+        .product-card:last-child { border-bottom: none; padding-bottom: 0; }
+        .product-card:first-of-type { padding-top: 0; }
 
         .product-info {
             flex: 1;
@@ -144,6 +188,7 @@
             font-size: 15px;
             font-weight: 600;
             margin-bottom: 5px;
+            line-height: 1.2;
         }
 
         .product-desc {
@@ -154,6 +199,7 @@
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            line-height: 1.4;
         }
 
         .product-price {
@@ -163,31 +209,28 @@
         }
 
         .product-img {
-            width: 90px;
-            height: 90px;
+            width: 100px;
+            height: 100px;
             border-radius: 8px;
             object-fit: cover;
         }
 
-        /* Modal Overlay */
+        /* Modal Overlays */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
             z-index: 1000;
             display: none;
             justify-content: center;
-            align-items: flex-end; /* Abre de baixo pra cima no mobile */
+            align-items: flex-end;
         }
 
         .modal-content {
-            background: var(--white);
+            background: var(--background);
             width: 100%;
-            max-width: 500px;
-            height: 85vh;
+            max-width: 600px;
+            height: 90vh;
             border-radius: 20px 20px 0 0;
             display: flex;
             flex-direction: column;
@@ -200,98 +243,134 @@
         }
 
         .modal-header {
-            padding: 20px;
+            background: var(--white);
+            padding: 15px 20px;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+            text-align: center;
             border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .close-modal {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--text-light);
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            font-size: 28px;
+            line-height: 20px;
+            color: var(--primary);
             cursor: pointer;
             border: none;
             background: none;
         }
 
         .modal-body {
-            padding: 20px;
             overflow-y: auto;
             flex: 1;
+            padding-bottom: 20px;
+        }
+
+        .modal-product-header {
+            background: var(--white);
+            padding: 20px;
+            margin-bottom: 10px;
         }
 
         .modal-product-img {
             width: 100%;
-            height: 200px;
+            height: 220px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 15px;
         }
 
-        /* Options Groups (Adicionais) */
+        /* Option Groups */
         .option-group {
-            background: var(--background);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 15px;
+            background: var(--white);
+            padding: 20px;
+            margin-bottom: 10px;
         }
 
         .option-group-header {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
+            align-items: center;
+            margin-bottom: 5px;
         }
 
         .option-group-title {
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .option-group-subtitle {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+            display: block;
         }
 
         .option-badge {
             background: var(--text-dark);
             color: var(--white);
-            font-size: 10px;
-            padding: 3px 6px;
+            font-size: 11px;
+            padding: 4px 8px;
             border-radius: 4px;
+            font-weight: 600;
         }
 
         .option-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 15px 0;
+            border-top: 1px solid var(--border);
         }
-        .option-item:last-child {
-            border-bottom: none;
+
+        .option-item label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .option-price {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 20px;
+            height: 20px;
         }
 
         .modal-footer {
             padding: 15px 20px;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             background: var(--white);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
         }
 
         .add-to-cart-btn {
             background: var(--primary);
             color: var(--white);
             border: none;
-            padding: 15px 30px;
+            padding: 16px;
             border-radius: 8px;
             font-weight: 600;
             font-size: 16px;
             width: 100%;
             cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         @media (min-width: 768px) {
             body { max-width: 600px; margin: 0 auto; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
-            .modal-content { border-radius: 10px; height: auto; max-height: 90vh; align-self: center; }
+            .modal-content { border-radius: 10px; height: 85vh; align-self: center; }
+            .modal-header { border-radius: 10px 10px 0 0; }
             .modal-overlay { align-items: center; }
         }
     </style>
@@ -313,7 +392,14 @@
     </header>
 
     <nav class="categories-nav" id="nav-categories">
+        <a href="#destaques" class="category-chip active">Os mais pedidos</a>
         </nav>
+
+    <section class="highlights-section" id="destaques">
+        <h2 class="section-title">Os mais pedidos</h2>
+        <div class="horizontal-scroll" id="highlights-container">
+            </div>
+    </section>
 
     <main id="menu-container">
         </main>
@@ -321,64 +407,99 @@
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 id="modalTitle">Nome do Produto</h2>
-                <button class="close-modal" onclick="closeModal()">&times;</button>
+                <button class="close-modal" onclick="closeModal()">×</button>
+                <h3 style="font-size: 16px;">Detalhes do item</h3>
             </div>
+            
             <div class="modal-body">
-                <img id="modalImg" src="" alt="Produto" class="modal-product-img">
-                <p id="modalDesc" class="product-desc" style="margin-bottom: 20px;"></p>
-                <h3 id="modalPrice" class="product-price" style="margin-bottom: 20px;"></h3>
+                <div class="modal-product-header">
+                    <img id="modalImg" src="" alt="Produto" class="modal-product-img">
+                    <h2 id="modalTitle" style="font-size: 20px; margin-bottom: 8px;"></h2>
+                    <p id="modalDesc" class="product-desc" style="-webkit-line-clamp: unset;"></p>
+                    <h3 id="modalPrice" class="product-price" style="font-size: 18px; margin-top: 10px;"></h3>
+                </div>
 
                 <div id="optionsContainer">
                     </div>
             </div>
+
             <div class="modal-footer">
-                <button class="add-to-cart-btn" onclick="addToCart()">Adicionar <span id="btnPrice"></span></button>
+                <button class="add-to-cart-btn" onclick="addToCart()">
+                    <span>Adicionar</span>
+                    <span id="btnPrice"></span>
+                </button>
             </div>
         </div>
     </div>
 
     <script>
-        // Banco de Dados de Produtos
-        const products = [
-            // OS MAIS PEDIDOS
-            { id: 1, category: "Os mais pedidos", name: "Genuíno Barbecue", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721133832475blob_600.webp", isBurger: true },
-            { id: 2, category: "Os mais pedidos", name: "Genuíno Austrália", price: 29.90, desc: "Pão australiano, blend 160g, cheddar, cebola caramelizada, bacon, maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1726497085058blob_600.webp", isBurger: true },
-            { id: 3, category: "Os mais pedidos", name: "Genuíno Crispy Cheese", price: 31.90, desc: "Pão brioche, blend 160g, cheddar, muçarela empanada, bacon, ketchup e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1723224990296blob_600.webp", isBurger: true },
-            
-            // COMBOS
-            { id: 4, category: "Os combos mais pedidos", name: "Genuíno Salad + Refri + Batata Crinkle P", price: 34.90, desc: "Pão brioche, blend 160g, cheddar, alface, tomate e molho genuíno. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589595711blob_600.webp", isBurger: true },
-            
-            // BURGUERS
-            { id: 5, category: "Burguers", name: "Imperial Burguer - Edição Limitada", price: 33.90, desc: "Pão brioche, hamburguer 150g 100% Angus, bacon crocante, cebola caramelizada, abacaxi grelhado, queijo cheddar, rúcula, molho barbecue e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1769777778468blob_600.webp", isBurger: true },
-            
-            // SMASH
-            { id: 6, category: "Smash Burger", name: "Smash Salad", price: 19.90, desc: "Pão brioche, 2 smashs de 50g, cheddar, alface, tomate e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134963935blob_600.webp", isBurger: true },
-            
-            // CHICKEN
-            { id: 7, category: "Chicken Burguer", name: "Chicken", price: 16.90, desc: "Pão brioche, peito de frango empanado, bacon, alface e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135424357blob_600.webp", isBurger: true },
-            
-            // PORÇÕES
-            { id: 8, category: "Porções", name: "Fritas Genuíno 600g", price: 39.90, desc: "Batata crinkle (ondulada), cheddar, costela desfiada, sourcream, molho barbecue e cebolinha.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509807248blob_600.webp", isBurger: false },
-            
-            // BEBIDAS
-            { id: 9, category: "Refrigerantes Lata", name: "Coca-Cola Original 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false }
-            // Nota: Adicionei os principais de cada categoria como exemplo funcional. 
-            // Você pode facilmente copiar e colar o restante seguindo este mesmo padrão de chaves {}.
+        // BANCO DE DADOS COMPLETO
+        const highlights = [
+            { id: 101, name: "Genuíno Barbecue", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721133832475blob_600.webp", isBurger: true },
+            { id: 102, name: "Genuíno Austrália", price: 29.90, desc: "Pão australiano, blend 160g, cheddar, cebola caramelizada, bacon, maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1726497085058blob_600.webp", isBurger: true },
+            { id: 103, name: "Genuíno Crispy Cheese", price: 31.90, desc: "Pão brioche, blend 160g, cheddar, muçarela empanada, bacon, ketchup e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1723224990296blob_600.webp", isBurger: true },
+            { id: 104, name: "Genuíno Pepper", price: 29.90, desc: "Brioche tostado na manteiga, blend 100% angus 150g, queijo cheddar, cebola crispy, bacon crocante, pimenta jalapeño, sourcream e maionese genuino.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134687600blob_600.webp", isBurger: true },
+            { id: 105, name: "Genuíno Cheese Burguer", price: 19.90, desc: "Pão brioche, blend 160g, cheddar e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1723224917758blob_600.webp", isBurger: true },
+            { id: 106, name: "Smash Bacon", price: 29.90, desc: "Pão brioche, 2 smashs de 50g, cheddar, bacon, cebola caramelizada e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134983447blob_600.webp", isBurger: true }
         ];
 
-        // Template HTML para as opções (Adicionais)
+        const products = [
+            // OS COMBOS MAIS PEDIDOS
+            { id: 201, category: "Os combos mais pedidos", name: "Genuíno Salad + Refri + Batata Crinkle P", price: 34.90, desc: "Pão brioche, blend 160g, cheddar, alface, tomate e molho genuíno. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589595711blob_600.webp", isBurger: true },
+            { id: 202, category: "Os combos mais pedidos", name: "Genuíno Barbecue + Refri + Batata Crinkle P", price: 41.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1726152303823blob_600.webp", isBurger: true },
+            { id: 203, category: "Os combos mais pedidos", name: "Genuíno Cheese Burguer + Refri + Batata Crinkle P", price: 32.90, desc: "Pão brioche, blend 150g, cheddar e maionese genuíno. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589627235blob_600.webp", isBurger: true },
+            
+            // BURGUERS
+            { id: 301, category: "Burguers", name: "Imperial Burguer - Edição Limitada", price: 33.90, desc: "Pão brioche, hamburguer 150g 100% Angus, bacon crocante, cebola caramelizada, abacaxi grelhado, queijo cheddar, rúcula, molho barbecue e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1769777778468blob_600.webp", isBurger: true },
+            { id: 302, category: "Burguers", name: "Genuíno Salad", price: 21.90, desc: "Pão brioche, blend 160g, cheddar, alface, tomate e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1722604953330blob_600.webp", isBurger: true },
+            { id: 303, category: "Burguers", name: "Genuíno Barbecue", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721133832475blob_600.webp", isBurger: true },
+            { id: 304, category: "Burguers", name: "Genuíno Cheese Burguer", price: 19.90, desc: "Pão brioche, blend 160g, cheddar e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1723224917758blob_600.webp", isBurger: true },
+            { id: 305, category: "Burguers", name: "Genuíno Ribs Bbq", price: 32.90, desc: "Pão australiano, blend 160g, cheddar, costela desfiada, bacon, cebola caramelizada, maionese genuína, molho barbecue e sourcream.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1723224947603blob_600.webp", isBurger: true },
+            { id: 306, category: "Burguers", name: "Genuíno Austrália", price: 28.90, desc: "Pão australiano, blend 160g, cheddar, cebola caramelizada, bacon, maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1726497085058blob_600.webp", isBurger: true },
+            { id: 307, category: "Burguers", name: "Genuíno Crispy Cheese", price: 32.90, desc: "Pão brioche, blend 160g, cheddar, muçarela empanada, bacon, ketchup e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1723224990296blob_600.webp", isBurger: true },
+            { id: 308, category: "Burguers", name: "Genuíno Bacon Crown", price: 33.90, desc: "Pão brioche, blend 160g, cheddar, anel de cebola enrolado com bacon crocante, molho de queijo cheddar, bacon crocante e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/202212281834_YIG1_i.webp", isBurger: true },
+            { id: 309, category: "Burguers", name: "Genuíno Pepper", price: 29.90, desc: "Brioche tostado na manteiga, blend 100% angus 150g, queijo cheddar, cebola crispy, bacon crocante, pimenta jalapeño, sourcream e maionese genuino.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134687600blob_600.webp", isBurger: true },
+            { id: 310, category: "Burguers", name: "Genuíno Catupiry Crispy", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, Catupiry empanado, alface, tomate e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/202212281839_183C_i.webp", isBurger: true },
+            { id: 311, category: "Burguers", name: "Genuíno Blue Cheese", price: 32.90, desc: "Pão brioche, blend 160g, molho gorgonzola, bacon, cebola caramelizada, rúcula, maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/202212281829_QG71_i.webp", isBurger: true },
+
+            // SMASH BURGERS
+            { id: 401, category: "Smash Burgers", name: "Smash Salad", price: 19.90, desc: "Pão brioche, 2 smashs de 50g, cheddar, alface, tomate e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134963935blob_600.webp", isBurger: true },
+            { id: 402, category: "Smash Burgers", name: "Smash Bacon", price: 26.90, desc: "Pão brioche, 2 smashs de 50g, cheddar, bacon, cebola caramelizada e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134983447blob_600.webp", isBurger: true },
+            { id: 403, category: "Smash Burgers", name: "Smash Cheese", price: 13.90, desc: "Pão brioche, 2 smashs de 50g, cheddar e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135069727blob_600.webp", isBurger: true },
+
+            // CHICKEN BURGUERS
+            { id: 501, category: "Chicken Burguers", name: "Chicken", price: 16.90, desc: "Pão brioche, peito de frango empanado, bacon alface e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135424357blob_600.webp", isBurger: true },
+            { id: 502, category: "Chicken Burguers", name: "Chicken BBQ", price: 24.90, desc: "Pão brioche, peito de frango empanado, bacon crocante cebola crispy, molho barbecue, surcream e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135452879blob_600.webp", isBurger: true },
+            { id: 503, category: "Chicken Burguers", name: "Chicken Bacon", price: 25.90, desc: "Pão brioche, peito de frango empanado, bacon, cebola caramelizada e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135468538blob_600.webp", isBurger: true },
+
+            // PORÇÕES
+            { id: 601, category: "Porções", name: "Tiras de Frango 400g", price: 22.90, desc: "Tiras de peito de frango crocante e empanado, acompanhado de maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1769777984718blob_600.webp", isBurger: false },
+            { id: 602, category: "Porções", name: "Fritas 200g", price: 11.90, desc: "Batata crinkle(ondulado) temperada com hub da casa e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509217142blob_600.webp", isBurger: false },
+            { id: 603, category: "Porções", name: "Fritas 500g", price: 24.90, desc: "Batata crinkle(ondulado) temperada com hub da casa e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509217142blob_600.webp", isBurger: false },
+            { id: 604, category: "Porções", name: "Fritas Bacon 600g (450g de batata)", price: 33.90, desc: "Batata frita crinkle (ondulado) , cheddar e bacon.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509985719blob_600.webp", isBurger: false },
+            { id: 605, category: "Porções", name: "Fritas Genuíno 600g", price: 39.90, desc: "Batata crinkle (ondulada), cheddar, costela desfiada, sourcream, molho barbecue e cebolinha.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509807248blob_600.webp", isBurger: false },
+            { id: 606, category: "Porções", name: "Combo Kids", price: 26.90, desc: "Pão brioche, smash de 50g, queijo cheddar e maionese genuína + batata frita + surpresinha", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589230781blob_600.webp", isBurger: false },
+
+            // BEBIDAS
+            { id: 701, category: "Refrigerantes lata", name: "Coca-Cola Original 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
+            { id: 702, category: "Refrigerantes lata", name: "Coca-Cola Zero 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
+            { id: 703, category: "Refrigerantes lata", name: "Fanta Guaraná 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
+            { id: 704, category: "Refrigerantes lata", name: "Fanta Laranja 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
+            { id: 705, category: "Refrigerantes lata", name: "Fanta Uva 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false }
+        ];
+
+        // TEMPLATE DE ADICIONAIS
         const optionsTemplate = `
             <div class="option-group">
                 <div class="option-group-header">
                     <span class="option-group-title">Escolha seu Refri</span>
-                    <span class="option-badge">Obrigatório</span>
+                </div>
+                <span class="option-group-subtitle">Escolha 1 item</span>
+                <div class="option-item">
+                    <label><input type="radio" name="refri" value="0"> Coca-Cola Original 350ml</label>
                 </div>
                 <div class="option-item">
-                    <label><input type="radio" name="refri" value="Coca Original"> Coca-Cola Original 350ml</label>
-                </div>
-                <div class="option-item">
-                    <label><input type="radio" name="refri" value="Coca Zero"> Coca-Cola Zero 350ml</label>
+                    <label><input type="radio" name="refri" value="0"> Coca-Cola Zero 350ml</label>
                 </div>
             </div>
 
@@ -387,11 +508,12 @@
                     <span class="option-group-title">Qual o ponto da carne?</span>
                     <span class="option-badge">Obrigatório</span>
                 </div>
+                <span class="option-group-subtitle">Escolha 1 item</span>
                 <div class="option-item">
-                    <label><input type="radio" name="ponto" value="Rosada"> Ponto da Casa (rosada)</label>
+                    <label><input type="radio" name="ponto" value="0"> Ponto da Casa (rosada)</label>
                 </div>
                 <div class="option-item">
-                    <label><input type="radio" name="ponto" value="Bem passada"> Bem passada</label>
+                    <label><input type="radio" name="ponto" value="0"> Bem passada</label>
                 </div>
             </div>
 
@@ -399,26 +521,33 @@
                 <div class="option-group-header">
                     <span class="option-group-title">Que tal uma maionese artesanal?</span>
                 </div>
+                <span class="option-group-subtitle">Escolha até 1 item</span>
                 <div class="option-item">
-                    <label><input type="checkbox" class="addon-checkbox" value="2.00"> Maionese (+ R$ 2,00)</label>
+                    <label><input type="checkbox" class="addon-checkbox" value="2.00"> Maionese</label>
+                    <span class="option-price">+ R$ 2,00</span>
                 </div>
             </div>
 
             <div class="option-group">
                 <div class="option-group-header">
-                    <span class="option-group-title">Turbine seu burguer (Máx 4)</span>
+                    <span class="option-group-title">Turbine seu burguer</span>
+                </div>
+                <span class="option-group-subtitle">Escolha até 4 itens</span>
+                <div class="option-item">
+                    <label><input type="checkbox" class="addon-checkbox" value="8.00"> Carne 150g</label>
+                    <span class="option-price">+ R$ 8,00</span>
                 </div>
                 <div class="option-item">
-                    <label><input type="checkbox" class="addon-checkbox" value="8.00"> Carne 150g (+ R$ 8,00)</label>
+                    <label><input type="checkbox" class="addon-checkbox" value="4.00"> Bacon</label>
+                    <span class="option-price">+ R$ 4,00</span>
                 </div>
                 <div class="option-item">
-                    <label><input type="checkbox" class="addon-checkbox" value="4.00"> Bacon (+ R$ 4,00)</label>
+                    <label><input type="checkbox" class="addon-checkbox" value="2.00"> Ovo</label>
+                    <span class="option-price">+ R$ 2,00</span>
                 </div>
                 <div class="option-item">
-                    <label><input type="checkbox" class="addon-checkbox" value="2.00"> Ovo (+ R$ 2,00)</label>
-                </div>
-                <div class="option-item">
-                    <label><input type="checkbox" class="addon-checkbox" value="2.00"> Picles (+ R$ 2,00)</label>
+                    <label><input type="checkbox" class="addon-checkbox" value="2.00"> Picles</label>
+                    <span class="option-price">+ R$ 2,00</span>
                 </div>
             </div>
         `;
@@ -429,26 +558,43 @@
             return `R$ ${value.toFixed(2).replace('.', ',')}`;
         }
 
-        // Renderizar Categorias e Produtos
         function renderMenu() {
+            // Renderiza Destaques (Horizontal)
+            const hlContainer = document.getElementById('highlights-container');
+            highlights.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'highlight-card';
+                card.onclick = () => openModal(prod);
+                card.innerHTML = `
+                    <div class="highlight-info">
+                        <h3 class="product-name" style="font-size:14px;">${prod.name}</h3>
+                        <span class="product-price" style="font-size:14px;">${formatMoney(prod.price)}</span>
+                    </div>
+                    <img src="${prod.img}" class="highlight-img" loading="lazy">
+                `;
+                hlContainer.appendChild(card);
+            });
+
+            // Renderiza Categorias Normais (Vertical)
             const categories = [...new Set(products.map(p => p.category))];
             const nav = document.getElementById('nav-categories');
             const container = document.getElementById('menu-container');
 
             categories.forEach((cat, index) => {
-                // Nav Chips
+                // Nav
                 const a = document.createElement('a');
                 a.href = `#cat-${index}`;
-                a.className = `category-chip ${index === 0 ? 'active' : ''}`;
+                a.className = 'category-chip';
                 a.textContent = cat;
                 nav.appendChild(a);
 
-                // Sections
+                // Section
                 const section = document.createElement('div');
                 section.className = 'menu-section';
                 section.id = `cat-${index}`;
                 
                 const h2 = document.createElement('h2');
+                h2.className = 'section-title';
                 h2.textContent = cat;
                 section.appendChild(h2);
 
@@ -469,9 +615,17 @@
                 });
                 container.appendChild(section);
             });
+
+            // Adiciona classe 'active' ao clicar na navegação
+            const chips = document.querySelectorAll('.category-chip');
+            chips.forEach(chip => {
+                chip.addEventListener('click', function() {
+                    chips.forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
         }
 
-        // Sistema de Modal e Cálculo de Preço
         function openModal(product) {
             document.getElementById('modalTitle').textContent = product.name;
             document.getElementById('modalDesc').textContent = product.desc;
@@ -484,16 +638,15 @@
             const optionsContainer = document.getElementById('optionsContainer');
             if(product.isBurger) {
                 optionsContainer.innerHTML = optionsTemplate;
-                // Adicionar listeners nos checkboxes recém criados
                 document.querySelectorAll('.addon-checkbox').forEach(box => {
                     box.addEventListener('change', updateBtnPrice);
                 });
             } else {
-                optionsContainer.innerHTML = ''; // Limpa se for porção/bebida
+                optionsContainer.innerHTML = ''; 
             }
 
             document.getElementById('productModal').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Impede scroll do fundo
+            document.body.style.overflow = 'hidden'; 
         }
 
         function closeModal() {
@@ -506,15 +659,14 @@
             document.querySelectorAll('.addon-checkbox:checked').forEach(box => {
                 total += parseFloat(box.value);
             });
-            document.getElementById('btnPrice').textContent = `- ${formatMoney(total)}`;
+            document.getElementById('btnPrice').textContent = formatMoney(total);
         }
 
         function addToCart() {
-            alert("Produto adicionado ao carrinho! (Aqui entra a lógica de fechar pedido/WhatsApp)");
+            alert("Produto adicionado! (Pronto para integrar ao carrinho ou WhatsApp)");
             closeModal();
         }
 
-        // Inicializar
         window.onload = renderMenu;
     </script>
 </body>
