@@ -7,11 +7,13 @@
     <style>
         :root {
             --primary: #ea1d2c;
+            --primary-hover: #fce8ea;
             --background: #f7f7f7;
             --text-dark: #3e3e3e;
             --text-light: #717171;
             --white: #ffffff;
             --border: #f2f2f2;
+            --header-height: 140px; /* Compensa o cabeçalho fixo na rolagem */
         }
 
         * {
@@ -22,23 +24,31 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: var(--header-height);
+        }
+
         body {
             background-color: var(--background);
             color: var(--text-dark);
-            padding-bottom: 80px;
+            padding-bottom: 90px;
         }
 
-        /* Header */
+        /* Header e Nav Fixos */
+        .sticky-top {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
         header {
-            background-color: var(--white);
             padding: 15px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
         .brand-info {
@@ -48,22 +58,15 @@
         }
 
         .logo {
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
             object-fit: cover;
             border: 1px solid var(--border);
         }
 
-        .store-details h1 {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .store-details p {
-            font-size: 12px;
-            color: var(--text-light);
-        }
+        .store-details h1 { font-size: 16px; font-weight: 700; }
+        .store-details p { font-size: 12px; color: var(--text-light); }
 
         .ifood-partner {
             display: flex;
@@ -75,20 +78,19 @@
         }
 
         .ifood-partner img {
-            width: 40px;
+            width: 45px;
             margin-top: 2px;
         }
 
         /* Categories Nav */
         .categories-nav {
-            background: var(--white);
-            padding: 15px 20px;
+            padding: 10px 20px;
             display: flex;
             overflow-x: auto;
             gap: 10px;
             white-space: nowrap;
             scrollbar-width: none;
-            border-bottom: 1px solid var(--border);
+            border-top: 1px solid var(--border);
         }
         .categories-nav::-webkit-scrollbar { display: none; }
 
@@ -100,7 +102,12 @@
             font-weight: 600;
             color: var(--text-dark);
             text-decoration: none;
-            transition: 0.2s;
+            transition: all 0.3s ease;
+        }
+
+        .category-chip:hover {
+            background: var(--primary-hover);
+            color: var(--primary);
         }
 
         .category-chip.active {
@@ -144,7 +151,9 @@
             display: flex;
             gap: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: transform 0.2s;
         }
+        .highlight-card:active { transform: scale(0.98); }
 
         .highlight-info {
             flex: 1;
@@ -153,19 +162,10 @@
             justify-content: space-between;
         }
 
-        .highlight-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
+        .highlight-img { width: 80px; height: 80px; border-radius: 8px; object-fit: cover; }
 
         /* Vertical Menu Section */
-        .menu-section {
-            background: var(--white);
-            margin-bottom: 10px;
-            padding: 20px;
-        }
+        .menu-section { background: var(--white); margin-bottom: 10px; padding: 20px; }
 
         .product-card {
             display: flex;
@@ -174,66 +174,32 @@
             padding: 15px 0;
             border-bottom: 1px solid var(--border);
             cursor: pointer;
+            transition: background 0.2s;
         }
-
+        .product-card:active { background: #fafafa; }
         .product-card:last-child { border-bottom: none; padding-bottom: 0; }
         .product-card:first-of-type { padding-top: 0; }
 
-        .product-info {
-            flex: 1;
-            padding-right: 15px;
-        }
-
-        .product-name {
-            font-size: 15px;
-            font-weight: 600;
-            margin-bottom: 5px;
-            line-height: 1.2;
-        }
-
+        .product-info { flex: 1; padding-right: 15px; }
+        .product-name { font-size: 15px; font-weight: 600; margin-bottom: 5px; line-height: 1.2; }
         .product-desc {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-bottom: 8px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-            line-height: 1.4;
+            font-size: 13px; color: var(--text-light); margin-bottom: 8px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4;
         }
+        .product-price { font-size: 15px; font-weight: 700; color: var(--text-dark); }
+        .product-img { width: 100px; height: 100px; border-radius: 8px; object-fit: cover; }
 
-        .product-price {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--text-dark);
-        }
-
-        .product-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
-            object-fit: cover;
-        }
-
-        /* Modal Overlays */
+        /* Modals (Produto e Carrinho) */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: flex-end;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); z-index: 1000;
+            display: none; justify-content: center; align-items: flex-end;
         }
 
         .modal-content {
-            background: var(--background);
-            width: 100%;
-            max-width: 600px;
-            height: 90vh;
-            border-radius: 20px 20px 0 0;
-            display: flex;
-            flex-direction: column;
+            background: var(--background); width: 100%; max-width: 600px;
+            height: 90vh; border-radius: 20px 20px 0 0;
+            display: flex; flex-direction: column;
             animation: slideUp 0.3s ease-out;
         }
 
@@ -243,171 +209,145 @@
         }
 
         .modal-header {
-            background: var(--white);
-            padding: 15px 20px;
-            border-radius: 20px 20px 0 0;
-            position: relative;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
+            background: var(--white); padding: 15px 20px; border-radius: 20px 20px 0 0;
+            position: relative; text-align: center; border-bottom: 1px solid var(--border);
         }
 
         .close-modal {
-            position: absolute;
-            left: 20px;
-            top: 15px;
-            font-size: 28px;
-            line-height: 20px;
-            color: var(--primary);
-            cursor: pointer;
-            border: none;
-            background: none;
+            position: absolute; left: 20px; top: 15px; font-size: 28px; line-height: 20px;
+            color: var(--text-light); cursor: pointer; border: none; background: none;
         }
 
-        .modal-body {
-            overflow-y: auto;
-            flex: 1;
-            padding-bottom: 20px;
-        }
+        .modal-body { overflow-y: auto; flex: 1; padding-bottom: 20px; }
 
-        .modal-product-header {
-            background: var(--white);
-            padding: 20px;
-            margin-bottom: 10px;
-        }
-
-        .modal-product-img {
-            width: 100%;
-            height: 220px;
-            object-fit: cover;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
+        /* Produto Detalhes */
+        .modal-product-header { background: var(--white); padding: 20px; margin-bottom: 10px; }
+        .modal-product-img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; }
 
         /* Option Groups */
-        .option-group {
-            background: var(--white);
-            padding: 20px;
-            margin-bottom: 10px;
-        }
+        .option-group { background: var(--white); padding: 20px; margin-bottom: 10px; }
+        .option-group-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+        .option-group-title { font-size: 16px; font-weight: 700; }
+        .option-group-subtitle { font-size: 13px; color: var(--text-light); margin-bottom: 15px; display: block; }
+        .option-badge { background: var(--text-dark); color: var(--white); font-size: 11px; padding: 4px 8px; border-radius: 4px; font-weight: 600; }
+        .option-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-top: 1px solid var(--border); }
+        .option-item label { display: flex; align-items: center; gap: 15px; width: 100%; font-size: 15px; cursor: pointer; }
+        .option-price { color: var(--text-dark); font-weight: 500; }
+        input[type="radio"], input[type="checkbox"] { accent-color: var(--primary); width: 20px; height: 20px; }
 
-        .option-group-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 5px;
-        }
-
-        .option-group-title {
-            font-size: 16px;
-            font-weight: 700;
-        }
-
-        .option-group-subtitle {
-            font-size: 13px;
-            color: var(--text-light);
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        .option-badge {
-            background: var(--text-dark);
-            color: var(--white);
-            font-size: 11px;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-        }
-
-        .option-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .option-item label {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            width: 100%;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .option-price {
-            color: var(--text-dark);
-            font-weight: 500;
-        }
-
-        input[type="radio"], input[type="checkbox"] {
-            accent-color: var(--primary);
-            width: 20px;
-            height: 20px;
-        }
-
-        .modal-footer {
-            padding: 15px 20px;
-            background: var(--white);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-        }
+        .modal-footer { padding: 15px 20px; background: var(--white); box-shadow: 0 -2px 10px rgba(0,0,0,0.05); }
 
         .add-to-cart-btn {
-            background: var(--primary);
-            color: var(--white);
-            border: none;
-            padding: 16px;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            width: 100%;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: var(--primary); color: var(--white); border: none; padding: 16px;
+            border-radius: 8px; font-weight: 600; font-size: 16px; width: 100%;
+            cursor: pointer; display: flex; justify-content: space-between; align-items: center;
         }
+        .add-to-cart-btn:active { background: #d01825; }
+        .add-to-cart-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+        /* Carrinho (Sacola) Flutuante */
+        .floating-cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(234, 29, 44, 0.4);
+            display: none; /* Só aparece quando tem item */
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            z-index: 900;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .floating-cart.pop {
+            animation: popCart 0.3s ease-in-out;
+        }
+
+        @keyframes popCart {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        .cart-badge {
+            background: white;
+            color: var(--primary);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        /* Estilos do Checkout */
+        .cart-item {
+            background: var(--white);
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+        .cart-item-header { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: 5px;}
+        .cart-item-desc { font-size: 12px; color: var(--text-light); margin-bottom: 10px; }
+        .remove-btn { background: none; border: none; color: var(--primary); font-size: 12px; font-weight: 600; cursor: pointer; }
+
+        .payment-section { background: var(--white); padding: 20px; margin-top: 10px; }
+        .payment-option { display: flex; align-items: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid var(--border); font-size: 15px;}
+        .payment-option:last-child { border-bottom: none; }
+        .payment-option.disabled { color: #aaa; }
 
         @media (min-width: 768px) {
             body { max-width: 600px; margin: 0 auto; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
             .modal-content { border-radius: 10px; height: 85vh; align-self: center; }
             .modal-header { border-radius: 10px 10px 0 0; }
             .modal-overlay { align-items: center; }
+            .floating-cart { bottom: 30px; right: calc(50% - 280px); }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-info">
-            <img src="https://files.catbox.moe/9d367j.png" alt="Genuíno Burguer Logo" class="logo">
-            <div class="store-details">
-                <h1>Genuíno Burguer</h1>
-                <p>BH Shopping, Belo Horizonte</p>
+    <div class="sticky-top">
+        <header>
+            <div class="brand-info">
+                <img src="https://i.postimg.cc/wBkj1m2y/Orange-Background.png" alt="Genuíno Burguer Logo" class="logo">
+                <div class="store-details">
+                    <h1>Genuíno Burguer</h1>
+                    <p>BH Shopping, Belo Horizonte</p>
+                </div>
             </div>
-        </div>
-        <div class="ifood-partner">
-            <span>Entrega parceira</span>
-            <img src="https://files.catbox.moe/g7f173.webp" alt="iFood Logo">
-        </div>
-    </header>
+            <div class="ifood-partner">
+                <span>Entrega parceira</span>
+                <img src="https://i.postimg.cc/hG4fbsXF/ifood-logo-vermelho-700x699.webp" alt="iFood Logo">
+            </div>
+        </header>
 
-    <nav class="categories-nav" id="nav-categories">
-        <a href="#destaques" class="category-chip active">Os mais pedidos</a>
-        </nav>
+        <nav class="categories-nav" id="nav-categories">
+            <a href="#destaques" class="category-chip active">Os mais pedidos</a>
+            </nav>
+    </div>
 
     <section class="highlights-section" id="destaques">
         <h2 class="section-title">Os mais pedidos</h2>
-        <div class="horizontal-scroll" id="highlights-container">
-            </div>
+        <div class="horizontal-scroll" id="highlights-container"></div>
     </section>
 
-    <main id="menu-container">
-        </main>
+    <main id="menu-container"></main>
+
+    <div class="floating-cart" id="floatingCart" onclick="openCart()">
+        <span class="cart-badge" id="cartBadge">0</span>
+        Ver Sacola
+    </div>
 
     <div class="modal-overlay" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
-                <button class="close-modal" onclick="closeModal()">×</button>
+                <button class="close-modal" onclick="closeProductModal()">×</button>
                 <h3 style="font-size: 16px;">Detalhes do item</h3>
             </div>
             
@@ -432,8 +372,49 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-modal" onclick="closeCartModal()">×</button>
+                <h3 style="font-size: 16px;">Sua Sacola</h3>
+            </div>
+            
+            <div class="modal-body" style="background: var(--background);">
+                <div id="cartItemsContainer">
+                    </div>
+
+                <div class="payment-section">
+                    <h3 style="font-size: 16px; margin-bottom: 10px;">Forma de Pagamento</h3>
+                    
+                    <label class="payment-option">
+                        <input type="radio" name="payment" value="pix" checked>
+                        <div>
+                            <strong>PIX</strong>
+                            <div style="font-size: 12px; color: var(--text-light);">Aprovação imediata</div>
+                        </div>
+                    </label>
+                    
+                    <label class="payment-option disabled">
+                        <input type="radio" name="payment" value="card" disabled>
+                        <div>
+                            <strong>Cartão de Crédito / Débito</strong>
+                            <div style="font-size: 12px; color: var(--primary);">Em manutenção</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="add-to-cart-btn" onclick="finalizeOrder()">
+                    <span>Finalizar Pedido</span>
+                    <span id="cartTotalBtn"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // BANCO DE DADOS COMPLETO
+        // BANCO DE DADOS COMPLETO (IDÊNTICO AO ANTERIOR)
         const highlights = [
             { id: 101, name: "Genuíno Barbecue", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721133832475blob_600.webp", isBurger: true },
             { id: 102, name: "Genuíno Austrália", price: 29.90, desc: "Pão australiano, blend 160g, cheddar, cebola caramelizada, bacon, maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1726497085058blob_600.webp", isBurger: true },
@@ -444,12 +425,9 @@
         ];
 
         const products = [
-            // OS COMBOS MAIS PEDIDOS
             { id: 201, category: "Os combos mais pedidos", name: "Genuíno Salad + Refri + Batata Crinkle P", price: 34.90, desc: "Pão brioche, blend 160g, cheddar, alface, tomate e molho genuíno. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589595711blob_600.webp", isBurger: true },
             { id: 202, category: "Os combos mais pedidos", name: "Genuíno Barbecue + Refri + Batata Crinkle P", price: 41.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1726152303823blob_600.webp", isBurger: true },
             { id: 203, category: "Os combos mais pedidos", name: "Genuíno Cheese Burguer + Refri + Batata Crinkle P", price: 32.90, desc: "Pão brioche, blend 150g, cheddar e maionese genuíno. + Refri + Batata Crinkle P", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589627235blob_600.webp", isBurger: true },
-            
-            // BURGUERS
             { id: 301, category: "Burguers", name: "Imperial Burguer - Edição Limitada", price: 33.90, desc: "Pão brioche, hamburguer 150g 100% Angus, bacon crocante, cebola caramelizada, abacaxi grelhado, queijo cheddar, rúcula, molho barbecue e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1769777778468blob_600.webp", isBurger: true },
             { id: 302, category: "Burguers", name: "Genuíno Salad", price: 21.90, desc: "Pão brioche, blend 160g, cheddar, alface, tomate e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1722604953330blob_600.webp", isBurger: true },
             { id: 303, category: "Burguers", name: "Genuíno Barbecue", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, cebola crispy, bacon, maionese genuína e molho barbecue.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721133832475blob_600.webp", isBurger: true },
@@ -461,26 +439,18 @@
             { id: 309, category: "Burguers", name: "Genuíno Pepper", price: 29.90, desc: "Brioche tostado na manteiga, blend 100% angus 150g, queijo cheddar, cebola crispy, bacon crocante, pimenta jalapeño, sourcream e maionese genuino.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134687600blob_600.webp", isBurger: true },
             { id: 310, category: "Burguers", name: "Genuíno Catupiry Crispy", price: 29.90, desc: "Pão brioche, blend 160g, cheddar, Catupiry empanado, alface, tomate e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/202212281839_183C_i.webp", isBurger: true },
             { id: 311, category: "Burguers", name: "Genuíno Blue Cheese", price: 32.90, desc: "Pão brioche, blend 160g, molho gorgonzola, bacon, cebola caramelizada, rúcula, maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/202212281829_QG71_i.webp", isBurger: true },
-
-            // SMASH BURGERS
             { id: 401, category: "Smash Burgers", name: "Smash Salad", price: 19.90, desc: "Pão brioche, 2 smashs de 50g, cheddar, alface, tomate e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134963935blob_600.webp", isBurger: true },
             { id: 402, category: "Smash Burgers", name: "Smash Bacon", price: 26.90, desc: "Pão brioche, 2 smashs de 50g, cheddar, bacon, cebola caramelizada e maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721134983447blob_600.webp", isBurger: true },
             { id: 403, category: "Smash Burgers", name: "Smash Cheese", price: 13.90, desc: "Pão brioche, 2 smashs de 50g, cheddar e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135069727blob_600.webp", isBurger: true },
-
-            // CHICKEN BURGUERS
             { id: 501, category: "Chicken Burguers", name: "Chicken", price: 16.90, desc: "Pão brioche, peito de frango empanado, bacon alface e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135424357blob_600.webp", isBurger: true },
             { id: 502, category: "Chicken Burguers", name: "Chicken BBQ", price: 24.90, desc: "Pão brioche, peito de frango empanado, bacon crocante cebola crispy, molho barbecue, surcream e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135452879blob_600.webp", isBurger: true },
             { id: 503, category: "Chicken Burguers", name: "Chicken Bacon", price: 25.90, desc: "Pão brioche, peito de frango empanado, bacon, cebola caramelizada e maionese genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1721135468538blob_600.webp", isBurger: true },
-
-            // PORÇÕES
             { id: 601, category: "Porções", name: "Tiras de Frango 400g", price: 22.90, desc: "Tiras de peito de frango crocante e empanado, acompanhado de maionese genuína.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1769777984718blob_600.webp", isBurger: false },
             { id: 602, category: "Porções", name: "Fritas 200g", price: 11.90, desc: "Batata crinkle(ondulado) temperada com hub da casa e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509217142blob_600.webp", isBurger: false },
             { id: 603, category: "Porções", name: "Fritas 500g", price: 24.90, desc: "Batata crinkle(ondulado) temperada com hub da casa e molho genuíno.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509217142blob_600.webp", isBurger: false },
-            { id: 604, category: "Porções", name: "Fritas Bacon 600g (450g de batata)", price: 33.90, desc: "Batata frita crinkle (ondulado) , cheddar e bacon.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509985719blob_600.webp", isBurger: false },
+            { id: 604, category: "Porções", name: "Fritas Bacon 600g", price: 33.90, desc: "Batata frita crinkle (ondulado) , cheddar e bacon.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509985719blob_600.webp", isBurger: false },
             { id: 605, category: "Porções", name: "Fritas Genuíno 600g", price: 39.90, desc: "Batata crinkle (ondulada), cheddar, costela desfiada, sourcream, molho barbecue e cebolinha.", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1719509807248blob_600.webp", isBurger: false },
             { id: 606, category: "Porções", name: "Combo Kids", price: 26.90, desc: "Pão brioche, smash de 50g, queijo cheddar e maionese genuína + batata frita + surpresinha", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1763589230781blob_600.webp", isBurger: false },
-
-            // BEBIDAS
             { id: 701, category: "Refrigerantes lata", name: "Coca-Cola Original 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
             { id: 702, category: "Refrigerantes lata", name: "Coca-Cola Zero 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
             { id: 703, category: "Refrigerantes lata", name: "Fanta Guaraná 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false },
@@ -488,7 +458,6 @@
             { id: 705, category: "Refrigerantes lata", name: "Fanta Uva 350ml", price: 6.00, desc: "Lata 350ml", img: "https://client-assets.anota.ai/produtos/656dd5ce4f42a500191ce703/-1725048759671blob_600.webp", isBurger: false }
         ];
 
-        // TEMPLATE DE ADICIONAIS
         const optionsTemplate = `
             <div class="option-group">
                 <div class="option-group-header">
@@ -496,7 +465,7 @@
                 </div>
                 <span class="option-group-subtitle">Escolha 1 item</span>
                 <div class="option-item">
-                    <label><input type="radio" name="refri" value="0"> Coca-Cola Original 350ml</label>
+                    <label><input type="radio" name="refri" value="0" checked> Coca-Cola Original 350ml</label>
                 </div>
                 <div class="option-item">
                     <label><input type="radio" name="refri" value="0"> Coca-Cola Zero 350ml</label>
@@ -510,7 +479,7 @@
                 </div>
                 <span class="option-group-subtitle">Escolha 1 item</span>
                 <div class="option-item">
-                    <label><input type="radio" name="ponto" value="0"> Ponto da Casa (rosada)</label>
+                    <label><input type="radio" name="ponto" value="0" checked> Ponto da Casa (rosada)</label>
                 </div>
                 <div class="option-item">
                     <label><input type="radio" name="ponto" value="0"> Bem passada</label>
@@ -552,19 +521,17 @@
             </div>
         `;
 
-        let currentProductBasePrice = 0;
+        let currentProduct = null;
+        let cart = [];
 
-        function formatMoney(value) {
-            return `R$ ${value.toFixed(2).replace('.', ',')}`;
-        }
+        function formatMoney(value) { return `R$ ${value.toFixed(2).replace('.', ',')}`; }
 
         function renderMenu() {
-            // Renderiza Destaques (Horizontal)
             const hlContainer = document.getElementById('highlights-container');
             highlights.forEach(prod => {
                 const card = document.createElement('div');
                 card.className = 'highlight-card';
-                card.onclick = () => openModal(prod);
+                card.onclick = () => openProductModal(prod);
                 card.innerHTML = `
                     <div class="highlight-info">
                         <h3 class="product-name" style="font-size:14px;">${prod.name}</h3>
@@ -575,20 +542,17 @@
                 hlContainer.appendChild(card);
             });
 
-            // Renderiza Categorias Normais (Vertical)
             const categories = [...new Set(products.map(p => p.category))];
             const nav = document.getElementById('nav-categories');
             const container = document.getElementById('menu-container');
 
             categories.forEach((cat, index) => {
-                // Nav
                 const a = document.createElement('a');
                 a.href = `#cat-${index}`;
                 a.className = 'category-chip';
                 a.textContent = cat;
                 nav.appendChild(a);
 
-                // Section
                 const section = document.createElement('div');
                 section.className = 'menu-section';
                 section.id = `cat-${index}`;
@@ -602,7 +566,7 @@
                 catProducts.forEach(prod => {
                     const card = document.createElement('div');
                     card.className = 'product-card';
-                    card.onclick = () => openModal(prod);
+                    card.onclick = () => openProductModal(prod);
                     card.innerHTML = `
                         <div class="product-info">
                             <h3 class="product-name">${prod.name}</h3>
@@ -616,7 +580,7 @@
                 container.appendChild(section);
             });
 
-            // Adiciona classe 'active' ao clicar na navegação
+            // Lógica para marcar o botão ativo no topo
             const chips = document.querySelectorAll('.category-chip');
             chips.forEach(chip => {
                 chip.addEventListener('click', function() {
@@ -626,20 +590,20 @@
             });
         }
 
-        function openModal(product) {
+        // --- LÓGICA DO PRODUTO ---
+        function openProductModal(product) {
+            currentProduct = product;
             document.getElementById('modalTitle').textContent = product.name;
             document.getElementById('modalDesc').textContent = product.desc;
             document.getElementById('modalImg').src = product.img;
-            document.getElementById('modalPrice').textContent = formatMoney(product.price);
             
-            currentProductBasePrice = product.price;
-            updateBtnPrice();
+            updateBtnPrice(); // Inicializa o preço do botão
 
             const optionsContainer = document.getElementById('optionsContainer');
             if(product.isBurger) {
                 optionsContainer.innerHTML = optionsTemplate;
-                document.querySelectorAll('.addon-checkbox').forEach(box => {
-                    box.addEventListener('change', updateBtnPrice);
+                document.querySelectorAll('.addon-checkbox, input[type="radio"]').forEach(el => {
+                    el.addEventListener('change', updateBtnPrice);
                 });
             } else {
                 optionsContainer.innerHTML = ''; 
@@ -649,22 +613,113 @@
             document.body.style.overflow = 'hidden'; 
         }
 
-        function closeModal() {
+        function closeProductModal() {
             document.getElementById('productModal').style.display = 'none';
             document.body.style.overflow = 'auto';
+            currentProduct = null;
         }
 
         function updateBtnPrice() {
-            let total = currentProductBasePrice;
+            if(!currentProduct) return;
+            let total = currentProduct.price;
+            
             document.querySelectorAll('.addon-checkbox:checked').forEach(box => {
                 total += parseFloat(box.value);
             });
             document.getElementById('btnPrice').textContent = formatMoney(total);
         }
 
+        // --- LÓGICA DO CARRINHO ---
         function addToCart() {
-            alert("Produto adicionado! (Pronto para integrar ao carrinho ou WhatsApp)");
-            closeModal();
+            if(!currentProduct) return;
+
+            let totalOptionsPrice = 0;
+            let selectedOptions = [];
+
+            // Pega Checkboxes (Adicionais pagos)
+            document.querySelectorAll('.addon-checkbox:checked').forEach(box => {
+                totalOptionsPrice += parseFloat(box.value);
+                selectedOptions.push(box.parentElement.textContent.trim());
+            });
+
+            // Pega Radios (Ponto, Refri - ignorando o radio de pagamento)
+            document.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                if(radio.name !== 'payment') {
+                    selectedOptions.push(radio.parentElement.textContent.trim());
+                }
+            });
+
+            const finalItemPrice = currentProduct.price + totalOptionsPrice;
+
+            cart.push({
+                product: currentProduct,
+                price: finalItemPrice,
+                options: selectedOptions
+            });
+
+            closeProductModal();
+            updateCartUI();
+
+            // Animação da Sacola
+            const cartBtn = document.getElementById('floatingCart');
+            cartBtn.classList.remove('pop');
+            void cartBtn.offsetWidth; // Força reinício da animação
+            cartBtn.classList.add('pop');
+        }
+
+        function updateCartUI() {
+            const cartBtn = document.getElementById('floatingCart');
+            const cartBadge = document.getElementById('cartBadge');
+            
+            if (cart.length > 0) {
+                cartBtn.style.display = 'flex';
+                cartBadge.textContent = cart.length;
+            } else {
+                cartBtn.style.display = 'none';
+                closeCartModal(); // Fecha sacola se esvaziar
+            }
+        }
+
+        function openCart() {
+            const container = document.getElementById('cartItemsContainer');
+            container.innerHTML = '';
+            let totalCartPrice = 0;
+
+            cart.forEach((item, index) => {
+                totalCartPrice += item.price;
+                const optionsHtml = item.options.length > 0 ? `<div class="cart-item-desc">${item.options.join(' • ')}</div>` : '';
+                
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-header">
+                            <span>1x ${item.product.name}</span>
+                            <span>${formatMoney(item.price)}</span>
+                        </div>
+                        ${optionsHtml}
+                        <button class="remove-btn" onclick="removeFromCart(${index})">Remover item</button>
+                    </div>
+                `;
+            });
+
+            document.getElementById('cartTotalBtn').textContent = formatMoney(totalCartPrice);
+            document.getElementById('cartModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+            if(cart.length > 0) openCart(); 
+        }
+
+        function finalizeOrder() {
+            if(cart.length === 0) return;
+            alert("Preparando para enviar para o PIX/WhatsApp! Em breve faremos essa conexão.");
         }
 
         window.onload = renderMenu;
