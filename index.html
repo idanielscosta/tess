@@ -63,8 +63,6 @@
         .btn-danger:hover { background: var(--color-danger); color: #fff; }
         .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
         .btn-success:hover { background: var(--color-accent); color: #000; }
-        .btn-edit { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--color-warning); color: var(--color-warning); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
-        .btn-edit:hover { background: var(--color-warning); color: #000; }
         
         .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; padding: 1rem 2.5rem; width: max-content; }
         .btn-discord:hover { background: #4752C4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
@@ -96,7 +94,7 @@
 
         .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
         
-        /* 3D Box E Efeito Magico na Logo */
+        /* 3D Box E Efeito Parallax */
         .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.1s; transform-style: preserve-3d; }
         .logo-mask {
             max-width: 100%; 
@@ -240,7 +238,6 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
         .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 8px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto;}
         .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
-        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
         
         .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
         .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.9rem;}
@@ -259,10 +256,6 @@
         .cat-manager-item { display: flex; justify-content: space-between; background: #000; padding: 0.8rem; border: 1px solid var(--color-border); margin-bottom: 5px; border-radius: 4px; align-items: center;}
         .cat-manager-item button { background: none; border: none; color: var(--color-primary); cursor: pointer; font-size: 1.2rem; }
         .cat-manager-item button:hover { color: #fff; }
-        
-        .radio-option { display: block; padding: 10px; border: 1px solid var(--color-border); margin-bottom: 5px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-align: left; }
-        .radio-option:hover { border-color: var(--color-primary); background: rgba(107, 33, 168, 0.1); }
-        .radio-option input { margin-right: 10px; }
 
         @media (max-width: 768px) {
             .dash-layout { grid-template-columns: 1fr; }
@@ -274,7 +267,6 @@
             .gamer-info-row { flex-direction: column; align-items: center; text-align: center; }
             .gamer-avatar-wrapper { margin-right: 0; margin-bottom: 1rem; }
             .cart-sidebar { width: 100%; right: -100%; }
-            .hero-buttons { justify-content: center; }
         }
     </style>
 </head>
@@ -545,29 +537,13 @@
                         </div>
 
                         <div style="background: #000; padding: 2rem; border-radius: 8px; border: 1px solid var(--color-border);">
-                            <h3 id="admin-form-title" style="color: var(--color-accent); margin-bottom: 1rem;">Novo Drop (Produto)</h3>
+                            <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Novo Drop (Produto)</h3>
                             <div class="form-group"><input type="text" id="add-title" class="form-control" placeholder="Nome do Produto"></div>
                             <div class="form-group"><input type="text" id="add-image" class="form-control" placeholder="Link da Imagem HTTPs"></div>
                             <div class="form-group"><select id="add-category" class="form-control"></select></div>
                             <div class="form-group"><input type="number" id="add-price" class="form-control" placeholder="Preço (ex: 50.00)"></div>
                             <div class="form-group"><textarea id="add-desc" class="form-control" rows="2" placeholder="Descrição"></textarea></div>
-                            
-                            <div class="form-group" style="background: rgba(255,255,255,0.02); padding:1rem; border:1px solid #333; border-radius:4px;">
-                                <label><input type="checkbox" id="add-has-subcats" onchange="window.toggleSubcatsUI()" style="margin-right: 10px;"> Ativar Variações (Subcategorias)</label>
-                                <div id="subcats-ui" style="display:none; margin-top: 15px;">
-                                    <div id="subcats-list"></div>
-                                    <div style="display:flex; gap:10px; margin-top: 10px;">
-                                        <input type="text" id="sub-name" class="form-control" placeholder="Opção (Ex: Ouro)">
-                                        <input type="number" id="sub-price" class="form-control" placeholder="Preço">
-                                        <button class="btn-success" onclick="window.addSubcat()">Adicionar</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style="display: flex; gap: 10px;">
-                                <button id="btn-save-prod" class="btn btn-primary" style="flex-grow: 1;" onclick="window.addProduct()"><span>Publicar Produto</span></button>
-                                <button id="btn-cancel-prod" class="btn-danger" style="display: none;" onclick="window.cancelEditP()">Cancelar</button>
-                            </div>
+                            <button class="btn btn-primary" style="width: 100%;" onclick="window.addProduct()"><span>Publicar Produto</span></button>
                         </div>
                     </div>
                     <div>
@@ -596,9 +572,6 @@
                 <span id="pm-cat" class="badge"></span>
                 <h2 id="pm-title" style="font-family: var(--font-display); font-size: 2.5rem; margin: 1rem 0;">--</h2>
                 <p id="pm-desc" style="color: var(--color-text-muted); margin-bottom: 2rem;">--</p>
-                
-                <div id="pm-subcats-container" style="display: none; margin-bottom: 2rem;"></div>
-
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div id="pm-price" class="price">--</div>
                     <button class="btn btn-primary" id="pm-add-btn"><span>Adicionar ao Carrinho</span></button>
@@ -683,9 +656,6 @@
         let isRegisterMode = false;
         let pendingCheckoutOrderId = null;
         let activeCategoryFilter = 'all';
-        
-        let editProductId = null; // pra editar
-        let tempSubcats = []; // pra adicionar variacoes
 
         // UI Helpers
         window.showToast = function(msg, type = 'success') {
@@ -698,16 +668,10 @@
             setTimeout(() => toast.remove(), 3500);
         }
 
-        // Animacoes 3D e Parallax
+        // Navegação e Efeitos
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
-        const pBg = document.getElementById('parallax-bg');
-        const pTitle = document.getElementById('parallax-title');
-        window.addEventListener('scroll', () => {
-            let s = window.scrollY; 
-            if(s < 800 && pBg && pTitle) { pBg.style.transform = `translateY(${s * 0.3}px)`; pTitle.style.transform = `translateY(${s * 0.15}px)`; }
-        });
-
-        // 3D Tilt Restabelecido
+        
+        // Tilt Efeito Restaurado
         const visualContainer = document.getElementById('hero-visual-container');
         const box3D = document.getElementById('hero-3d-box');
         if(visualContainer && box3D) {
@@ -747,9 +711,7 @@
             }
         });
 
-        // ==========================================
-        // BD PRODUTOS & VITRINE
-        // ==========================================
+        // BD PRODUTOS E VITRINE
         async function loadStoreData() {
             try {
                 const cDoc = await getDoc(doc(db, "config", "storeData"));
@@ -808,16 +770,6 @@
 
             list.forEach(p => {
                 const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
-                
-                // Trata exibicao se tiver subcategoria
-                let priceLabel = `R$ ${p.price.toFixed(2)}`;
-                let actionBtn = `<button class="btn-outline btn-add-cart" onclick="event.stopPropagation(); window.addToCart('${p.id}')">Adicionar</button>`;
-                
-                if(p.subcategories && p.subcategories.length > 0) {
-                    priceLabel = `<span style="font-size:1rem; color:var(--color-text-muted);">A partir de</span><br>R$ ${p.price.toFixed(2)}`;
-                    actionBtn = `<button class="btn-primary btn-add-cart" onclick="event.stopPropagation(); window.openProduct('${p.id}')">Opções</button>`;
-                }
-
                 cont.insertAdjacentHTML('beforeend', `
                     <div class="product-card" onclick="window.openProduct('${p.id}')">
                         ${img}
@@ -828,9 +780,12 @@
                             </div>
                             <h3 class="card-title">${p.title}</h3>
                             <p class="card-desc">${p.description}</p>
-                            <div class="card-footer" style="margin-top:auto; align-items:flex-end;">
-                                <div class="price" style="line-height:1;">${priceLabel}</div>
-                                ${actionBtn}
+                            <div class="card-footer" style="margin-top:auto;">
+                                <div class="price">R$ ${p.price.toFixed(2)}</div>
+                                <div style="display:flex; gap:10px;">
+                                    <button class="btn btn-outline" style="border-radius:4px; font-weight:800; font-family:var(--font-body); text-transform:uppercase; letter-spacing:1px; padding:0.8rem 1.5rem;" onclick="event.stopPropagation(); window.openProduct('${p.id}')">Opções</button>
+                                    <button class="btn btn-primary" style="background:var(--color-primary); color:#fff; padding:0.8rem 1.5rem;" onclick="event.stopPropagation(); window.addToCart('${p.id}')">Adicionar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -849,7 +804,6 @@
             });
         }, 40000);
 
-        // Modal de Produto Comporta Subcategorias
         window.openProduct = function(id) {
             const p = products.find(x => x.id === id);
             if(!p) return;
@@ -857,50 +811,12 @@
             document.getElementById('pm-cat').innerText = p.category;
             document.getElementById('pm-title').innerText = p.title;
             document.getElementById('pm-desc').innerText = p.description;
-            
-            const subCont = document.getElementById('pm-subcats-container');
-            if(p.subcategories && p.subcategories.length > 0) {
-                let html = '<h4 style="margin-bottom:10px; color:var(--color-text-muted);">Selecione a versão:</h4>';
-                p.subcategories.forEach((sub, i) => {
-                    html += `
-                    <label class="radio-option">
-                        <input type="radio" name="pm_subcat" value="${i}" ${i===0?'checked':''}>
-                        <strong>${sub.name}</strong> - R$ ${parseFloat(sub.price).toFixed(2)}
-                    </label>`;
-                });
-                subCont.innerHTML = html;
-                subCont.style.display = 'block';
-                document.getElementById('pm-price').innerText = `A partir de R$ ${p.price.toFixed(2)}`;
-            } else {
-                subCont.style.display = 'none';
-                document.getElementById('pm-price').innerText = `R$ ${p.price.toFixed(2)}`;
-            }
-
-            document.getElementById('pm-add-btn').onclick = () => { window.addToCartFromModal(p); };
+            document.getElementById('pm-price').innerText = `R$ ${p.price.toFixed(2)}`;
+            document.getElementById('pm-add-btn').onclick = () => { window.addToCart(p.id); document.getElementById('product-modal').style.display='none'; };
             document.getElementById('product-modal').style.display = 'flex';
         }
 
-        window.addToCartFromModal = function(p) {
-            let finalPrice = parseFloat(p.price);
-            let finalTitle = p.title;
-
-            if(p.subcategories && p.subcategories.length > 0) {
-                const selected = document.querySelector('input[name="pm_subcat"]:checked');
-                if(!selected) return window.showToast('Escolha uma opção!', 'error');
-                const sub = p.subcategories[selected.value];
-                finalPrice = parseFloat(sub.price);
-                finalTitle = `${p.title} (${sub.name})`;
-            }
-
-            cart.push({ id: p.id, title: finalTitle, price: finalPrice, imageUrl: p.imageUrl });
-            updateCartUI();
-            window.showToast(`${finalTitle} adicionado!`, 'success');
-            document.getElementById('product-modal').style.display = 'none';
-        }
-
-        // ==========================================
         // CARRINHO E PIX
-        // ==========================================
         window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
         
         window.addToCart = function(id) {
@@ -993,12 +909,10 @@
                 
                 cart = []; updateCartUI(); window.toggleCart();
                 window.navegar('app-checkout');
-            } catch (e) { window.showToast('Erro ao criar Pix.', 'error'); }
+            } catch (e) { console.error(e); window.showToast('Erro ao criar Pix.', 'error'); }
         }
 
-        // ==========================================
         // AUTH
-        // ==========================================
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 try {
@@ -1060,9 +974,7 @@
 
         window.logoutUser = function() { auth.signOut(); window.navegar('app-home'); window.showToast("Desconectado.", "info"); }
 
-        // ==========================================
         // DASHBOARD CLIENTE
-        // ==========================================
         function getEloData(spent) {
             if (spent < 50) return { name: 'BRONZE', c: 'elo-bronze', next: 50 };
             if (spent < 150) return { name: 'PRATA', c: 'elo-prata', next: 150 };
@@ -1076,7 +988,7 @@
             if(uDoc.exists()) loggedInUser = { uid: loggedInUser.uid, ...uDoc.data() };
             
             const spent = loggedInUser.totalSpent || 0;
-            document.getElementById('dash-client-name').innerText = loggedInUser.username || 'Operador';
+            document.getElementById('dash-client-name').innerText = loggedInUser.username;
             document.getElementById('client-spent').innerText = spent.toFixed(2);
             document.getElementById('dash-avatar').src = loggedInUser.avatarUrl || 'https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg';
             
@@ -1130,9 +1042,7 @@
             } catch (e) { window.showToast("Erro ao salvar perfil.", "error"); }
         }
 
-        // ==========================================
-        // PAINEL ADMIN
-        // ==========================================
+        // ADMIN
         const mySessionId = Math.random().toString(36).substring(2);
         async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
         setInterval(pingPresence, 30000); pingPresence(); 
@@ -1145,6 +1055,7 @@
         }
 
         window.attemptAdminLogin = function() {
+            // Senha Admin Atualizada
             if(document.getElementById('secret-password').value === "5566") {
                 document.getElementById('admin-login-modal').style.display = 'none';
                 window.navegar('app-admin');
@@ -1169,17 +1080,7 @@
             pList.innerHTML = '';
             products.forEach(p => {
                 const img = p.imageUrl ? `<img src="${p.imageUrl}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;margin-right:10px;">` : '';
-                pList.insertAdjacentHTML('beforeend', `
-                <div class="product-list-item">
-                    <div style="display:flex;align-items:center;">
-                        ${img}
-                        <div><strong>${p.title}</strong><span style="display:block;font-size:0.8rem;color:#aaa">Cat: ${p.category} | R$ ${p.price}</span></div>
-                    </div>
-                    <div>
-                        <button class="btn-edit" onclick="window.editP('${p.id}')">✏️</button>
-                        <button class="btn-danger" onclick="window.delP('${p.id}')">X</button>
-                    </div>
-                </div>`);
+                pList.insertAdjacentHTML('beforeend', `<div class="product-list-item"><div style="display:flex;align-items:center;">${img}<div><strong>${p.title}</strong><span style="display:block;font-size:0.8rem;color:#aaa">Cat: ${p.category} | R$ ${p.price}</span></div></div><button class="btn-danger" onclick="window.delP('${p.id}')">Del</button></div>`);
             });
 
             const qsO = await getDocs(collection(db, "pedidos"));
@@ -1196,17 +1097,10 @@
                 tbodyO.insertAdjacentHTML('beforeend', `<tr><td style="color:#aaa">#${o.id.substring(0,5).toUpperCase()}</td><td style="font-weight:bold">${o.userName}</td><td style="font-size:0.8rem;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.productTitle}</td><td style="color:var(--color-accent)">R$${p.toFixed(2)}</td><td><span class="status-badge ${o.status==='concluido'?'status-concluido':'status-pendente'}">${o.status}</span></td><td>${action}</td></tr>`);
             });
 
-            // CRM BLINDADO contra erros se o Firebase nao tiver a table
-            const tbodyU = document.getElementById('table-admin-users');
-            tbodyU.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
-            try {
-                const qsU = await getDocs(collection(db, "users"));
-                allUsers = [];
-                qsU.forEach(doc => allUsers.push({id: doc.id, ...doc.data()}));
-                renderUserTable(allUsers);
-            } catch(e) {
-                tbodyU.innerHTML = '<tr><td colspan="4">Regras do Firestore bloqueando a leitura da tabela "users".</td></tr>';
-            }
+            const qsU = await getDocs(collection(db, "users"));
+            allUsers = [];
+            qsU.forEach(doc => allUsers.push({id: doc.id, ...doc.data()}));
+            renderUserTable(allUsers);
         }
 
         function renderUserTable(list) {
@@ -1250,103 +1144,24 @@
             } catch(e) { window.showToast("Erro no servidor.", "error"); }
         }
 
-        // ==========================================
-        // GESTAO DE SUBCATEGORIAS & EDITAR PRODUTO
-        // ==========================================
-        window.toggleSubcatsUI = function() {
-            const isChecked = document.getElementById('add-has-subcats').checked;
-            document.getElementById('subcats-ui').style.display = isChecked ? 'block' : 'none';
-        }
-
-        window.addSubcat = function() {
-            const n = document.getElementById('sub-name').value.trim();
-            const p = document.getElementById('sub-price').value;
-            if(!n || !p) return;
-            tempSubcats.push({ name: n, price: Number(p) });
-            renderSubcatsAdmin();
-            document.getElementById('sub-name').value = '';
-            document.getElementById('sub-price').value = '';
-        }
-
-        window.delSubcat = function(index) { tempSubcats.splice(index, 1); renderSubcatsAdmin(); }
-
-        function renderSubcatsAdmin() {
-            const div = document.getElementById('subcats-list');
-            div.innerHTML = '';
-            tempSubcats.forEach((s, i) => {
-                div.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:space-between; background:#111; padding:5px 10px; margin-bottom:5px; border-radius:4px; border:1px solid #333;">
-                    <span>${s.name} - R$ ${s.price}</span>
-                    <button style="background:none; border:none; color:var(--color-danger); cursor:pointer;" onclick="window.delSubcat(${i})">x</button>
-                </div>`);
-            });
-        }
-
-        window.editP = function(id) {
-            const p = products.find(x => x.id === id);
-            if(!p) return;
-            editProductId = p.id;
-            document.getElementById('add-title').value = p.title;
-            document.getElementById('add-image').value = p.imageUrl || '';
-            document.getElementById('add-category').value = p.category;
-            document.getElementById('add-price').value = p.price;
-            document.getElementById('add-desc').value = p.description;
-            
-            if(p.subcategories && p.subcategories.length > 0) {
-                document.getElementById('add-has-subcats').checked = true;
-                tempSubcats = [...p.subcategories];
-                window.toggleSubcatsUI();
-                renderSubcatsAdmin();
-            } else {
-                document.getElementById('add-has-subcats').checked = false;
-                tempSubcats = [];
-                window.toggleSubcatsUI();
-            }
-
-            document.getElementById('btn-save-prod').innerHTML = '<span>Atualizar Produto</span>';
-            document.getElementById('btn-cancel-prod').style.display = 'block';
-            document.getElementById('admin-form-title').innerText = 'Editando Produto';
-        }
-
-        window.cancelEditP = function() {
-            editProductId = null; tempSubcats = [];
-            document.getElementById('add-title').value=''; document.getElementById('add-price').value=''; document.getElementById('add-image').value=''; document.getElementById('add-desc').value='';
-            document.getElementById('add-has-subcats').checked = false; window.toggleSubcatsUI();
-            document.getElementById('btn-save-prod').innerHTML = '<span>Publicar Produto</span>';
-            document.getElementById('btn-cancel-prod').style.display = 'none';
-            document.getElementById('admin-form-title').innerText = 'Novo Drop (Produto)';
-        }
-
         window.addProduct = async function() {
             const t = document.getElementById('add-title').value;
             const img = document.getElementById('add-image').value;
             const c = document.getElementById('add-category').value;
             const p = document.getElementById('add-price').value;
             const d = document.getElementById('add-desc').value;
-            const hasSub = document.getElementById('add-has-subcats').checked;
-
-            if(!t || !p) return window.showToast("Preencha o título e preço base!", "error");
+            if(!t || !p) return window.showToast("Preencha o título e preço!", "error");
             
-            const dataObj = { 
-                title: t, imageUrl: img, category: c, price: Number(p), description: d,
-                subcategories: hasSub ? tempSubcats : []
-            };
-
             try {
-                if(editProductId) {
-                    await updateDoc(doc(db, "products", editProductId), dataObj);
-                    window.showToast("Atualizado com sucesso!", "success");
-                } else {
-                    await addDoc(collection(db, "products"), dataObj);
-                    window.showToast("Drop enviado!", "success");
-                }
-                window.cancelEditP(); // limpa form
-                loadStoreData(); loadAdminData(); 
-            } catch(e) { window.showToast("Erro ao processar.", "error"); }
+                await addDoc(collection(db, "products"), { title: t, imageUrl: img, category: c, price: Number(p), description: d });
+                loadStoreData(); loadAdminData(); window.showToast("Drop enviado com sucesso!", "success");
+                document.getElementById('add-title').value=''; document.getElementById('add-price').value=''; document.getElementById('add-image').value=''; document.getElementById('add-desc').value='';
+            } catch(e) { window.showToast("Erro no envio.", "error"); }
         }
-
         window.delP = async function(id) { await deleteDoc(doc(db, "products", id)); loadStoreData(); loadAdminData(); window.showToast("Removido.", "info"); }
 
         loadStoreData();
+        
     </script>
 </body>
 </html>
