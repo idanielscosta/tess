@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DU Store - A principal loja de contas, boosts e serviços gaming com pegada street.">
+    <meta name="description" content="DU Store - A principal loja de contas, boosts e serviços gaming.">
     <title>DU Store | Premium Gaming & Street Culture</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,9 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* ==========================================================================
-           1. VARIÁVEIS GLOBAIS (DESIGN SYSTEM)
-           ========================================================================== */
+        /* variaveis e paleta de cores do site */
         :root {
             --color-bg-base: #050505;
             --color-bg-surface: #111111;
@@ -22,7 +20,7 @@
             --color-primary-glow: rgba(107, 33, 168, 0.4);
             --color-accent: #10B981;
             --color-danger: #EF4444;
-            --color-discord: #5865F2; /* Cor oficial do Discord */
+            --color-discord: #5865F2;
             --color-text-main: #F3F4F6;
             --color-text-muted: #9CA3AF;
             --color-border: #27272A;
@@ -32,16 +30,14 @@
             --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             --transition-fast: all 0.3s ease;
             
-            /* Cores dos Elos */
+            /* cores dos elos de cliente */
             --elo-bronze: #CD7F32;
             --elo-prata: #C0C0C0;
             --elo-esmeralda: #50C878;
             --elo-diamante: #B9F2FF;
         }
 
-        /* ==========================================================================
-           2. BASE & BOTÕES
-           ========================================================================== */
+        /* reset padrao e body */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html.smooth-scroll { scroll-behavior: smooth; }
         body { background-color: var(--color-bg-base); color: var(--color-text-main); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
@@ -49,6 +45,7 @@
         .container { max-width: var(--container-max); margin: 0 auto; padding: 0 2rem; }
         .text-primary { color: var(--color-primary); }
 
+        /* base e botoes */
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: none; position: relative; overflow: hidden; background: transparent; color: var(--color-text-main); transition: var(--transition-fast); text-decoration: none; }
         .btn-primary { background: var(--color-text-main); color: var(--color-bg-base); border-radius: 2px; }
         .btn-primary::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--color-primary); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
@@ -59,7 +56,7 @@
         .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .btn-danger:hover { background: var(--color-danger); color: #fff; }
 
-        /* Botão do Discord Específico */
+        /* estilizacao focada pro botao do discord */
         .btn-discord { background: var(--color-discord); color: #fff; border-radius: 2px; gap: 10px; }
         .btn-discord::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
         .btn-discord:hover::after { transform: scaleY(1); }
@@ -67,9 +64,7 @@
         .btn-discord img { height: 20px; filter: brightness(0) invert(1); position: relative; z-index: 2; }
         .btn-discord span { position: relative; z-index: 2; }
 
-        /* ==========================================================================
-           3. NAVBAR & HERO
-           ========================================================================== */
+        /* navbar e hero section */
         header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.5rem 0; background: var(--color-bg-glass); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: var(--transition-smooth); }
         header.scrolled { padding: 1rem 0; background: rgba(5, 5, 5, 0.95); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
@@ -81,6 +76,7 @@
         .nav-links a:hover { color: var(--color-text-main); }
         .nav-links a:hover::before { width: 100%; }
 
+        /* banner principal com efeito parallax */
         .hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
         .hero-bg-grid { position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; z-index: 1; transform: translateZ(0); }
         .hero-glow { position: absolute; top: 20%; left: 10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 60%); filter: blur(80px); z-index: 2; opacity: 0.5; animation: pulse-glow 8s infinite alternate; }
@@ -101,24 +97,26 @@
         .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
         .hero-visual-box { width: 100%; height: 80%; background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px); transform: rotateY(-15deg) rotateX(5deg); transition: transform 0.5s ease-out; box-shadow: -20px 20px 50px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; }
 
-        /* ==========================================================================
-           4. SEÇÕES & CATÁLOGO
-           ========================================================================== */
+        /* sessoes padrao do site e espacamentos */
         section { padding: 6rem 0; position: relative; z-index: 20; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-title { font-family: var(--font-display); font-size: 4rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
         .section-subtitle { color: var(--color-text-muted); font-size: 1.1rem; }
         
+        /* faz os elementos aparecerem no scroll */
         .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* filtros do catalogo */
         .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .filter-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 0.8rem 2rem; border-radius: 50px; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast); }
         .filter-btn:hover, .filter-btn.active { background: rgba(107, 33, 168, 0.1); border-color: var(--color-primary); color: var(--color-text-main); box-shadow: 0 0 15px var(--color-primary-glow); }
 
+        /* grid de produtos */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; min-height: 200px; }
         .empty-state { grid-column: 1 / -1; text-align: center; color: var(--color-text-muted); font-style: italic; padding: 3rem; border: 1px dashed var(--color-border); border-radius: 8px; }
         
+        /* cards da vitrine */
         .product-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 2rem; position: relative; overflow: hidden; transition: var(--transition-fast); display: flex; flex-direction: column; gap: 1.5rem; }
         .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(107, 33, 168, 0.15), transparent 40%); z-index: 0; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
         .product-card:hover::before { opacity: 1; }
@@ -136,9 +134,7 @@
         .btn-outline { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 0.8rem 1.5rem; text-transform: uppercase; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: var(--transition-fast); }
         .btn-outline:hover { background: var(--color-text-main); color: var(--color-bg-base); }
 
-        /* ==========================================================================
-           5. GARANTIA, DEPOIMENTOS, FAQ & FOOTER
-           ========================================================================== */
+        /* blocos de garantia e depoimentos */
         .trust-section { background: #0a0a0a; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
         .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: center; }
         .trust-item h3 { font-family: var(--font-display); font-size: 1.8rem; margin: 1rem 0; color: var(--color-text-main); }
@@ -150,6 +146,7 @@
         .testimo-text { font-style: italic; color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
         .testimo-author { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-text-main); letter-spacing: 1px; }
 
+        /* lista de perguntas frequentes */
         .faq-container { max-width: 800px; margin: 0 auto; }
         .faq-item { background: var(--color-bg-surface); margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; }
         .faq-btn { width: 100%; text-align: left; padding: 1.5rem; background: transparent; border: none; color: var(--color-text-main); font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
@@ -158,15 +155,14 @@
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
         .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
 
+        /* rodape */
         footer { background: #000; padding: 4rem 0 2rem 0; border-top: 2px solid var(--color-primary); text-align: center; }
         .footer-brand { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem; }
         .footer-brand span { color: var(--color-primary); }
         .footer-text { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
         .footer-bottom { border-top: 1px solid var(--color-border); padding-top: 2rem; color: #666; font-size: 0.8rem; }
 
-        /* ==========================================================================
-           6. MODAIS, FORMS & ÁREA DO CLIENTE
-           ========================================================================== */
+        /* configuracoes dos modais popup (admin e cliente) */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; }
         .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-primary); padding: 3rem; border-radius: 8px; width: 90%; max-width: 450px; box-shadow: 0 0 50px rgba(107, 33, 168, 0.2); position: relative; }
         .modal-title { font-family: var(--font-display); font-size: 2.5rem; text-align: center; margin-bottom: 2rem; color: var(--color-text-main); }
@@ -178,11 +174,10 @@
         
         .error-msg { color: var(--color-danger); font-size: 0.8rem; text-align: center; margin-bottom: 1rem; display: none; }
         .success-msg { color: var(--color-accent); font-size: 0.8rem; text-align: center; margin-bottom: 1rem; display: none; }
-
         .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
         .close-modal:hover { color: var(--color-danger); }
 
-        /* Área do Cliente - ELOS */
+        /* painel visual do dashboard do cliente e badges de elo */
         .client-dashboard { max-width: 600px; text-align: center; }
         .elo-badge { display: inline-block; padding: 0.5rem 1.5rem; border-radius: 50px; font-family: var(--font-display); font-size: 2rem; letter-spacing: 2px; margin: 1rem 0; color: #000; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
         
@@ -195,7 +190,7 @@
         .progress-bar { height: 100%; background: var(--color-primary); width: 0%; transition: width 0.8s ease-out; box-shadow: 0 0 10px var(--color-primary-glow); }
         .progress-text { position: absolute; top: 0; left: 0; width: 100%; text-align: center; font-size: 0.75rem; font-weight: bold; line-height: 20px; color: #fff; z-index: 2; text-shadow: 1px 1px 2px #000;}
 
-        /* Admin Layout */
+        /* layout interno do painel de admin */
         .admin-panel { max-width: 900px; max-height: 90vh; overflow-y: auto; padding: 2rem; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; margin-bottom: 2rem; }
         .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
@@ -203,10 +198,12 @@
         .product-list-info strong { display: block; color: var(--color-text-main); }
         .product-list-info span { font-size: 0.8rem; color: var(--color-text-muted); }
         
+        /* ajusta a scrollbar do admin pra ficar limpo */
         .admin-panel::-webkit-scrollbar { width: 8px; }
         .admin-panel::-webkit-scrollbar-track { background: #000; }
         .admin-panel::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
         
+        /* responsividade pra tela menor e celular */
         @media (max-width: 768px) {
             .hero-content { grid-template-columns: 1fr; text-align: center; }
             .hero-text-area { align-items: center; }
@@ -229,8 +226,8 @@
                 <a href="#depoimentos">Feedbacks</a>
                 <a href="#faq">FAQ</a>
             </nav>
-            <button class="btn btn-primary" id="header-user-btn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;" onclick="openUserArea()">
-                <span>Login</span>
+            <button class="btn btn-primary" id="header-user-btn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;" onclick="window.openUserArea()">
+                <span id="header-btn-text">Login</span>
             </button>
         </div>
     </header>
@@ -270,9 +267,11 @@
                 <p class="section-subtitle">Escolha sua categoria e domine o servidor com vantagem tática.</p>
             </div>
             <div class="filters reveal" id="dynamic-filters">
-                </div>
+                <button class="filter-btn active" data-filter="all">Carregando...</button>
+            </div>
             <div class="products-grid reveal" id="products-container">
-                </div>
+                <div class="empty-state">Conectando ao servidor da DU Store...</div>
+            </div>
         </div>
     </section>
 
@@ -285,6 +284,7 @@
             </div>
         </div>
     </section>
+
     <section id="depoimentos">
         <div class="container">
             <div class="section-header reveal"><h2 class="section-title">Voz da <span class="text-primary">Rua</span></h2><p class="section-subtitle">Quem comprou, testou e validou nossa performance.</p></div>
@@ -295,15 +295,17 @@
             </div>
         </div>
     </section>
+
     <section id="faq">
         <div class="container">
-            <div class="section-header reveal"><h2 class="section-title">Intel <span class="text-primary">(FAQ)</span></h2></div>
+            <div class="section-header reveal"><h2 class="section-title">FAQ</h2></div>
             <div class="faq-container reveal">
                 <div class="faq-item"><button class="faq-btn">Como recebo após o pagamento? <span>+</span></button><div class="faq-content"><p>Entrega 100% automatizada. O login será enviado para o email cadastrado.</p></div></div>
                 <div class="faq-item"><button class="faq-btn">O Boost tem risco de banimento? <span>+</span></button><div class="faq-content"><p>Risco virtualmente zero. Utilizamos VPNs da sua mesma cidade.</p></div></div>
             </div>
         </div>
     </section>
+
     <footer>
         <div class="container">
             <div class="footer-brand">DU<span>.</span>STORE</div>
@@ -314,20 +316,20 @@
 
     <div class="modal-overlay" id="user-login-modal">
         <div class="modal-box">
-            <button class="close-modal" onclick="closeModals()">×</button>
+            <button class="close-modal" onclick="window.closeModals()">×</button>
             <h2 class="modal-title" id="auth-title">Entrar na Base</h2>
             <div class="error-msg" id="user-error"></div>
             <div class="success-msg" id="user-success"></div>
             <div class="form-group"><label>Nome de Operador</label><input type="text" id="user-username" class="form-control" placeholder="Digite seu nick..."></div>
             <div class="form-group"><label>Senha</label><input type="password" id="user-password" class="form-control" placeholder="Sua senha..."></div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="handleAuth()" id="auth-btn"><span>Fazer Login</span></button>
-            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-muted);">Não tem conta? <a href="#" style="color: var(--color-primary);" onclick="toggleAuthMode()">Aliste-se aqui</a>.</p>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="window.handleAuth()" id="auth-btn"><span>Fazer Login</span></button>
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-muted);">Não tem conta? <a href="#" style="color: var(--color-primary);" onclick="window.toggleAuthMode()">Aliste-se aqui</a>.</p>
         </div>
     </div>
 
     <div class="modal-overlay" id="client-dashboard-modal">
         <div class="modal-box client-dashboard">
-            <button class="close-modal" onclick="closeModals()">×</button>
+            <button class="close-modal" onclick="window.closeModals()">×</button>
             <h2 class="modal-title" style="margin-bottom: 0.5rem;">Área do <span class="text-primary">Cliente</span></h2>
             <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Operador: <strong id="client-name" style="color:#fff;"></strong></p>
             <div style="background: #000; border: 1px solid var(--color-border); padding: 2rem; border-radius: 8px;">
@@ -336,23 +338,23 @@
                 <p style="font-size: 0.9rem; margin-top: 1rem;">Total Investido: <span style="color: var(--color-accent); font-weight: bold;">R$ <span id="client-spent">0.00</span></span></p>
                 <div class="progress-container">
                     <div class="progress-bar" id="client-progress"></div>
-                    <div class="progress-text" id="client-progress-text">R$ 0 / R$ 50 para Prata</div>
+                    <div class="progress-text" id="client-progress-text">Carregando dados...</div>
                 </div>
             </div>
-            <button class="btn btn-danger" style="width: 100%; margin-top: 2rem;" onclick="logoutUser()">Desconectar</button>
+            <button class="btn btn-danger" style="width: 100%; margin-top: 2rem;" onclick="window.logoutUser()">Desconectar</button>
         </div>
     </div>
 
     <div class="modal-overlay" id="admin-login-modal">
         <div class="modal-box">
-            <button class="close-modal" onclick="closeModals()">×</button>
+            <button class="close-modal" onclick="window.closeModals()">×</button>
             <h2 class="modal-title">Acesso Restrito Admin</h2>
             <div class="error-msg" id="admin-login-error">Senha Incorreta. Acesso Negado.</div>
             <div class="form-group">
                 <label>Protocolo de Segurança</label>
                 <input type="password" id="secret-password" class="form-control" placeholder="Chave de acesso...">
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="attemptAdminLogin()">
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="window.attemptAdminLogin()">
                 <span>Verificar Protocolo</span>
             </button>
         </div>
@@ -360,7 +362,7 @@
 
     <div class="modal-overlay" id="admin-panel-modal">
         <div class="modal-box admin-panel">
-            <button class="close-modal" onclick="closeModals()">×</button>
+            <button class="close-modal" onclick="window.closeModals()">×</button>
             <div class="admin-header"><h2 class="modal-title" style="margin: 0;">Centro de <span class="text-primary">Comando</span></h2></div>
             <div class="admin-grid">
                 
@@ -370,7 +372,7 @@
                         <div class="form-group">
                             <input type="text" id="new-category-name" class="form-control" placeholder="Ex: Skins">
                         </div>
-                        <button class="btn-outline" style="width: 100%;" onclick="addCategory()">Adicionar Categoria</button>
+                        <button class="btn-outline" style="width: 100%;" onclick="window.addCategory()">Adicionar Categoria</button>
                     </div>
 
                     <h3 style="margin-bottom: 1rem; color: var(--color-accent);">Novo Drop (Produto)</h3>
@@ -378,24 +380,51 @@
                     <div class="form-group"><label>URL da Imagem (Link)</label><input type="text" id="add-image" class="form-control" placeholder="Ex: https://imgur.com/foto.png"></div>
                     <div class="form-group">
                         <label>Categoria</label>
-                        <select id="add-category" class="form-control">
-                            </select>
+                        <select id="add-category" class="form-control"></select>
                     </div>
                     <div class="form-group"><label>Preço (R$)</label><input type="number" id="add-price" class="form-control" placeholder="150.00"></div>
                     <div class="form-group"><label>Descrição</label><textarea id="add-desc" class="form-control" rows="3"></textarea></div>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="addProduct()"><span>Salvar Produto</span></button>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="window.addProduct()"><span>Salvar Produto</span></button>
                 </div>
 
                 <div>
                     <h3 style="margin-bottom: 1rem; color: var(--color-primary);">Arsenal Ativo</h3>
-                    <div id="admin-products-list" style="max-height: 600px; overflow-y: auto;"></div>
+                    <div id="admin-products-list" style="max-height: 600px; overflow-y: auto;">
+                        <p style="color: var(--color-text-muted);">Carregando nuvem...</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        /* 1. VISUAL & SCROLL */
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+
+        // as suas chaves mestre da google
+        const firebaseConfig = {
+            apiKey: "AIzaSyARnKCFkE3irJWBPb5ivn7G-jfgieNlnJg",
+            authDomain: "dust-e1c8b.firebaseapp.com",
+            projectId: "dust-e1c8b",
+            storageBucket: "dust-e1c8b.firebasestorage.app",
+            messagingSenderId: "362597802569",
+            appId: "1:362597802569:web:ad0b24818947bc93585598"
+        };
+
+        // ligando os motores
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // variaveis locais pra injetar na tela
+        let products = [];
+        let categories = [];
+        let loggedInUser = null; 
+        let isRegisterMode = false;
+        let activeCategoryFilter = 'all';
+
+        // --- FUNCOES VISUAIS (SCROLL E CLIQUES) ---
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         window.addEventListener('scroll', () => {
             let s = window.scrollY; if(s < 800) { document.getElementById('parallax-bg').style.transform = `translateY(${s * 0.3}px)`; document.getElementById('parallax-title').style.transform = `translateY(${s * 0.15}px)`; }
@@ -405,72 +434,89 @@
         window.addEventListener('scroll', revealOnScroll); revealOnScroll();
         document.querySelectorAll('.faq-btn').forEach(btn => { btn.addEventListener('click', function() { this.classList.toggle('active'); let c = this.nextElementSibling; c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px"; }); });
 
-        /* 2. BANCO DE DADOS LOCAL (LocalStorage) */
-        let products = JSON.parse(localStorage.getItem('dustore_products')) || [];
-        let users = JSON.parse(localStorage.getItem('dustore_users')) || [];
-        let loggedInUser = JSON.parse(localStorage.getItem('dustore_logged_in')) || null;
-        let categories = JSON.parse(localStorage.getItem('dustore_categories')) || ['contas', 'boost', 'moedas'];
-        let isRegisterMode = false;
+        // atalho pro admin (ctrl + p)
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault(); 
+                window.closeModals();
+                document.getElementById('admin-login-modal').style.display = 'flex';
+                document.getElementById('secret-password').focus();
+            }
+        });
 
-        function saveDb() {
-            localStorage.setItem('dustore_products', JSON.stringify(products));
-            localStorage.setItem('dustore_users', JSON.stringify(users));
-            localStorage.setItem('dustore_logged_in', JSON.stringify(loggedInUser));
-            localStorage.setItem('dustore_categories', JSON.stringify(categories));
-        }
+        window.closeModals = function() {
+            document.getElementById('user-login-modal').style.display = 'none';
+            document.getElementById('client-dashboard-modal').style.display = 'none';
+            document.getElementById('admin-login-modal').style.display = 'none';
+            document.getElementById('admin-panel-modal').style.display = 'none';
+        };
 
-        /* 3. SISTEMA DE CATEGORIAS DINÂMICAS */
-        function renderCategories() {
-            const filterContainer = document.getElementById('dynamic-filters');
-            filterContainer.innerHTML = `<button class="filter-btn active" data-filter="all">Todos</button>`;
-            
-            categories.forEach(cat => {
-                const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
-                filterContainer.innerHTML += `<button class="filter-btn" data-filter="${cat}">${capitalized}</button>`;
-            });
+        // --- SISTEMA DE BANCO DE DADOS (FIREBASE FIRESTORE) ---
 
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', () => { 
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); 
-                    btn.classList.add('active'); 
-                    renderStoreFront(); 
+        // puxa os produtos direto da nuvem
+        async function loadProducts() {
+            products = [];
+            try {
+                const querySnapshot = await getDocs(collection(db, "products"));
+                querySnapshot.forEach((doc) => {
+                    products.push({ id: doc.id, ...doc.data() });
                 });
-            });
-
-            const selectContainer = document.getElementById('add-category');
-            selectContainer.innerHTML = '';
-            categories.forEach(cat => {
-                const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
-                selectContainer.innerHTML += `<option value="${cat}">${capitalized}</option>`;
-            });
-        }
-
-        function addCategory() {
-            const newCat = document.getElementById('new-category-name').value.trim().toLowerCase();
-            if(!newCat) { alert("Digite o nome da categoria."); return; }
-            if(categories.includes(newCat)) { alert("Categoria já existe!"); return; }
-            
-            categories.push(newCat);
-            saveDb();
-            renderCategories();
-            document.getElementById('new-category-name').value = '';
-            alert("Categoria adicionada com sucesso!");
-        }
-
-        /* 4. SISTEMA DE USUÁRIO E ELOS */
-        function checkLoginState() {
-            const headerBtn = document.getElementById('header-user-btn');
-            if(loggedInUser) {
-                headerBtn.innerHTML = `<span>Painel: ${loggedInUser.username}</span>`;
-                headerBtn.classList.add('btn-primary');
-                loggedInUser = users.find(u => u.username === loggedInUser.username);
-            } else {
-                headerBtn.innerHTML = `<span>Login</span>`;
+                renderStoreFront();
+                renderAdminList();
+            } catch (error) {
+                console.error("Erro ao puxar produtos da nuvem:", error);
+                document.getElementById('products-container').innerHTML = '<div class="empty-state">Erro de conexão com a base de dados central.</div>';
             }
         }
 
-        function openUserArea() {
-            closeModals();
+        // puxa as categorias da nuvem (ou cria a padrao se for site zero)
+        async function loadCategories() {
+            const docRef = doc(db, "config", "storeData");
+            try {
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists() && docSnap.data().categories) {
+                    categories = docSnap.data().categories;
+                } else {
+                    categories = ['contas', 'boost', 'moedas'];
+                    await setDoc(docRef, { categories: categories });
+                }
+                renderCategories();
+            } catch (error) {
+                console.error("Erro nas categorias:", error);
+                categories = ['contas', 'boost', 'moedas'];
+                renderCategories();
+            }
+        }
+
+        // --- SISTEMA DE AUTENTICACAO (FIREBASE AUTH) ---
+        
+        // o vigia que checa se o cara ta logado o tempo todo
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                // extrai o nick tirando o '@dustore.com' que a gente forcou
+                const username = user.email.split('@')[0];
+                
+                // puxa os dados do elo do firebase db
+                const docRef = doc(db, "users", user.uid);
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    loggedInUser = { uid: user.uid, username: username, totalSpent: docSnap.data().totalSpent };
+                } else {
+                    loggedInUser = { uid: user.uid, username: username, totalSpent: 0 };
+                    await setDoc(docRef, { username: username, totalSpent: 0 });
+                }
+                
+                document.getElementById('header-btn-text').innerText = `Painel: ${username}`;
+                document.getElementById('header-user-btn').classList.add('btn-primary');
+            } else {
+                loggedInUser = null;
+                document.getElementById('header-btn-text').innerText = `Login`;
+            }
+        });
+
+        window.openUserArea = function() {
+            window.closeModals();
             if(loggedInUser) {
                 updateClientDashboard();
                 document.getElementById('client-dashboard-modal').style.display = 'flex';
@@ -479,7 +525,7 @@
             }
         }
 
-        function toggleAuthMode() {
+        window.toggleAuthMode = function() {
             isRegisterMode = !isRegisterMode;
             document.getElementById('auth-title').innerText = isRegisterMode ? "Alistar-se" : "Entrar na Base";
             document.getElementById('auth-btn').innerHTML = isRegisterMode ? "<span>Criar Conta</span>" : "<span>Fazer Login</span>";
@@ -487,42 +533,58 @@
             document.getElementById('user-success').style.display = 'none';
         }
 
-        function handleAuth() {
-            const user = document.getElementById('user-username').value.trim();
+        // a magica do login/registro rolando aqui
+        window.handleAuth = async function() {
+            const userText = document.getElementById('user-username').value.trim().toLowerCase();
             const pass = document.getElementById('user-password').value.trim();
             const err = document.getElementById('user-error');
             const suc = document.getElementById('user-success');
             err.style.display = 'none'; suc.style.display = 'none';
 
-            if(!user || !pass) { err.innerText = "Preencha todos os campos."; err.style.display = 'block'; return; }
+            if(!userText || !pass) { err.innerText = "Preencha todos os campos."; err.style.display = 'block'; return; }
+            if(pass.length < 6) { err.innerText = "A senha precisa de 6 dígitos."; err.style.display = 'block'; return; }
 
-            if(isRegisterMode) {
-                if(users.find(u => u.username === user)) { err.innerText = "Usuário já existe."; err.style.display = 'block'; return; }
-                users.push({ username: user, password: pass, totalSpent: 0 });
-                saveDb();
-                suc.innerText = "Conta criada! Faça o login."; suc.style.display = 'block';
-                toggleAuthMode();
-                document.getElementById('user-password').value = '';
-            } else {
-                const found = users.find(u => u.username === user && u.password === pass);
-                if(found) {
-                    loggedInUser = found;
-                    saveDb();
-                    checkLoginState();
-                    closeModals();
-                    openUserArea();
+            // o nosso truque de e-mail invisivel pro firebase deixar passar
+            const fakeEmail = `${userText}@dustore.com`;
+
+            try {
+                const authBtn = document.getElementById('auth-btn');
+                authBtn.innerHTML = "<span>Processando...</span>";
+                authBtn.disabled = true;
+
+                if(isRegisterMode) {
+                    const userCredential = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
+                    // grava o doc dele zerado pro sistema de elos funcionar depois
+                    await setDoc(doc(db, "users", userCredential.user.uid), {
+                        username: userText,
+                        totalSpent: 0
+                    });
+                    suc.innerText = "Sua conta foi criada! Carregando..."; suc.style.display = 'block';
+                    setTimeout(() => { window.openUserArea(); }, 1500);
                 } else {
-                    err.innerText = "Credenciais incorretas."; err.style.display = 'block';
+                    await signInWithEmailAndPassword(auth, fakeEmail, pass);
+                    window.openUserArea();
                 }
+                document.getElementById('user-password').value = '';
+            } catch (error) {
+                console.error(error);
+                if (error.code === 'auth/email-already-in-use') err.innerText = "Esse operador já existe.";
+                else if (error.code === 'auth/wrong-password' || error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential') err.innerText = "Credenciais inválidas.";
+                else err.innerText = "Erro no servidor da loja.";
+                err.style.display = 'block';
+            } finally {
+                const authBtn = document.getElementById('auth-btn');
+                authBtn.innerHTML = isRegisterMode ? "<span>Criar Conta</span>" : "<span>Fazer Login</span>";
+                authBtn.disabled = false;
             }
         }
 
-        function logoutUser() {
-            loggedInUser = null;
-            saveDb();
-            checkLoginState();
-            closeModals();
+        window.logoutUser = async function() {
+            await signOut(auth);
+            window.closeModals();
         }
+
+        // --- SISTEMA DE ELOS E DASHBOARD DO CLIENTE ---
 
         function getEloData(spent) {
             if (spent < 50) return { name: 'BRONZE', class: 'elo-bronze', next: 50, nextName: 'Prata' };
@@ -561,28 +623,72 @@
             }
         }
 
-        function buyItem(price) {
-            if(!loggedInUser) { alert("Você precisa estar logado para comprar e subir de Elo!"); openUserArea(); return; }
+        // agora essa funcao manda o dinheiro pro servidor e nao salva local
+        window.buyItem = async function(price) {
+            if(!loggedInUser) { alert("Você precisa estar logado para comprar e subir de Elo!"); window.openUserArea(); return; }
+            
             const p = parseFloat(price);
-            loggedInUser.totalSpent += p;
-            const userIndex = users.findIndex(u => u.username === loggedInUser.username);
-            users[userIndex].totalSpent = loggedInUser.totalSpent;
-            saveDb();
-            alert(`Compra de R$ ${p.toFixed(2)} aprovada! Seus gastos foram atualizados.`);
-            openUserArea();
+            const newTotal = loggedInUser.totalSpent + p;
+            
+            try {
+                // atualiza direto no firestore
+                const userRef = doc(db, "users", loggedInUser.uid);
+                await updateDoc(userRef, { totalSpent: newTotal });
+                
+                // atualiza visualmente no site dele rapidao
+                loggedInUser.totalSpent = newTotal;
+                
+                alert(`Compra de R$ ${p.toFixed(2)} simulada com sucesso! O sistema registrou seu gasto.`);
+                window.openUserArea();
+            } catch (error) {
+                console.error("Erro ao comprar:", error);
+                alert("Erro ao registrar a compra no servidor.");
+            }
         }
 
-        /* 5. RENDERIZAÇÃO DA LOJA (COM IMAGENS) */
+        // --- RENDERIZACAO NA TELA ---
+        
+        function renderCategories() {
+            const filterContainer = document.getElementById('dynamic-filters');
+            filterContainer.innerHTML = `<button class="filter-btn active" onclick="window.setFilter('all')">Todos</button>`;
+            
+            categories.forEach(cat => {
+                const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
+                filterContainer.innerHTML += `<button class="filter-btn" onclick="window.setFilter('${cat}')">${capitalized}</button>`;
+            });
+
+            // att o painel do adm tbm
+            const selectContainer = document.getElementById('add-category');
+            selectContainer.innerHTML = '';
+            categories.forEach(cat => {
+                const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
+                selectContainer.innerHTML += `<option value="${cat}">${capitalized}</option>`;
+            });
+        }
+
+        window.setFilter = function(filterName) {
+            activeCategoryFilter = filterName;
+            
+            // traca de botoes visuais
+            const btns = document.querySelectorAll('.filter-btn');
+            btns.forEach(b => {
+                if (b.innerText.toLowerCase() === filterName || (filterName === 'all' && b.innerText === 'Todos')) {
+                    b.classList.add('active');
+                } else {
+                    b.classList.remove('active');
+                }
+            });
+            renderStoreFront();
+        }
+
         function renderStoreFront() {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
-            const activeFilterBtn = document.querySelector('.filter-btn.active');
-            const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
             
-            const filteredProducts = products.filter(p => activeFilter === 'all' || p.category === activeFilter);
+            const filteredProducts = products.filter(p => activeCategoryFilter === 'all' || p.category === activeCategoryFilter);
 
             if (filteredProducts.length === 0) {
-                container.innerHTML = '<div class="empty-state">Nenhum drop disponível nesta categoria.</div>';
+                container.innerHTML = '<div class="empty-state">O mercado negro está vazio nesta categoria.</div>';
                 return;
             }
 
@@ -598,14 +704,15 @@
                         <p class="card-desc">${p.description}</p>
                         <div class="card-footer">
                             <div class="price">R$ ${parseFloat(p.price).toFixed(2).replace('.', ',')}</div>
-                            <button class="btn-outline" onclick="buyItem(${p.price})">Comprar</button>
+                            <button class="btn-outline" onclick="window.buyItem(${p.price})">Comprar</button>
                         </div>
                     </div>
                 </div>`;
                 container.insertAdjacentHTML('beforeend', card);
             });
             
-            document.getElementById('products-container').addEventListener('mousemove', e => {
+            // recria o hover de neon nos cards criados
+            container.addEventListener('mousemove', e => {
                 for(const card of document.querySelectorAll('.product-card')) {
                     const rect = card.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
                     card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
@@ -613,24 +720,9 @@
             });
         }
 
-        /* 6. ADMIN AREA (Ctrl+P) */
-        window.addEventListener('keydown', (e) => {
-            if (e.ctrlKey && e.key === 'p') {
-                e.preventDefault(); 
-                closeModals();
-                document.getElementById('admin-login-modal').style.display = 'flex';
-                document.getElementById('secret-password').focus();
-            }
-        });
-
-        function closeModals() {
-            document.getElementById('user-login-modal').style.display = 'none';
-            document.getElementById('client-dashboard-modal').style.display = 'none';
-            document.getElementById('admin-login-modal').style.display = 'none';
-            document.getElementById('admin-panel-modal').style.display = 'none';
-        }
-
-        function attemptAdminLogin() {
+        // --- PAINEL DO ADMINISTRADOR (CLOUD) ---
+        
+        window.attemptAdminLogin = function() {
             const password = document.getElementById('secret-password').value;
             const errorMsg = document.getElementById('admin-login-error');
             
@@ -639,7 +731,8 @@
                 document.getElementById('admin-login-modal').style.display = 'none';
                 document.getElementById('admin-panel-modal').style.display = 'flex';
                 document.getElementById('secret-password').value = '';
-                renderAdminList(); 
+                // puxa dnv pra garantir q o dono ta vendo tudo atualizado
+                loadProducts(); 
             } else {
                 errorMsg.style.display = 'block';
                 document.getElementById('secret-password').value = ''; 
@@ -649,7 +742,7 @@
         function renderAdminList() {
             const list = document.getElementById('admin-products-list');
             list.innerHTML = '';
-            if (products.length === 0) { list.innerHTML = '<p style="color:var(--color-text-muted);">Nenhum produto cadastrado.</p>'; return; }
+            if (products.length === 0) { list.innerHTML = '<p style="color:var(--color-text-muted);">Nenhum produto online.</p>'; return; }
             
             products.forEach(p => {
                 const thumb = p.imageUrl ? `<img src="${p.imageUrl}" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; margin-right: 15px;">` : '';
@@ -663,37 +756,90 @@
                             <span>Cat: ${p.category} | R$ ${p.price}</span>
                         </div>
                     </div>
-                    <button class="btn-danger" onclick="deleteProduct(${p.id})">Del</button>
+                    <button class="btn-danger" onclick="window.deleteProduct('${p.id}')">Del</button>
                 </div>`);
             });
         }
 
-        function addProduct() {
+        window.addCategory = async function() {
+            const newCat = document.getElementById('new-category-name').value.trim().toLowerCase();
+            if(!newCat) { alert("Digite o nome da categoria."); return; }
+            if(categories.includes(newCat)) { alert("Categoria já existe!"); return; }
+            
+            categories.push(newCat);
+            
+            try {
+                const docRef = doc(db, "config", "storeData");
+                await setDoc(docRef, { categories: categories }, { merge: true });
+                renderCategories();
+                document.getElementById('new-category-name').value = '';
+                alert("Categoria enviada pro servidor com sucesso!");
+            } catch (error) {
+                console.error("Erro salvando categoria:", error);
+                alert("Erro ao gravar no banco. Verifique as permissões de Teste do Firestore.");
+            }
+        }
+
+        window.addProduct = async function() {
+            const btn = document.querySelector('#admin-panel-modal .btn-primary');
+            const originalText = btn.innerHTML;
+            
             const t = document.getElementById('add-title').value;
             const img = document.getElementById('add-image').value;
             const c = document.getElementById('add-category').value;
             const p = document.getElementById('add-price').value;
             const d = document.getElementById('add-desc').value;
 
-            if (!t || !p || !d) { alert("Preencha título, preço e descrição!"); return; }
+            if (!t || !p || !d) { alert("Faltou titulo, preço ou descricao do drop!"); return; }
             
-            products.push({ id: Date.now(), title: t, imageUrl: img, category: c, price: p, description: d });
-            saveDb(); 
-            renderAdminList(); 
-            renderStoreFront();
-            
-            document.getElementById('add-title').value = ''; 
-            document.getElementById('add-image').value = ''; 
-            document.getElementById('add-price').value = ''; 
-            document.getElementById('add-desc').value = '';
+            try {
+                btn.innerHTML = "<span>Enviando Nuvem...</span>";
+                btn.disabled = true;
+                
+                // dispara pra criar no google cloud
+                const docRef = await addDoc(collection(db, "products"), {
+                    title: t,
+                    imageUrl: img,
+                    category: c,
+                    price: Number(p),
+                    description: d,
+                    timestamp: new Date()
+                });
+
+                // limpa a tela do patrao
+                document.getElementById('add-title').value = ''; 
+                document.getElementById('add-image').value = ''; 
+                document.getElementById('add-price').value = ''; 
+                document.getElementById('add-desc').value = '';
+                
+                // recarrega tudo e mostra o produto novo
+                await loadProducts();
+                
+            } catch (error) {
+                console.error("Erro adicionando produto:", error);
+                alert("Erro grave de banco de dados. Veja o console F12.");
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }
         }
 
-        function deleteProduct(id) { products = products.filter(p => p.id !== id); saveDb(); renderAdminList(); renderStoreFront(); }
+        window.deleteProduct = async function(id) { 
+            try {
+                // detona do firebase
+                await deleteDoc(doc(db, "products", id));
+                // recarrega a visao
+                await loadProducts();
+            } catch (error) {
+                console.error("Erro apagando:", error);
+                alert("Falha ao remover o produto.");
+            }
+        }
 
-        // INICIALIZAÇÃO DO SITE
-        renderCategories(); 
-        checkLoginState();  
-        renderStoreFront(); 
+        // CHUTES INICIAIS DA APLICACAO (O START)
+        loadCategories(); 
+        loadProducts();   
+        
     </script>
 </body>
 </html>
