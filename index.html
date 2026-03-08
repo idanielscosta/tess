@@ -8,31 +8,35 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <style>
+        /* paleta de cores e variaveis mestre */
         :root {
             --color-bg-base: #050505;
             --color-bg-surface: #111111;
             --color-bg-glass: rgba(17, 17, 17, 0.8);
-            --color-primary: #6B21A8;
-            --color-primary-glow: rgba(107, 33, 168, 0.4);
+            --color-primary: #8a2be2; /* Roxo mais vibrante */
+            --color-primary-dark: #5a189a;
+            --color-primary-glow: rgba(138, 43, 226, 0.5);
             --color-accent: #10B981;
             --color-warning: #F59E0B;
             --color-danger: #EF4444;
             --color-discord: #5865F2;
             --color-text-main: #F3F4F6;
             --color-text-muted: #9CA3AF;
-            --color-border: #27272A;
+            --color-border: #2a2a2a; /* Borda levemente mais clara para dar destaque */
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'Inter', sans-serif;
             
+            /* cores dos ranks */
             --elo-bronze: #CD7F32;
             --elo-prata: #C0C0C0;
             --elo-esmeralda: #50C878;
             --elo-diamante: #B9F2FF;
         }
 
+        /* reset geral */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html.smooth-scroll { scroll-behavior: smooth; }
         body { background-color: var(--color-bg-base); color: var(--color-text-main); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
@@ -41,36 +45,38 @@
         .text-primary { color: var(--color-primary); }
         .text-accent { color: var(--color-accent); }
         
+        /* formatacao scrollbar estilo hacker */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
+        /* controle de views do spa (single page app) */
         .app-view { display: none; opacity: 0; transition: opacity 0.4s ease; min-height: 100vh; }
         .app-view.active { display: block; opacity: 1; }
 
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: none; position: relative; overflow: hidden; background: transparent; color: var(--color-text-main); transition: 0.3s; text-decoration: none; border-radius: 4px;}
-        .btn-primary { background: var(--color-text-main); color: var(--color-bg-base); }
-        .btn-primary::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--color-primary); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
-        .btn-primary:hover::after { transform: scaleY(1); }
-        .btn-primary span { position: relative; z-index: 2; transition: 0.3s; }
-        .btn-primary:hover span { color: #fff; }
+        /* ==========================================================================
+           BOTOES MODERNIZADOS (DESIGN PREMIUM)
+           ========================================================================== */
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2rem; font-family: var(--font-body); font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border: none; border-radius: 8px; position: relative; overflow: hidden; transition: all 0.3s ease; text-decoration: none; }
         
-        .btn-outline { border: 1px solid var(--color-primary); color: var(--color-text-main); background: rgba(107, 33, 168, 0.1); }
-        .btn-outline:hover { background: var(--color-primary); color: #fff; box-shadow: 0 0 15px var(--color-primary-glow); }
-
-        .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
-        .btn-danger:hover { background: var(--color-danger); color: #fff; }
-        .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
-        .btn-success:hover { background: var(--color-accent); color: #000; }
-        .btn-edit { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--color-warning); color: var(--color-warning); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
-        .btn-edit:hover { background: var(--color-warning); color: #000; }
+        .btn-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)); color: #fff; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6); background: linear-gradient(135deg, #9d4edd, var(--color-primary)); }
         
-        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; padding: 1rem 2.5rem; width: max-content; }
-        .btn-discord:hover { background: #4752C4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
-        .btn-discord img { height: 20px; filter: brightness(0) invert(1); position: relative; z-index: 2;}
-        .btn-discord span { position: relative; z-index: 2; }
+        .btn-outline { background: rgba(138, 43, 226, 0.05); color: #fff; border: 1px solid var(--color-primary); box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.1); }
+        .btn-outline:hover { background: rgba(138, 43, 226, 0.15); border-color: #9d4edd; box-shadow: inset 0 0 15px rgba(138, 43, 226, 0.3), 0 4px 15px rgba(138, 43, 226, 0.2); transform: translateY(-2px); }
 
+        .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; border-radius: 6px; }
+        .btn-danger:hover { background: var(--color-danger); color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        
+        .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; border-radius: 6px; }
+        .btn-success:hover { background: var(--color-accent); color: #000; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+        
+        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; width: max-content; padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3); border: 1px solid rgba(255,255,255,0.1);}
+        .btn-discord:hover { background: #4752C4; box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6); transform: translateY(-2px); }
+        .btn-discord img { height: 20px; filter: brightness(0) invert(1); }
+
+        /* header navbar */
         header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.5rem 0; background: var(--color-bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; }
         header.scrolled { padding: 1rem 0; background: rgba(5, 5, 5, 0.95); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
@@ -80,6 +86,7 @@
         .nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; position: relative; }
         .nav-links a:hover { color: var(--color-text-main); }
 
+        /* sessoes da vitrine (home) */
         .hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
         .hero-bg-grid { position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; z-index: 1; }
         .hero-glow { position: absolute; top: 20%; left: 10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 60%); filter: blur(80px); z-index: 2; opacity: 0.5; animation: pulse 8s infinite alternate; }
@@ -89,24 +96,29 @@
         .hero-title { font-family: var(--font-display); font-size: 6.5rem; line-height: 0.9; text-transform: uppercase; margin-bottom: 1.5rem; }
         .hero-title .outline { color: transparent; -webkit-text-stroke: 2px var(--color-text-main); display: block; }
         .hero-desc { font-size: 1.2rem; color: var(--color-text-muted); max-width: 90%; margin-bottom: 2rem; }
+        
         .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem;}
+        
         .hero-stats { display: flex; gap: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
         .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
         .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
 
-        .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
-        
-        /* 3D Box E Efeito Magico na Logo */
+        .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; z-index: 10; }
         .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.1s; transform-style: preserve-3d; }
+        
+        /* LOGO APRIMORADA - BLEND MODE + MASK */
         .logo-mask {
             max-width: 100%; 
-            max-height: 400px; 
+            max-height: 450px; 
             object-fit: contain; 
-            filter: drop-shadow(0 0 40px var(--color-primary-glow));
-            /* O mix-blend-mode é o que faz a magica de remover o fundo preto perfeitamente */
+            filter: drop-shadow(0 0 50px var(--color-primary-glow));
+            /* O screen ignora o preto. Deixa a fumaça perfeita no fundo escuro. */
             mix-blend-mode: screen; 
-            transform: translateZ(50px);
-            opacity: 0.95;
+            transform: translateZ(60px);
+            opacity: 1;
+            /* Mascara radial agressiva para garantir que qualquer borda reta da imagem suma */
+            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+            mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
         }
 
         section { padding: 6rem 0; position: relative; z-index: 20; }
@@ -117,46 +129,50 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* vitrine de cards e filtros */
         .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .filter-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 0.8rem 2rem; border-radius: 50px; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
-        .filter-btn:hover, .filter-btn.active { background: rgba(107, 33, 168, 0.1); border-color: var(--color-primary); color: var(--color-text-main); }
+        .filter-btn:hover, .filter-btn.active { background: rgba(138, 43, 226, 0.1); border-color: var(--color-primary); color: #fff; box-shadow: 0 0 15px rgba(138, 43, 226, 0.2); }
+        
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
         
-        .product-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 8px; padding: 1.5rem; position: relative; transition: 0.3s; display: flex; flex-direction: column; cursor: pointer; }
-        .product-card:hover { transform: translateY(-5px); border-color: rgba(107, 33, 168, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; border: 1px solid var(--color-border); }
-        .badge { background: rgba(107, 33, 168, 0.2); color: #c084fc; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; }
+        /* CARDS REFINADOS */
+        .product-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; cursor: pointer; overflow: hidden;}
+        .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(138, 43, 226, 0.1), transparent 40%); z-index: 0; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .product-card:hover::before { opacity: 1; }
+        .product-card:hover { transform: translateY(-5px); border-color: var(--color-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(138,43,226,0.1); }
+        
+        .card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1.2rem; border: 1px solid var(--color-border); z-index: 1; position: relative;}
+        .badge { background: rgba(138, 43, 226, 0.15); color: #c084fc; border: 1px solid rgba(138,43,226,0.3); padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;}
         .view-count { font-size: 0.7rem; color: var(--color-danger); display: flex; align-items: center; gap: 5px; font-weight: bold; }
-        .card-title { font-family: var(--font-display); font-size: 2rem; margin: 0.5rem 0; line-height: 1.1;}
-        .card-desc { color: var(--color-text-muted); font-size: 0.9rem; flex-grow: 1; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .price { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-accent); }
+        .card-title { font-family: var(--font-display); font-size: 2.2rem; margin: 0.8rem 0 0.5rem 0; line-height: 1;}
+        .card-desc { color: var(--color-text-muted); font-size: 0.9rem; flex-grow: 1; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5;}
+        .price { font-family: var(--font-display); font-size: 2rem; color: #fff; }
+        .price span { font-family: var(--font-body); font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: block; margin-bottom: -5px;}
         
-        /* Botoes dos cards aprimorados */
-        .btn-add-cart { padding: 0.8rem 1.5rem; border-radius: 4px; z-index: 5; font-family: var(--font-body); font-weight: 800; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s;}
-        .btn-add-cart.solid { background: var(--color-primary); color: #fff; border: 1px solid var(--color-primary); box-shadow: 0 0 10px rgba(107, 33, 168, 0.3);}
-        .btn-add-cart.solid:hover { background: #822cd6; box-shadow: 0 0 15px rgba(107, 33, 168, 0.6); }
-        
-        .btn-add-cart.outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-        .btn-add-cart.outline:hover { background: rgba(107, 33, 168, 0.2); border-color: var(--color-primary); box-shadow: inset 0 0 10px rgba(107, 33, 168, 0.3); }
+        .btn-add-cart { padding: 0.8rem 1.5rem; border-radius: 6px; z-index: 5; font-size: 0.85rem;}
 
-        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 900; box-shadow: 0 0 20px rgba(107,33,168,0.5); transition: 0.3s; }
-        .cart-float:hover { transform: scale(1.1); }
-        .cart-float .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--color-danger); font-size: 0.8rem; font-weight: bold; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        /* Carrinho Lateral e Float */
+        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 900; box-shadow: 0 5px 20px rgba(138, 43, 226, 0.5); transition: 0.3s; border: 2px solid rgba(255,255,255,0.1);}
+        .cart-float:hover { transform: scale(1.1) rotate(5deg); background: var(--color-primary-dark); }
+        .cart-float .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--color-danger); font-size: 0.8rem; font-weight: bold; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--color-bg-base);}
         
-        .cart-sidebar { position: fixed; top: 0; right: -400px; width: 400px; height: 100vh; background: var(--color-bg-surface); border-left: 1px solid var(--color-border); z-index: 1000; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
+        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 450px; height: 100vh; background: var(--color-bg-surface); border-left: 1px solid var(--color-border); z-index: 1000; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
         .cart-sidebar.open { right: 0; }
-        .cart-header { padding: 2rem; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+        .cart-header { padding: 2rem; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3);}
         .cart-header h2 { font-family: var(--font-display); font-size: 2.5rem; margin: 0; }
         .close-cart { background: none; border: none; color: var(--color-text-muted); font-size: 2rem; cursor: pointer; transition: 0.3s; }
         .close-cart:hover { color: var(--color-danger); }
         .cart-items { flex-grow: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
-        .cart-item { display: flex; align-items: center; gap: 1rem; background: #000; padding: 1rem; border-radius: 8px; border: 1px solid var(--color-border); }
-        .cart-item img { width: 60px; height: 60px; border-radius: 4px; object-fit: cover; }
+        .cart-item { display: flex; align-items: center; gap: 1rem; background: #000; padding: 1rem; border-radius: 8px; border: 1px solid var(--color-border); transition: 0.3s;}
+        .cart-item:hover { border-color: #333; }
+        .cart-item img { width: 70px; height: 70px; border-radius: 6px; object-fit: cover; }
         .cart-item-info { flex-grow: 1; }
-        .cart-item-title { font-weight: 600; font-size: 1rem; }
-        .cart-item-price { color: var(--color-accent); font-weight: bold; }
-        .cart-footer { padding: 2rem; border-top: 1px solid var(--color-border); background: #000; }
+        .cart-item-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; color: #fff;}
+        .cart-item-price { color: var(--color-accent); font-weight: bold; font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1px;}
+        .cart-footer { padding: 2rem; border-top: 1px solid var(--color-border); background: rgba(0,0,0,0.5); }
 
+        /* Toasts Customizados */
         #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
         .toast { min-width: 250px; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; animation: slideInLeft 0.3s forwards, fadeOut 0.5s forwards 3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-left: 5px solid transparent; background: var(--color-bg-surface); }
         .toast-success { border-color: var(--color-accent); }
@@ -165,6 +181,7 @@
         @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { to { opacity: 0; display: none; } }
 
+        /* Sessoes Institucionais */
         .trust-section { background: #0a0a0a; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
         .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: center; }
         .trust-item h3 { font-family: var(--font-display); font-size: 1.8rem; margin: 1rem 0; color: var(--color-text-main); }
@@ -172,32 +189,55 @@
         .trust-icon { font-size: 3rem; color: var(--color-primary); }
 
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .testimo-card { background: var(--color-bg-surface); padding: 2.5rem; border-radius: 8px; border-left: 4px solid var(--color-primary); position: relative; }
+        .testimo-card { background: var(--color-bg-surface); padding: 2.5rem; border-radius: 12px; border-left: 4px solid var(--color-primary); position: relative; border-top: 1px solid var(--color-border); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);}
         .testimo-text { font-style: italic; color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
         .testimo-author { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-text-main); letter-spacing: 1px; }
 
         .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-item { background: var(--color-bg-surface); margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; }
+        .faq-item { background: var(--color-bg-surface); margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
         .faq-btn { width: 100%; text-align: left; padding: 1.5rem; background: transparent; border: none; color: var(--color-text-main); font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .faq-btn span { font-size: 1.5rem; color: var(--color-primary); transition: transform 0.3s; }
         .faq-btn.active span { transform: rotate(45deg); }
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
         .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
         
+        /* ==========================================================================
+           PÁGINA DO PRODUTO (NOVA VIEW DEDICADA)
+           ========================================================================== */
+        .product-page-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
+        .pp-image-container { position: sticky; top: 100px; border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); background: #000; display: flex; align-items: center; justify-content: center; height: max-content;}
+        .pp-image-container img { width: 100%; height: auto; object-fit: cover; }
+        .pp-details { padding-bottom: 4rem; }
+        .pp-title { font-family: var(--font-display); font-size: 4rem; line-height: 1; margin: 1rem 0; }
+        .pp-desc { font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 2rem; line-height: 1.7; }
+        
+        /* Cards de Variação (Subcategorias) */
+        .variations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+        .variation-tile { display: block; cursor: pointer; }
+        .variation-tile input { display: none; }
+        .variation-tile .tile-content { border: 2px solid var(--color-border); background: var(--color-bg-surface); padding: 1.5rem; border-radius: 8px; transition: 0.3s; text-align: center; }
+        .variation-tile:hover .tile-content { border-color: #555; background: #1a1a1a; }
+        .variation-tile input:checked + .tile-content { border-color: var(--color-primary); background: rgba(138, 43, 226, 0.1); box-shadow: 0 0 15px rgba(138, 43, 226, 0.2); }
+        .tile-name { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 1.1rem; color: #fff;}
+        .tile-price { display: block; font-family: var(--font-display); font-size: 1.5rem; color: var(--color-accent); }
+
+        .pp-action-bar { background: var(--color-bg-surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; position: sticky; bottom: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); z-index: 10;}
+        .pp-final-price { font-family: var(--font-display); font-size: 3rem; color: #fff; line-height: 1;}
+
         /* Area do Cliente - Gamificada */
         .gamer-profile-header { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); overflow: hidden; margin-bottom: 2rem; position: relative; }
         .gamer-banner { height: 160px; background: linear-gradient(45deg, #1b0033, #050505); width: 100%; position: relative; }
         .gamer-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--color-bg-surface), transparent); }
         
         .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -60px; position: relative; z-index: 2; }
-        .gamer-avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0; position: relative;}
+        .gamer-avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0;}
         .gamer-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
         .gamer-details { flex-grow: 1; padding-bottom: 5px; }
         .gamer-tag { color: var(--color-primary); font-family: var(--font-body); font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;}
         .gamer-name-box { font-family: var(--font-display); font-size: 3rem; margin: 0; line-height: 1; display:flex; align-items:center; gap: 15px;}
         
-        .btn-edit-profile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; font-size: 1rem; color: var(--color-text-main); }
+        .btn-edit-profile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; font-size: 1rem; color: var(--color-text-main); }
         .btn-edit-profile:hover { background: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px var(--color-primary-glow); }
         
         .gamer-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
@@ -225,56 +265,54 @@
         .dash-sidebar { background: var(--color-bg-surface); border-right: 1px solid var(--color-border); padding: 2rem; display: flex; flex-direction: column; }
         .dash-content { padding: 3rem; overflow-y: auto; height: 100vh;}
         .dash-menu { margin-top: 3rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .dash-menu button { background: transparent; border: none; color: var(--color-text-muted); text-align: left; padding: 1rem; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: 4px; transition: 0.3s; }
+        .dash-menu button { background: transparent; border: none; color: var(--color-text-muted); text-align: left; padding: 1rem; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.3s; }
         .dash-menu button:hover, .dash-menu button.active { background: rgba(255,255,255,0.05); color: var(--color-text-main); border-left: 3px solid var(--color-primary); }
         
         .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-        .stat-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--color-primary); }
+        .stat-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--color-primary); }
         .stat-card h4 { color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .stat-card .value { font-family: var(--font-display); font-size: 2.5rem; color: #fff; }
 
-        .data-table { width: 100%; border-collapse: collapse; background: var(--color-bg-surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border); }
-        .data-table th, .data-table td { padding: 1.2rem 1rem; text-align: left; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; }
+        .data-table { width: 100%; border-collapse: collapse; background: var(--color-bg-surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); }
+        .data-table th, .data-table td { padding: 1.2rem 1rem; text-align: left; border-bottom: 1px solid var(--color-border); font-size: 0.95rem; }
         .data-table th { background: rgba(0,0,0,0.5); font-family: var(--font-display); letter-spacing: 1px; color: var(--color-text-muted); font-size: 1.1rem; }
         .data-table tr:hover { background: rgba(255,255,255,0.02); }
         
-        .status-badge { padding: 0.3rem 0.8rem; border-radius: 50px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
-        .status-pendente { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); border: 1px solid var(--color-warning); }
-        .status-concluido { background: rgba(16, 185, 129, 0.1); color: var(--color-accent); border: 1px solid var(--color-accent); }
+        .status-badge { padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;}
+        .status-pendente { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); border: 1px solid rgba(245,158,11,0.3); }
+        .status-concluido { background: rgba(16, 185, 129, 0.1); color: var(--color-accent); border: 1px solid rgba(16,185,129,0.3); }
 
+        /* modais popup com design limpo */
         .form-group { margin-bottom: 1.5rem; text-align: left; }
-        .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.5rem; letter-spacing: 1px; }
-        .form-control { width: 100%; background: #000; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 1rem; border-radius: 4px; font-family: var(--font-body); outline: none; transition: 0.3s; }
-        .form-control:focus { border-color: var(--color-primary); }
+        .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.5rem; letter-spacing: 1px; font-weight: 600;}
+        .form-control { width: 100%; background: #000; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 1rem; border-radius: 8px; font-family: var(--font-body); outline: none; transition: 0.3s; }
+        .form-control:focus { border-color: var(--color-primary); box-shadow: 0 0 10px rgba(138,43,226,0.1); }
         
-        /* modais pop up */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
-        .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 8px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto;}
-        .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
-        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
+        .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 12px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
+        .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; transition: 0.3s; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;}
+        .close-modal:hover { background: rgba(255,255,255,0.05); color: #fff; }
+        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; background: rgba(239,68,68,0.1); padding: 10px; border-radius: 8px;}
         
+        /* Botoes Sociais Limpos (Arrumou o bloco branco) */
         .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
-        .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.9rem;}
+        .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 8px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.95rem;}
         .btn-social img { width: 20px; height: 20px; margin-right: 10px; }
-        .btn-google { background-color: #ffffff; color: #000000; }
+        .btn-google { background-color: #fff; color: #000; }
         .btn-google:hover { background-color: #e0e0e0; }
-        .btn-apple { background-color: #000000; color: #ffffff; border: 1px solid var(--color-border); }
-        .btn-apple:hover { background-color: #1a1a1a; }
+        .btn-apple { background-color: #000; color: #fff; border: 1px solid var(--color-border); }
+        .btn-apple:hover { background-color: #1a1a1a; border-color: #333;}
+        
         .divider { display: flex; align-items: center; text-align: center; margin: 1.5rem 0; color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; font-family: var(--font-display); letter-spacing: 1px;}
         .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--color-border); }
         .divider:not(:empty)::before { margin-right: 1em; }
         .divider:not(:empty)::after { margin-left: 1em; }
 
-        footer { background: #000; padding: 4rem 0 2rem 0; border-top: 2px solid var(--color-primary); text-align: center; }
+        footer { background: #000; padding: 4rem 0 2rem 0; border-top: 1px solid var(--color-border); text-align: center; }
 
-        .cat-manager-item { display: flex; justify-content: space-between; background: #000; padding: 0.8rem; border: 1px solid var(--color-border); margin-bottom: 5px; border-radius: 4px; align-items: center;}
-        .cat-manager-item button { background: none; border: none; color: var(--color-primary); cursor: pointer; font-size: 1.2rem; }
+        .cat-manager-item { display: flex; justify-content: space-between; background: #000; padding: 0.8rem 1.2rem; border: 1px solid var(--color-border); margin-bottom: 8px; border-radius: 8px; align-items: center;}
+        .cat-manager-item button { background: none; border: none; color: var(--color-text-muted); cursor: pointer; font-size: 1.2rem; padding: 5px; transition: 0.3s;}
         .cat-manager-item button:hover { color: #fff; }
-        
-        /* Modal do Produto (Design Novo) */
-        .radio-option { display: block; padding: 12px 15px; border: 1px solid var(--color-border); margin-bottom: 8px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-align: left; font-size: 0.95rem;}
-        .radio-option:hover { border-color: var(--color-primary); background: rgba(107, 33, 168, 0.1); }
-        .radio-option input { margin-right: 10px; accent-color: var(--color-primary); transform: scale(1.2);}
 
         @media (max-width: 768px) {
             .dash-layout { grid-template-columns: 1fr; }
@@ -283,10 +321,12 @@
             .hero-visual { display: none; }
             .nav-links { display: none; }
             .gamer-grid { grid-template-columns: 1fr; }
-            .gamer-info-row { flex-direction: column; align-items: center; text-align: center; }
-            .gamer-avatar-wrapper { margin-right: 0; margin-bottom: 1rem; }
+            .gamer-info-row { flex-direction: column; align-items: center; text-align: center; margin-top: -80px;}
+            .gamer-avatar-wrapper { margin-right: 0; margin-bottom: 1rem; width: 100px; height: 100px;}
             .cart-sidebar { width: 100%; right: -100%; }
             .hero-buttons { justify-content: center; }
+            .product-page-layout { grid-template-columns: 1fr; gap: 2rem;}
+            .pp-image-container { position: relative; top: 0; }
         }
     </style>
 </head>
@@ -324,7 +364,7 @@
                     <a href="#garantia">Garantia</a>
                     <a href="#faq">FAQ</a>
                 </nav>
-                <button class="btn btn-primary" id="header-user-btn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;" onclick="window.openLoginOrDash()">
+                <button class="btn btn-outline" id="header-user-btn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem; border-radius: 50px;" onclick="window.openLoginOrDash()">
                     <span id="header-btn-text">Login / Cadastro</span>
                 </button>
             </div>
@@ -353,7 +393,7 @@
                     </div>
                 </div>
                 <div class="hero-visual" id="hero-visual-container">
-                    <div class="hero-visual-box" id="hero-3d-box" style="background: transparent; border: none; box-shadow: none;">
+                    <div class="hero-visual-box" id="hero-3d-box">
                         <img src="https://i.postimg.cc/L5jQKs8M/Design-sem-nome-(2).png" alt="DU Store Logo" class="logo-mask">
                     </div>
                 </div>
@@ -414,18 +454,57 @@
         </footer>
     </div>
 
+    <div id="app-product" class="app-view">
+        <header style="position: relative; background: transparent; border: none; padding-top: 2rem;">
+            <div class="container nav-wrapper">
+                <a onclick="window.navegar('app-home')" class="brand">DU<span>.</span>STORE</a>
+                <button class="btn btn-outline" style="padding: 0.6rem 1.5rem; font-size: 0.8rem; border-radius: 50px;" onclick="window.navegar('app-home')">
+                    <span>← Voltar à Loja</span>
+                </button>
+            </div>
+        </header>
+
+        <div class="container product-page-layout">
+            <div class="pp-image-container">
+                <img id="page-p-img" src="" alt="Produto">
+            </div>
+            
+            <div class="pp-details">
+                <span id="page-p-cat" class="badge"></span>
+                <h1 id="page-p-title" class="pp-title">--</h1>
+                <p id="page-p-desc" class="pp-desc">--</p>
+                
+                <div id="page-p-subcats-container" style="display: none;">
+                    <h4 style="margin-bottom: 15px; color: var(--color-text-main); font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 1px;">Escolha a sua versão:</h4>
+                    <div class="variations-grid" id="page-p-subcats-list">
+                        </div>
+                </div>
+
+                <div class="pp-action-bar">
+                    <div>
+                        <div style="font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; font-weight: bold; letter-spacing: 1px; margin-bottom: -5px;">Investimento</div>
+                        <div id="page-p-price" class="pp-final-price">R$ 0,00</div>
+                    </div>
+                    <button class="btn btn-primary" id="page-p-add-btn" style="padding: 1.2rem 3rem; font-size: 1.1rem; border-radius: 8px;">
+                        <span>Adicionar ao Carrinho</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="app-checkout" class="app-view">
         <div class="container" style="padding-top: 5rem; max-width: 600px;">
-            <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; margin-bottom: 2rem; font-size:1.1rem;">← Cancelar e Voltar à Loja</button>
+            <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; margin-bottom: 2rem; font-size:1.1rem; font-weight: bold; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--color-text-muted)'">← Cancelar e Voltar</button>
             
-            <div style="background: var(--color-bg-surface); padding: 3rem; border-radius: 8px; border: 1px solid var(--color-border); text-align: center;">
-                <h2 style="font-family: var(--font-display); font-size: 3rem; color: var(--color-accent); margin-bottom: 1rem;">Pagamento via PIX</h2>
-                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Referência <strong id="checkout-pedido-id" style="color:#fff;">#---</strong></p>
+            <div style="background: var(--color-bg-surface); padding: 3rem; border-radius: 12px; border: 1px solid var(--color-border); text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+                <h2 style="font-family: var(--font-display); font-size: 3rem; color: var(--color-accent); margin-bottom: 0.5rem; line-height: 1;">Pagamento via PIX</h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 2rem; font-size: 0.9rem;">Pedido <strong id="checkout-pedido-id" style="color:#fff;">#---</strong></p>
                 
-                <div style="font-size: 3rem; font-weight: bold; margin-bottom: 2rem; font-family: var(--font-display);" id="valor-pedido">R$ 0,00</div>
+                <div style="font-size: 3.5rem; font-weight: bold; margin-bottom: 2rem; font-family: var(--font-display); line-height: 1;" id="valor-pedido">R$ 0,00</div>
                 
-                <div style="background: #fff; padding: 15px; display: inline-block; border-radius: 8px; margin-bottom: 2rem;">
-                    <img id="qr-code-img" alt="QR Code Pix" src="" style="width: 250px; height: 250px;">
+                <div style="background: #fff; padding: 15px; display: inline-block; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);">
+                    <img id="qr-code-img" alt="QR Code Pix" src="" style="width: 250px; height: 250px; display: block;">
                 </div>
 
                 <div class="form-group" style="text-align: left;">
@@ -438,26 +517,26 @@
 
                 <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord" style="margin-top: 1rem; width: 100%; display:flex; justify-content:center;">
                     <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt="Discord"> 
-                    <span>Enviar Comprovante no Discord</span>
+                    <span>Enviar Comprovante no Ticket</span>
                 </a>
             </div>
         </div>
     </div>
 
     <div id="app-cliente" class="app-view">
-        <div class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+        <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; font-size: 1rem; font-weight: bold;">← Voltar à Loja</button>
             </div>
 
             <div class="gamer-profile-header">
                 <div class="gamer-banner">
-                    <button onclick="window.logoutUser()" class="btn-danger" style="position: absolute; top: 15px; right: 15px; z-index: 10; border-radius: 4px; border: none; padding: 0.5rem 1rem;">Sair da Conta</button>
+                    <button onclick="window.logoutUser()" class="btn-danger" style="position: absolute; top: 15px; right: 15px; z-index: 10;">Sair da Conta</button>
                 </div>
                 
                 <div class="gamer-info-row">
                     <div class="gamer-avatar-wrapper">
-                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="Avatar">
+                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="Avatar" onerror="this.src='https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg'">
                     </div>
                     
                     <div class="gamer-details">
@@ -528,7 +607,7 @@
                     <div class="stat-card" style="border-color: var(--color-danger);">
                         <h4 style="color: var(--color-danger);">Conexões Ativas no Site</h4>
                         <div class="value" style="display:flex; align-items:center; gap:10px;">
-                            <span style="width:15px; height:15px; background:var(--color-danger); border-radius:50%; display:block; animation: blink 1.5s infinite;"></span>
+                            <span style="width:15px; height:15px; background:var(--color-danger); border-radius:50%; display:block; animation: pulse 1.5s infinite alternate;"></span>
                             <span id="live-count">0</span>
                         </div>
                     </div>
@@ -547,28 +626,31 @@
                 <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Gerenciar <span class="text-primary">Estoque</span></h2>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
                     <div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 2rem;">
+                        <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 12px; margin-bottom: 2rem;">
                             <h3 style="margin-bottom: 1rem; color: #fff; font-size: 1.2rem;">Ordenar Categorias</h3>
                             <div id="admin-cat-list" style="margin-bottom: 1rem;"></div>
                             <div style="display:flex; gap: 10px;">
                                 <input type="text" id="new-category-name" class="form-control" placeholder="Nova Categoria..." style="margin-bottom:0;">
-                                <button class="btn-outline" onclick="window.addCategory()">Adicionar</button>
+                                <button class="btn-outline" style="border-radius: 8px;" onclick="window.addCategory()">Adicionar</button>
                             </div>
                         </div>
 
-                        <div style="background: #000; padding: 2rem; border-radius: 8px; border: 1px solid var(--color-border);">
-                            <h3 id="admin-form-title" style="color: var(--color-accent); margin-bottom: 1rem;">Novo Drop (Produto)</h3>
+                        <div style="background: #000; padding: 2rem; border-radius: 12px; border: 1px solid var(--color-border);">
+                            <h3 id="admin-form-title" style="color: var(--color-accent); margin-bottom: 1.5rem; font-family: var(--font-display); font-size: 2rem;">Novo Drop (Produto)</h3>
                             <div class="form-group"><input type="text" id="add-title" class="form-control" placeholder="Nome do Produto"></div>
                             <div class="form-group"><input type="text" id="add-image" class="form-control" placeholder="Link da Imagem HTTPs"></div>
                             <div class="form-group"><select id="add-category" class="form-control"></select></div>
                             <div class="form-group"><input type="number" id="add-price" class="form-control" placeholder="Preço Base (ex: 50.00)"></div>
                             <div class="form-group"><textarea id="add-desc" class="form-control" rows="2" placeholder="Descrição"></textarea></div>
                             
-                            <div class="form-group" style="background: rgba(255,255,255,0.02); padding:1rem; border:1px solid #333; border-radius:4px;">
-                                <label><input type="checkbox" id="add-has-subcats" onchange="window.toggleSubcatsUI()" style="margin-right: 10px;"> Ativar Variações (Ex: Elos, Ranks)</label>
+                            <div class="form-group" style="background: rgba(255,255,255,0.02); padding:1.5rem; border:1px solid #333; border-radius:8px;">
+                                <label style="display:flex; align-items:center; gap: 10px; cursor: pointer;">
+                                    <input type="checkbox" id="add-has-subcats" onchange="window.toggleSubcatsUI()" style="width: 18px; height: 18px; accent-color: var(--color-primary);"> 
+                                    Ativar Variações (Ex: Elos, Ranks)
+                                </label>
                                 <div id="subcats-ui" style="display:none; margin-top: 15px;">
                                     <div id="subcats-list"></div>
-                                    <div style="display:flex; gap:10px; margin-top: 10px;">
+                                    <div style="display:flex; gap:10px; margin-top: 15px;">
                                         <input type="text" id="sub-name" class="form-control" placeholder="Ex: Ouro">
                                         <input type="number" id="sub-price" class="form-control" placeholder="Preço">
                                         <button class="btn-success" onclick="window.addSubcat()">Add</button>
@@ -583,8 +665,8 @@
                         </div>
                     </div>
                     <div>
-                        <h3 style="margin-bottom: 1rem;">Produtos Online</h3>
-                        <div id="admin-products-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 800px; overflow-y:auto;"></div>
+                        <h3 style="margin-bottom: 1rem; font-family: var(--font-display); font-size: 2rem;">Produtos Online</h3>
+                        <div id="admin-products-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 800px; overflow-y:auto; padding-right: 10px;"></div>
                     </div>
                 </div>
             </div>
@@ -596,26 +678,6 @@
                     <thead><tr><th>Avatar</th><th>Nick do Operador</th><th>Total XP (R$)</th><th>Patente</th></tr></thead>
                     <tbody id="table-admin-users"></tbody>
                 </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="product-modal">
-        <div class="modal-box" style="text-align: left; padding: 0; overflow: hidden; max-width: 600px; border-color: var(--color-primary); box-shadow: 0 0 30px rgba(107,33,168,0.2);">
-            <button class="close-modal" onclick="document.getElementById('product-modal').style.display='none'" style="color: #fff; text-shadow: 0 0 5px #000; z-index: 10; background: rgba(0,0,0,0.5); width:40px; height:40px; border-radius:50%; top: 15px; right: 15px; display:flex; align-items:center; justify-content:center;">×</button>
-            <img id="pm-img" src="" style="width: 100%; height: 250px; object-fit: cover; border-bottom: 2px solid var(--color-primary);">
-            
-            <div style="padding: 2rem; background: linear-gradient(to top, var(--color-bg-surface) 80%, rgba(17,17,17,0.5));">
-                <span id="pm-cat" class="badge" style="background:var(--color-primary); color:#fff;"></span>
-                <h2 id="pm-title" style="font-family: var(--font-display); font-size: 2.8rem; margin: 0.5rem 0 1rem 0; line-height: 1;">--</h2>
-                <p id="pm-desc" style="color: var(--color-text-muted); margin-bottom: 2rem; line-height:1.6;">--</p>
-                
-                <div id="pm-subcats-container" style="display: none; margin-bottom: 2rem; padding: 1rem; background: #000; border-radius: 8px; border: 1px solid #333;"></div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #333; padding-top: 1.5rem;">
-                    <div id="pm-price" class="price" style="font-size:2.2rem;">--</div>
-                    <button class="btn btn-primary" id="pm-add-btn" style="padding: 1rem 2rem;"><span>Adicionar ao Carrinho</span></button>
-                </div>
             </div>
         </div>
     </div>
@@ -632,15 +694,16 @@
     </div>
 
     <div class="modal-overlay" id="user-login-modal">
-        <div class="modal-box">
+        <div class="modal-box" style="padding: 3rem 2rem;">
             <button class="close-modal" onclick="document.getElementById('user-login-modal').style.display='none'">×</button>
             <h2 class="modal-title" id="auth-title">Entrar na Base</h2>
+            <div class="error-msg" id="user-error"></div>
             
             <div class="form-group"><label>Operador (Nick)</label><input type="text" id="user-username" class="form-control" placeholder="Seu nick..."></div>
             <div class="form-group"><label>Senha</label><input type="password" id="user-password" class="form-control" placeholder="*******"></div>
             <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="window.handleAuth()"><span>Confirmar Acesso</span></button>
             
-            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-muted);">Não tem conta? <a href="#" style="color: var(--color-primary);" onclick="window.toggleAuthMode()">Criar conta</a>.</p>
+            <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: var(--color-text-muted);">Não tem conta? <a href="#" style="color: var(--color-primary); font-weight: bold;" onclick="window.toggleAuthMode()">Criar conta</a>.</p>
 
             <div class="divider">ou entre com</div>
             <div class="social-btns">
@@ -659,7 +722,7 @@
             <button class="close-modal" onclick="document.getElementById('admin-login-modal').style.display='none'">×</button>
             <h2 class="modal-title" style="color: var(--color-danger);">Acesso Restrito</h2>
             <div class="form-group"><input type="password" id="secret-password" class="form-control" placeholder="Chave Mestra..."></div>
-            <button class="btn btn-danger" style="width: 100%; padding:1rem;" onclick="window.attemptAdminLogin()">ACESSAR SISTEMA</button>
+            <button class="btn btn-danger" style="width: 100%; padding: 1rem; font-size: 1.1rem;" onclick="window.attemptAdminLogin()">ACESSAR SISTEMA</button>
         </div>
     </div>
 
@@ -668,7 +731,6 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyARnKCFkE3irJWBPb5ivn7G-jfgieNlnJg",
             authDomain: "dust-e1c8b.firebaseapp.com",
@@ -682,7 +744,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // PIX CONFIG
         const MINHA_CHAVE_PIX = "13163607683"; 
         const MEU_NOME_PIX = "Ulisses Faria Lourenco"; 
         const MINHA_CIDADE_PIX = "Lavras";
@@ -698,8 +759,8 @@
         
         let editProductId = null; 
         let tempSubcats = []; 
+        let currentProductView = null;
 
-        // UI Helpers
         window.showToast = function(msg, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -710,18 +771,16 @@
             setTimeout(() => toast.remove(), 3500);
         }
 
-        // Navegação e Efeitos
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         
-        // Parallax e 3D Tilt da Logo Restaurados e Protegidos
         const visualContainer = document.getElementById('hero-visual-container');
         const box3D = document.getElementById('hero-3d-box');
         if(visualContainer && box3D) {
             visualContainer.addEventListener('mousemove', (e) => {
                 const r = visualContainer.getBoundingClientRect();
                 const x = e.clientX - r.left, y = e.clientY - r.top;
-                const rotateX = ((y - r.height/2)/r.height) * -25; // Sensibilidade do tilt
-                const rotateY = ((x - r.width/2)/r.width) * 25;
+                const rotateX = ((y - r.height/2)/r.height) * -20;
+                const rotateY = ((x - r.width/2)/r.width) * 20;
                 box3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
             visualContainer.addEventListener('mouseleave', () => box3D.style.transform = `rotateX(0deg) rotateY(0deg)`);
@@ -733,7 +792,6 @@
             reveals.forEach(r => { if (r.getBoundingClientRect().top < wh - 50) r.classList.add('active'); }); 
         };
         window.addEventListener('scroll', revealOnScroll);
-        
         document.querySelectorAll('.faq-btn').forEach(btn => { btn.addEventListener('click', function() { this.classList.toggle('active'); let c = this.nextElementSibling; c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px"; }); });
 
         window.navegar = function(pageId) {
@@ -746,7 +804,7 @@
             if(pageId === 'app-admin') loadAdminData();
         };
 
-        // ADMIN HOTKEY: SHIFT + P, SENHA 5566
+        // Shift + P (Senha 5566)
         window.addEventListener('keydown', (e) => {
             if (e.shiftKey && e.key.toLowerCase() === 'p') {
                 document.getElementById('admin-login-modal').style.display = 'flex';
@@ -754,12 +812,12 @@
             }
         });
 
-        // BD PRODUTOS E VITRINE
+        // BD PRODUTOS
         async function loadStoreData() {
             try {
                 const cDoc = await getDoc(doc(db, "config", "storeData"));
                 if(cDoc.exists() && cDoc.data().categories) categories = cDoc.data().categories;
-            } catch (e) {}
+            } catch (e) { }
             renderCategoriesUI();
 
             try {
@@ -812,19 +870,18 @@
             if(list.length === 0) { cont.innerHTML = '<div class="empty-state">Sem estoque nesta categoria.</div>'; return; }
 
             list.forEach(p => {
-                const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
+                const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img" onerror="this.src='https://via.placeholder.com/600x250?text=DU+Store'">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
                 
-                // MUDANCA DE BOTOES: Adicionar x Opcoes
                 let priceLabel = `R$ ${p.price.toFixed(2)}`;
                 let actionBtn = `<button class="btn-add-cart solid" onclick="event.stopPropagation(); window.addToCart('${p.id}')">Adicionar</button>`;
                 
                 if(p.subcategories && p.subcategories.length > 0) {
-                    priceLabel = `<span style="font-size:1rem; color:var(--color-text-muted);">A partir de</span><br>R$ ${p.price.toFixed(2)}`;
-                    actionBtn = `<button class="btn-add-cart outline" onclick="event.stopPropagation(); window.openProduct('${p.id}')">Opções</button>`;
+                    priceLabel = `<span>A partir de</span>R$ ${p.price.toFixed(2)}`;
+                    actionBtn = `<button class="btn-add-cart outline" onclick="event.stopPropagation(); window.openProductPage('${p.id}')">Opções</button>`;
                 }
 
                 cont.insertAdjacentHTML('beforeend', `
-                    <div class="product-card" onclick="window.openProduct('${p.id}')">
+                    <div class="product-card" onclick="window.openProductPage('${p.id}')">
                         ${img}
                         <div class="card-content">
                             <div class="badge-container">
@@ -854,43 +911,63 @@
             });
         }, 40000);
 
-        // ABRE O PRODUTO E MOSTRA AS SUBCATEGORIAS SE TIVER
-        window.openProduct = function(id) {
+        // NOVA TELA DE PRODUTO DEDICADA
+        window.openProductPage = function(id) {
             const p = products.find(x => x.id === id);
             if(!p) return;
-            document.getElementById('pm-img').src = p.imageUrl || 'https://via.placeholder.com/600x250?text=DU+Store';
-            document.getElementById('pm-cat').innerText = p.category;
-            document.getElementById('pm-title').innerText = p.title;
-            document.getElementById('pm-desc').innerText = p.description;
+            currentProductView = p;
             
-            const subCont = document.getElementById('pm-subcats-container');
+            document.getElementById('page-p-img').src = p.imageUrl || 'https://via.placeholder.com/600x600?text=DU+Store';
+            document.getElementById('page-p-img').onerror = function() { this.src='https://via.placeholder.com/600x600?text=Sem+Foto' };
+            document.getElementById('page-p-cat').innerText = p.category;
+            document.getElementById('page-p-title').innerText = p.title;
+            document.getElementById('page-p-desc').innerText = p.description;
+            
+            const subCont = document.getElementById('page-p-subcats-container');
+            const subList = document.getElementById('page-p-subcats-list');
+            
             if(p.subcategories && p.subcategories.length > 0) {
-                let html = '<h4 style="margin-bottom:10px; color:var(--color-primary); text-transform:uppercase;">Escolha a Variação:</h4>';
+                let html = '';
                 p.subcategories.forEach((sub, i) => {
                     html += `
-                    <label class="radio-option">
-                        <input type="radio" name="pm_subcat" value="${i}" ${i===0?'checked':''}>
-                        <strong>${sub.name}</strong> <span style="float:right; color:var(--color-accent); font-weight:bold;">R$ ${parseFloat(sub.price).toFixed(2)}</span>
+                    <label class="variation-tile">
+                        <input type="radio" name="page_subcat" value="${i}" ${i===0?'checked':''} onchange="window.updatePagePrice()">
+                        <div class="tile-content">
+                            <span class="tile-name">${sub.name}</span>
+                            <span class="tile-price">R$ ${parseFloat(sub.price).toFixed(2)}</span>
+                        </div>
                     </label>`;
                 });
-                subCont.innerHTML = html;
+                subList.innerHTML = html;
                 subCont.style.display = 'block';
-                document.getElementById('pm-price').innerText = `A partir de R$ ${p.price.toFixed(2)}`;
             } else {
                 subCont.style.display = 'none';
-                document.getElementById('pm-price').innerText = `R$ ${p.price.toFixed(2)}`;
             }
 
-            document.getElementById('pm-add-btn').onclick = () => { window.addToCartFromModal(p); };
-            document.getElementById('product-modal').style.display = 'flex';
+            window.updatePagePrice();
+            
+            document.getElementById('page-p-add-btn').onclick = () => { window.addToCartFromPage(); };
+            window.navegar('app-product');
         }
 
-        window.addToCartFromModal = function(p) {
+        window.updatePagePrice = function() {
+            if(!currentProductView) return;
+            let price = parseFloat(currentProductView.price);
+            if(currentProductView.subcategories && currentProductView.subcategories.length > 0) {
+                const selected = document.querySelector('input[name="page_subcat"]:checked');
+                if(selected) price = parseFloat(currentProductView.subcategories[selected.value].price);
+            }
+            document.getElementById('page-p-price').innerText = `R$ ${price.toFixed(2)}`;
+        }
+
+        window.addToCartFromPage = function() {
+            if(!currentProductView) return;
+            let p = currentProductView;
             let finalPrice = parseFloat(p.price);
             let finalTitle = p.title;
 
             if(p.subcategories && p.subcategories.length > 0) {
-                const selected = document.querySelector('input[name="pm_subcat"]:checked');
+                const selected = document.querySelector('input[name="page_subcat"]:checked');
                 if(!selected) return window.showToast('Escolha uma variação!', 'error');
                 const sub = p.subcategories[selected.value];
                 finalPrice = parseFloat(sub.price);
@@ -900,12 +977,10 @@
             cart.push({ id: p.id, title: finalTitle, price: finalPrice, imageUrl: p.imageUrl });
             updateCartUI();
             window.showToast(`${finalTitle} adicionado!`, 'success');
-            document.getElementById('product-modal').style.display = 'none';
+            window.toggleCart(); // Abre o carrinho pra ele ver
         }
 
-        // CARRINHO E PIX
-        window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
-        
+        // ADD RAPIDO PELA VITRINE
         window.addToCart = function(id) {
             const p = products.find(x => x.id === id);
             cart.push({ id: p.id, title: p.title, price: parseFloat(p.price), imageUrl: p.imageUrl });
@@ -913,6 +988,8 @@
             window.showToast(`Adicionado ao arsenal!`, 'success');
         }
 
+        window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
+        
         function updateCartUI() {
             const count = document.getElementById('cart-count');
             count.innerText = cart.length;
@@ -929,7 +1006,7 @@
             let total = 0;
             cart.forEach((p, i) => {
                 total += p.price;
-                const img = p.imageUrl ? `<img src="${p.imageUrl}">` : `<div style="width:60px;height:60px;background:#333;border-radius:4px;"></div>`;
+                const img = p.imageUrl ? `<img src="${p.imageUrl}" onerror="this.src='https://via.placeholder.com/60'">` : `<div style="width:60px;height:60px;background:#333;border-radius:4px;"></div>`;
                 cont.insertAdjacentHTML('beforeend', `
                     <div class="cart-item">
                         ${img}
@@ -946,6 +1023,7 @@
 
         window.removeFromCart = function(index) { cart.splice(index, 1); updateCartUI(); }
 
+        // PIX BLINDADO
         window.checkoutCart = async function() {
             if(cart.length === 0) return window.showToast('Seu carrinho está vazio!', 'error');
             if(!loggedInUser) {
@@ -996,7 +1074,7 @@
                 
                 cart = []; updateCartUI(); window.toggleCart();
                 window.navegar('app-checkout');
-            } catch (e) { console.error(e); window.showToast('Erro de comunicação com o banco.', 'error'); }
+            } catch (e) { console.error(e); window.showToast('Erro ao criar Pix.', 'error'); }
         }
 
         // AUTH
@@ -1012,7 +1090,7 @@
                         await setDoc(doc(db, "users", user.uid), loggedInUser);
                     }
                     document.getElementById('header-btn-text').innerText = `Meu Perfil`;
-                } catch(e){}
+                } catch(e){ console.error(e); }
             } else {
                 loggedInUser = null;
                 document.getElementById('header-btn-text').innerText = `Login / Cadastro`;
@@ -1052,11 +1130,11 @@
 
         window.loginWithGoogle = async function() {
             try { await signInWithPopup(auth, new GoogleAuthProvider()); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado Google!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Erro API Google.", "error"); }
+            catch (e) { window.showToast("Libere dominios no Firebase Auth.", "error"); }
         }
         window.loginWithApple = async function() {
             try { await signInWithPopup(auth, new OAuthProvider('apple.com')); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado Apple!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Erro API Apple.", "error"); }
+            catch (e) { window.showToast("Libere dominios no Firebase Auth.", "error"); }
         }
 
         window.logoutUser = function() { auth.signOut(); window.navegar('app-home'); window.showToast("Desconectado.", "info"); }
@@ -1129,7 +1207,7 @@
             } catch (e) { window.showToast("Erro ao salvar perfil.", "error"); }
         }
 
-        // ADMIN AREA E SUBCATEGORIAS RESTAURADAS
+        // ADMIN AREA E SUBCATEGORIAS
         const mySessionId = Math.random().toString(36).substring(2);
         async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
         setInterval(pingPresence, 30000); pingPresence(); 
@@ -1142,6 +1220,7 @@
         }
 
         window.attemptAdminLogin = function() {
+            // Senha Admin
             if(document.getElementById('secret-password').value === "5566") {
                 document.getElementById('admin-login-modal').style.display = 'none';
                 window.navegar('app-admin');
@@ -1220,23 +1299,27 @@
             const temp = categories[index]; categories[index] = categories[index + dir]; categories[index + dir] = temp;
             try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Ordem salva!', 'success'); } catch(e) {}
         }
+
         window.addCategory = async function() {
             const val = document.getElementById('new-category-name').value.trim().toLowerCase();
             if(!val) return;
-            if(categories.includes(val)) return;
+            if(categories.includes(val)) return window.showToast("Essa já existe", "error");
             categories.push(val);
             try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Categoria Criada!', 'success'); document.getElementById('new-category-name').value = ''; } catch(e) {}
         }
+
         window.aprovarPedidoAdmin = async function(pedidoId) {
             try {
                 const pDoc = await getDoc(doc(db, "pedidos", pedidoId));
                 if(!pDoc.exists() || pDoc.data().status === 'concluido') return;
                 const pData = pDoc.data();
                 await updateDoc(doc(db, "pedidos", pedidoId), { status: 'concluido' });
+                
                 const uDoc = await getDoc(doc(db, "users", pData.userId));
                 const userSpent = uDoc.exists() ? (uDoc.data().totalSpent || 0) : 0;
                 await setDoc(doc(db, "users", pData.userId), { totalSpent: userSpent + (pData.price || 0) }, {merge: true});
-                loadAdminData(); window.showToast("Confirmado!", "success");
+                
+                loadAdminData(); window.showToast("Pagamento Confirmado!", "success");
             } catch(e) { window.showToast("Erro no servidor.", "error"); }
         }
 
@@ -1261,9 +1344,9 @@
             const div = document.getElementById('subcats-list');
             div.innerHTML = '';
             tempSubcats.forEach((s, i) => {
-                div.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:space-between; background:#111; padding:5px 10px; margin-bottom:5px; border-radius:4px; border:1px solid #333;">
+                div.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:space-between; background:#111; padding:10px 15px; margin-bottom:5px; border-radius:4px; border:1px solid #333;">
                     <span>${s.name} - R$ ${s.price}</span>
-                    <button style="background:none; border:none; color:var(--color-danger); cursor:pointer;" onclick="window.delSubcat(${i})">x</button>
+                    <button style="background:none; border:none; color:var(--color-danger); cursor:pointer; font-weight:bold;" onclick="window.delSubcat(${i})">X</button>
                 </div>`);
             });
         }
@@ -1291,6 +1374,9 @@
             document.getElementById('btn-save-prod').innerHTML = '<span>Atualizar</span>';
             document.getElementById('btn-cancel-prod').style.display = 'block';
             document.getElementById('admin-form-title').innerText = 'Editando Produto';
+            
+            // Rola pro form
+            document.getElementById('admin-form-title').scrollIntoView({behavior: 'smooth'});
         }
 
         window.cancelEditP = function() {
