@@ -44,7 +44,7 @@
         .text-primary { color: var(--color-primary); }
         .text-accent { color: var(--color-accent); }
         
-        /* formatacao scrollbar estilo hacker */
+        /* formatacao scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
@@ -70,10 +70,11 @@
         .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; }
         .btn-success:hover { background: var(--color-accent); color: #000; }
         
-        /* botao discord */
-        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; padding: 1rem 2.5rem; }
+        /* botao discord ajustado */
+        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; width: auto; }
         .btn-discord:hover { background: #4752C4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
-        .btn-discord img { height: 20px; filter: brightness(0) invert(1); }
+        .btn-discord img { height: 20px; filter: brightness(0) invert(1); position: relative; z-index: 2;}
+        .btn-discord span { position: relative; z-index: 2; }
 
         /* header navbar */
         header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.5rem 0; background: var(--color-bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; }
@@ -96,10 +97,26 @@
         .hero-title .outline { color: transparent; -webkit-text-stroke: 2px var(--color-text-main); display: block; }
         .hero-desc { font-size: 1.2rem; color: var(--color-text-muted); max-width: 90%; margin-bottom: 2rem; }
         
-        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem;}
+        
+        /* ESTATISTICAS HERO RESTAURADAS */
+        .hero-stats { display: flex; gap: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+        .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
+        .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
 
         .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
-        .hero-visual-box { width: 100%; height: 80%; background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px); transform: rotateY(-15deg) rotateX(5deg); transition: transform 0.5s ease-out; box-shadow: -20px 20px 50px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.5s ease-out;}
+        
+        /* MAGICA DO FADE NA LOGO (OPACIDADE NAS BORDAS) */
+        .logo-mask {
+            max-width: 90%; 
+            max-height: 90%; 
+            object-fit: contain; 
+            filter: drop-shadow(0 0 30px var(--color-primary-glow));
+            /* O radial gradiente faz as bordas ficarem transparentes suavemente */
+            -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 60%, transparent 100%);
+            mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 60%, transparent 100%);
+        }
 
         /* sessoes padrao do site e espacamentos */
         section { padding: 6rem 0; position: relative; z-index: 20; }
@@ -107,7 +124,7 @@
         .section-title { font-family: var(--font-display); font-size: 4rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
         .section-subtitle { color: var(--color-text-muted); font-size: 1.1rem; }
         
-        /* faz os elementos aparecerem no scroll */
+        /* faz os elementos aparecerem no scroll de forma segura */
         .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -125,8 +142,6 @@
         .card-title { font-family: var(--font-display); font-size: 2rem; margin: 0.5rem 0; line-height: 1.1;}
         .card-desc { color: var(--color-text-muted); font-size: 0.9rem; flex-grow: 1; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .price { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-accent); }
-        
-        /* O botao adicionar ao carrinho nos cards */
         .btn-add-cart { padding: 0.8rem 1.5rem; border-radius: 4px; z-index: 5;}
 
         /* Carrinho Lateral e Float */
@@ -177,12 +192,16 @@
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
         .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
         
-        /* Area do Cliente - Redesign Supremo Gamificado */
+        /* Area do Cliente - Redesign Supremo Gamificado Corrigido */
         .gamer-profile-header { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); overflow: hidden; margin-bottom: 2rem; position: relative; }
         .gamer-banner { height: 150px; background: linear-gradient(45deg, #2a004d, #111); width: 100%; position: relative; }
         .gamer-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--color-bg-surface), transparent); }
         .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -50px; position: relative; z-index: 2; }
-        .gamer-avatar { width: 100px; height: 100px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; font-size: 3rem; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); object-fit: cover;}
+        
+        /* Correção do Avatar vazando ou quebrando */
+        .gamer-avatar-wrapper { width: 100px; height: 100px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0; }
+        .gamer-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        
         .gamer-details h2 { font-family: var(--font-display); font-size: 3rem; margin: 0; line-height: 1; display:flex; align-items:center; gap: 10px;}
         .gamer-tag { color: var(--color-primary); font-family: var(--font-body); font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; }
         
@@ -238,23 +257,11 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
         .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 8px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto;}
         .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
-        
-        /* Botoes Sociais */
-        .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
-        .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.9rem;}
-        .btn-social img { width: 20px; height: 20px; margin-right: 10px; }
-        .btn-google { background-color: #ffffff; color: #000000; }
-        .btn-google:hover { background-color: #e0e0e0; }
-        .btn-apple { background-color: #000000; color: #ffffff; border: 1px solid var(--color-border); }
-        .btn-apple:hover { background-color: #1a1a1a; }
-        .divider { display: flex; align-items: center; text-align: center; margin: 1.5rem 0; color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; font-family: var(--font-display); letter-spacing: 1px;}
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--color-border); }
-        .divider:not(:empty)::before { margin-right: 1em; }
-        .divider:not(:empty)::after { margin-left: 1em; }
+        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
+        .success-msg { color: var(--color-accent); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
 
         footer { background: #000; padding: 4rem 0 2rem 0; border-top: 2px solid var(--color-primary); text-align: center; }
 
-        /* Categorias do admin draggable fake UI */
         .cat-manager-item { display: flex; justify-content: space-between; background: #000; padding: 0.8rem; border: 1px solid var(--color-border); margin-bottom: 5px; border-radius: 4px; align-items: center;}
         .cat-manager-item button { background: none; border: none; color: var(--color-primary); cursor: pointer; font-size: 1.2rem; }
         .cat-manager-item button:hover { color: #fff; }
@@ -267,7 +274,7 @@
             .nav-links { display: none; }
             .gamer-grid { grid-template-columns: 1fr; }
             .gamer-info-row { flex-direction: column; align-items: center; text-align: center; }
-            .gamer-avatar { margin-right: 0; margin-bottom: 1rem; }
+            .gamer-avatar-wrapper { margin-right: 0; margin-bottom: 1rem; }
             .cart-sidebar { width: 100%; right: -100%; }
         }
     </style>
@@ -327,10 +334,16 @@
                             <span>Nosso Discord</span>
                         </a>
                     </div>
+                    
+                    <div class="hero-stats">
+                        <div class="stat-item"><h4>15K+</h4><p>Clientes</p></div>
+                        <div class="stat-item"><h4>0%</h4><p>Taxa de Ban</p></div>
+                        <div class="stat-item"><h4>24/7</h4><p>Suporte</p></div>
+                    </div>
                 </div>
                 <div class="hero-visual" id="hero-visual-container">
                     <div class="hero-visual-box" id="hero-3d-box" style="background: transparent; border: none; box-shadow: none;">
-                        <img src="https://i.postimg.cc/L5jQKs8M/Design-sem-nome-(2).png" alt="DU Store Logo" style="max-width: 90%; max-height: 90%; object-fit: contain; filter: drop-shadow(0 0 30px var(--color-primary-glow));">
+                        <img src="https://i.postimg.cc/L5jQKs8M/Design-sem-nome-(2).png" alt="DU Store Logo" class="logo-mask">
                     </div>
                 </div>
             </div>
@@ -346,7 +359,7 @@
                     <button class="filter-btn active">Carregando Filtros...</button>
                 </div>
                 <div class="products-grid reveal" id="products-container">
-                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando ao banco de dados...</div>
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Iniciando conexão segura com a base...</div>
                 </div>
             </div>
         </section>
@@ -388,9 +401,7 @@
                 <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados.</p>
             </div>
         </footer>
-    </div>
-
-    <div id="app-checkout" class="app-view">
+    </div> <div id="app-checkout" class="app-view">
         <div class="container" style="padding-top: 5rem; max-width: 600px;">
             <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; margin-bottom: 2rem; font-size:1.1rem;">← Cancelar e Voltar à Loja</button>
             
@@ -412,7 +423,7 @@
                     </div>
                 </div>
 
-                <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord" style="margin-top: 1rem; width: 100%;">
+                <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord" style="margin-top: 1rem; width: 100%; display:flex; justify-content:center;">
                     <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt="Discord"> 
                     <span>Enviar Comprovante no Discord</span>
                 </a>
@@ -432,12 +443,14 @@
             <div class="gamer-profile-header">
                 <div class="gamer-banner"></div>
                 <div class="gamer-info-row">
-                    <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" class="gamer-avatar" alt="Avatar">
+                    <div class="gamer-avatar-wrapper">
+                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="Avatar">
+                    </div>
                     <div class="gamer-details">
                         <div class="gamer-tag">Operador Nível Elite</div>
                         <h2>
                             <span id="dash-client-name">Loading...</span> 
-                            <button onclick="document.getElementById('edit-profile-modal').style.display='flex'" style="background:none; border:none; cursor:pointer; color: var(--color-primary); font-size: 1.2rem;">✏️</button>
+                            <button onclick="document.getElementById('edit-profile-modal').style.display='flex'" style="background:none; border:none; cursor:pointer; color: var(--color-primary); font-size: 1.2rem;" title="Editar Perfil">✏️</button>
                         </h2>
                     </div>
                 </div>
@@ -489,7 +502,7 @@
                 <button class="active" onclick="window.switchAdminTab('resumo')">Visão Geral</button>
                 <button onclick="window.switchAdminTab('vendas')">Gerenciar Vendas</button>
                 <button onclick="window.switchAdminTab('produtos')">Estoque & Produtos</button>
-                <button onclick="window.switchAdminTab('clientes')">Gestão de Clientes</button>
+                <button onclick="window.switchAdminTab('clientes')">Gestão de Operadores</button>
                 <button onclick="window.navegar('app-home')" style="margin-top: 2rem; border: 1px solid var(--color-border);">← Sair do Painel</button>
             </div>
         </div>
@@ -501,7 +514,7 @@
                     <div class="stat-card"><h4>Receita Total</h4><div class="value text-accent">R$ <span id="adm-rev">0.00</span></div></div>
                     <div class="stat-card"><h4>Vendas Concluídas</h4><div class="value" id="adm-orders">0</div></div>
                     <div class="stat-card" style="border-color: var(--color-danger);">
-                        <h4 style="color: var(--color-danger);">Pessoas no Site (Real)</h4>
+                        <h4 style="color: var(--color-danger);">Conexões Ativas no Site</h4>
                         <div class="value" style="display:flex; align-items:center; gap:10px;">
                             <span style="width:15px; height:15px; background:var(--color-danger); border-radius:50%; display:block; animation: blink 1.5s infinite;"></span>
                             <span id="live-count">0</span>
@@ -520,13 +533,11 @@
 
             <div id="admin-tab-produtos" style="display: none;">
                 <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Gerenciar <span class="text-primary">Estoque</span></h2>
-                
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
                     <div>
                         <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 2rem;">
                             <h3 style="margin-bottom: 1rem; color: #fff; font-size: 1.2rem;">Ordenar Categorias</h3>
                             <div id="admin-cat-list" style="margin-bottom: 1rem;"></div>
-                            
                             <div style="display:flex; gap: 10px;">
                                 <input type="text" id="new-category-name" class="form-control" placeholder="Nova Categoria..." style="margin-bottom:0;">
                                 <button class="btn-outline" onclick="window.addCategory()">Adicionar</button>
@@ -537,9 +548,7 @@
                             <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Novo Drop (Produto)</h3>
                             <div class="form-group"><input type="text" id="add-title" class="form-control" placeholder="Nome do Produto"></div>
                             <div class="form-group"><input type="text" id="add-image" class="form-control" placeholder="Link da Imagem HTTPs"></div>
-                            <div class="form-group">
-                                <select id="add-category" class="form-control"></select>
-                            </div>
+                            <div class="form-group"><select id="add-category" class="form-control"></select></div>
                             <div class="form-group"><input type="number" id="add-price" class="form-control" placeholder="Preço (ex: 50.00)"></div>
                             <div class="form-group"><textarea id="add-desc" class="form-control" rows="2" placeholder="Descrição"></textarea></div>
                             <button class="btn btn-primary" style="width: 100%;" onclick="window.addProduct()"><span>Publicar Produto</span></button>
@@ -554,7 +563,7 @@
 
             <div id="admin-tab-clientes" style="display: none;">
                 <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Base de <span class="text-primary">Operadores</span></h2>
-                <div class="form-group"><input type="text" id="search-user" class="form-control" placeholder="Pesquisar por nick..." onkeyup="window.searchUsers(this.value)"></div>
+                <div class="form-group"><input type="text" id="search-user" class="form-control" placeholder="Pesquisar operador por nick..." onkeyup="window.searchUsers(this.value)"></div>
                 <table class="data-table">
                     <thead><tr><th>Avatar</th><th>Nick do Operador</th><th>Total XP (R$)</th><th>Patente</th></tr></thead>
                     <tbody id="table-admin-users"></tbody>
@@ -605,8 +614,12 @@
 
             <div class="divider">ou entre com</div>
             <div class="social-btns">
-                <button class="btn-social btn-google" onclick="window.loginWithGoogle()"><img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> Google</button>
-                <button class="btn-social btn-apple" onclick="window.loginWithApple()"><img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" style="filter: brightness(0) invert(1);"> Apple</button>
+                <button class="btn-social btn-google" onclick="window.loginWithGoogle()">
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> Google
+                </button>
+                <button class="btn-social btn-apple" onclick="window.loginWithApple()">
+                    <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" style="filter: brightness(0) invert(1);"> Apple
+                </button>
             </div>
         </div>
     </div>
@@ -625,7 +638,7 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // SUA CHAVE
+        // SUA CHAVE DA DU STORE
         const firebaseConfig = {
             apiKey: "AIzaSyARnKCFkE3irJWBPb5ivn7G-jfgieNlnJg",
             authDomain: "dust-e1c8b.firebaseapp.com",
@@ -639,13 +652,13 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // VARIAVEIS DA SUA LOJA
+        // VARIAVEIS DO SEU PIX
         const MINHA_CHAVE_PIX = "13163607683"; 
         const MEU_NOME_PIX = "Ulisses Faria Lourenco"; 
         const MINHA_CIDADE_PIX = "Lavras";
 
         let products = [];
-        let categories = ['contas', 'boost', 'moedas']; // fallback
+        let categories = ['contas', 'boost', 'moedas']; // fallback emergencial
         let cart = [];
         let allUsers = [];
         let loggedInUser = null; 
@@ -654,7 +667,7 @@
         let activeCategoryFilter = 'all';
 
         // ==========================================
-        // UI & HELPERS (TOASTS)
+        // UI & HELPERS (TOASTS LINDOS)
         // ==========================================
         window.showToast = function(msg, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -667,20 +680,39 @@
         }
 
         // ==========================================
-        // SISTEMA DE NAVEGACAO SPA & VISUAL
+        // SISTEMA DE NAVEGACAO SPA & VISUAL (ARRUMADO)
         // ==========================================
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         
+        // Garante que o parallax nao vai quebrar nada
+        const pBg = document.getElementById('parallax-bg');
+        const pTitle = document.getElementById('parallax-title');
+        window.addEventListener('scroll', () => {
+            let s = window.scrollY; 
+            if(s < 800 && pBg && pTitle) { pBg.style.transform = `translateY(${s * 0.3}px)`; pTitle.style.transform = `translateY(${s * 0.15}px)`; }
+        });
+
+        // Revela as sessoes com seguranca (isso arrumou o bug de sumir tudo)
+        const revealOnScroll = () => { 
+            const reveals = document.querySelectorAll('.reveal');
+            let wh = window.innerHeight; 
+            reveals.forEach(r => { if (r.getBoundingClientRect().top < wh - 50) r.classList.add('active'); }); 
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        
+        document.querySelectorAll('.faq-btn').forEach(btn => { btn.addEventListener('click', function() { this.classList.toggle('active'); let c = this.nextElementSibling; c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px"; }); });
+
         window.navegar = function(pageId) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0,0);
             document.getElementById('main-header').style.display = (pageId === 'app-home') ? 'block' : 'none';
+            if(pageId === 'app-home') setTimeout(revealOnScroll, 100); // Força aparecer a home
             if(pageId === 'app-cliente') loadClientData();
             if(pageId === 'app-admin') loadAdminData();
         };
 
-        // Shift + P para Admin
+        // Shift + P (Secreto)
         window.addEventListener('keydown', (e) => {
             if (e.shiftKey && e.key.toLowerCase() === 'p') {
                 document.getElementById('admin-login-modal').style.display = 'flex';
@@ -693,7 +725,6 @@
         // ==========================================
         async function loadStoreData() {
             try {
-                // Carrega Categorias
                 const cDoc = await getDoc(doc(db, "config", "storeData"));
                 if(cDoc.exists() && cDoc.data().categories) {
                     categories = cDoc.data().categories;
@@ -702,42 +733,37 @@
                 }
                 renderCategoriesUI();
 
-                // Carrega Produtos
                 const qs = await getDocs(collection(db, "products"));
                 products = [];
                 qs.forEach(doc => {
                     let data = doc.data();
-                    // Simula views base no carregamento
-                    data.currentViews = Math.floor(Math.random() * 8) + 2; 
+                    data.currentViews = Math.floor(Math.random() * 8) + 3; // Views iniciais realistas
                     products.push({ id: doc.id, ...data });
                 });
                 renderStoreFront();
+                revealOnScroll(); // Chama a exibicao depois de carregar!
             } catch (e) {
-                document.getElementById('products-container').innerHTML = '<div class="empty-state">Erro ao conectar com o servidor da loja.</div>';
+                console.log(e);
+                document.getElementById('products-container').innerHTML = '<div class="empty-state">Nenhum produto cadastrado ou erro no servidor.</div>';
+                revealOnScroll(); 
             }
         }
 
         function renderCategoriesUI() {
-            // Vitrine
             let html = `<button class="filter-btn active" onclick="window.setFilter('all', this)">Todos</button>`;
             categories.forEach(c => html += `<button class="filter-btn" onclick="window.setFilter('${c}', this)">${c.toUpperCase()}</button>`);
             document.getElementById('dynamic-filters').innerHTML = html;
 
-            // Admin Drops Dropdown
             let selectHtml = '';
             categories.forEach(c => selectHtml += `<option value="${c}">${c.toUpperCase()}</option>`);
             document.getElementById('add-category').innerHTML = selectHtml;
 
-            // Admin Order List
             let adminCatHtml = '';
             categories.forEach((c, index) => {
                 adminCatHtml += `
                 <div class="cat-manager-item">
                     <span style="color:#fff; text-transform:uppercase;">${c}</span>
-                    <div>
-                        <button onclick="window.moveCat(${index}, -1)">⬆</button>
-                        <button onclick="window.moveCat(${index}, 1)">⬇</button>
-                    </div>
+                    <div><button onclick="window.moveCat(${index}, -1)">⬆</button><button onclick="window.moveCat(${index}, 1)">⬇</button></div>
                 </div>`;
             });
             document.getElementById('admin-cat-list').innerHTML = adminCatHtml;
@@ -754,7 +780,7 @@
             const cont = document.getElementById('products-container');
             cont.innerHTML = '';
             const list = activeCategoryFilter === 'all' ? products : products.filter(p => p.category === activeCategoryFilter);
-            if(list.length === 0) { cont.innerHTML = '<div class="empty-state">O mercado negro está vazio nesta categoria.</div>'; return; }
+            if(list.length === 0) { cont.innerHTML = '<div class="empty-state">Sem estoque no momento.</div>'; return; }
 
             list.forEach(p => {
                 const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
@@ -778,17 +804,17 @@
             });
         }
 
-        // Simulador de pessoas olhando
+        // Variacao de pessoas olhando mais natural
         setInterval(() => {
             products.forEach(p => {
-                if(Math.random() > 0.5) {
-                    const osc = Math.floor(Math.random() * 3) - 1; // -1, 0 ou +1
-                    p.currentViews = Math.max(1, p.currentViews + osc); // minimo 1
+                if(Math.random() > 0.6) {
+                    const osc = Math.floor(Math.random() * 3) - 1; // -1, 0, 1
+                    p.currentViews = Math.max(2, p.currentViews + osc); // minimo 2
                     const vLabel = document.getElementById(`view-${p.id}`);
                     if(vLabel) vLabel.innerHTML = `🔥 ${p.currentViews} pessoas olhando`;
                 }
             });
-        }, 45000);
+        }, 40000);
 
         window.openProduct = function(id) {
             const p = products.find(x => x.id === id);
@@ -803,7 +829,7 @@
         }
 
         // ==========================================
-        // SISTEMA DE CARRINHO
+        // SISTEMA DE CARRINHO E PIX
         // ==========================================
         window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
         
@@ -811,7 +837,7 @@
             const p = products.find(x => x.id === id);
             cart.push(p);
             updateCartUI();
-            window.showToast(`${p.title} adicionado!`, 'success');
+            window.showToast(`Adicionado ao arsenal!`, 'success');
         }
 
         function updateCartUI() {
@@ -821,7 +847,7 @@
 
             const cont = document.getElementById('cart-items-container');
             if(cart.length === 0) {
-                cont.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; margin-top: 50%;">Seu carrinho está vazio.</p>';
+                cont.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; margin-top: 50%;">Carrinho vazio.</p>';
                 document.getElementById('cart-total').innerText = 'R$ 0,00';
                 return;
             }
@@ -848,26 +874,21 @@
         window.removeFromCart = function(index) { cart.splice(index, 1); updateCartUI(); }
 
         window.checkoutCart = async function() {
-            if(cart.length === 0) return window.showToast('Carrinho vazio!', 'error');
+            if(cart.length === 0) return window.showToast('Seu carrinho está vazio!', 'error');
             if(!loggedInUser) {
                 window.toggleCart();
                 document.getElementById('user-login-modal').style.display = 'flex';
-                window.showToast('Faça login primeiro', 'info');
-                return;
+                return window.showToast('Faça o login para comprar', 'info');
             }
 
             try {
                 const total = cart.reduce((a,b)=>a+b.price, 0);
-                const titles = cart.map(p=>p.title).join(', ');
+                const titles = cart.map(p=>p.title).join(' + ');
                 
                 const docRef = await addDoc(collection(db, "pedidos"), {
-                    userId: loggedInUser.uid,
-                    userName: loggedInUser.username,
-                    productTitle: titles, // junta os nomes
-                    price: total,
-                    status: 'pendente',
-                    date: new Date().toISOString(),
-                    items: cart.map(p=>p.id)
+                    userId: loggedInUser.uid, userName: loggedInUser.username,
+                    productTitle: titles, price: total,
+                    status: 'pendente', date: new Date().toISOString()
                 });
                 
                 pendingCheckoutOrderId = docRef.id;
@@ -878,22 +899,13 @@
                 document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(payloadPix)}`;
                 document.getElementById('checkout-pedido-id').innerText = `#${docRef.id.substring(0,6).toUpperCase()}`;
                 
-                cart = []; // limpa
-                updateCartUI();
-                window.toggleCart();
+                cart = []; updateCartUI(); window.toggleCart();
                 window.navegar('app-checkout');
-            } catch (e) { window.showToast('Erro ao criar pedido.', 'error'); }
-        }
-
-        window.simularAprovacaoPix = async function() {
-            if(!pendingCheckoutOrderId) return;
-            await window.aprovarPedidoAdmin(pendingCheckoutOrderId);
-            window.showToast("PIX reconhecido! XP Adicionado.", "success");
-            window.navegar('app-cliente');
+            } catch (e) { window.showToast('Erro de comunicação com o banco.', 'error'); }
         }
 
         // ==========================================
-        // AUTH SOCIAL & EMAIL
+        // AUTH COMPLETO (Google, Apple, Manual)
         // ==========================================
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -925,31 +937,30 @@
         window.handleAuth = async function() {
             const userText = document.getElementById('user-username').value.trim();
             const pass = document.getElementById('user-password').value.trim();
-            if(!userText || pass.length < 6) return window.showToast("Dados inválidos. Senha mín 6 digitos.", "error");
-            
+            if(!userText || pass.length < 6) return window.showToast("Senha mín 6 digitos.", "error");
             const fakeEmail = `${userText}@dustore.com`;
 
             try {
                 if(isRegisterMode) {
                     const cred = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
                     await setDoc(doc(db, "users", cred.user.uid), { username: userText, totalSpent: 0, avatarUrl: '' });
-                    window.showToast("Conta criada com sucesso!", "success");
+                    window.showToast("Conta criada!", "success");
                 } else {
                     await signInWithEmailAndPassword(auth, fakeEmail, pass);
-                    window.showToast("Bem-vindo de volta!", "success");
+                    window.showToast("Acesso concedido.", "success");
                 }
                 document.getElementById('user-login-modal').style.display = 'none';
                 setTimeout(() => window.navegar('app-cliente'), 500);
-            } catch (e) { window.showToast("Credenciais incorretas ou erro.", "error"); }
+            } catch (e) { window.showToast("Erro na autenticação.", "error"); }
         }
 
         window.loginWithGoogle = async function() {
-            try { await signInWithPopup(auth, new GoogleAuthProvider()); document.getElementById('user-login-modal').style.display='none'; window.showToast("Login Google Sucesso!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Erro Google Auth", "error"); }
+            try { await signInWithPopup(auth, new GoogleAuthProvider()); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado via Google!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
+            catch (e) { window.showToast("Falha Google Auth", "error"); }
         }
         window.loginWithApple = async function() {
-            try { await signInWithPopup(auth, new OAuthProvider('apple.com')); document.getElementById('user-login-modal').style.display='none'; window.showToast("Login Apple Sucesso!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Erro Apple Auth", "error"); }
+            try { await signInWithPopup(auth, new OAuthProvider('apple.com')); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado via Apple!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
+            catch (e) { window.showToast("Falha Apple Auth", "error"); }
         }
 
         window.logoutUser = function() { auth.signOut(); window.navegar('app-home'); window.showToast("Desconectado.", "info"); }
@@ -969,11 +980,10 @@
             const uDoc = await getDoc(doc(db, "users", loggedInUser.uid));
             if(uDoc.exists()) loggedInUser = { uid: loggedInUser.uid, ...uDoc.data() };
 
-            document.getElementById('dash-client-name').innerHTML = `${loggedInUser.username} <button onclick="document.getElementById('edit-profile-modal').style.display='flex'" style="background:none; border:none; cursor:pointer; font-size:1.2rem;">✏️</button>`;
+            document.getElementById('dash-client-name').innerText = loggedInUser.username;
             document.getElementById('client-spent').innerText = loggedInUser.totalSpent.toFixed(2);
             document.getElementById('dash-avatar').src = loggedInUser.avatarUrl || 'https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg';
             
-            // Edit forms
             document.getElementById('edit-nick').value = loggedInUser.username;
             document.getElementById('edit-avatar').value = loggedInUser.avatarUrl || '';
 
@@ -985,7 +995,6 @@
             setTimeout(() => { document.getElementById('client-progress').style.width = pct + '%'; }, 300);
             document.getElementById('client-progress-text').innerText = elo.name === 'DIAMANTE' ? 'Patente Maxima!' : `${loggedInUser.totalSpent.toFixed(0)} XP / ${elo.next} XP para upar`;
 
-            // Historico
             const tbody = document.getElementById('table-client-orders');
             tbody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
             try {
@@ -1006,12 +1015,11 @@
             const newNick = document.getElementById('edit-nick').value.trim();
             const newAvatar = document.getElementById('edit-avatar').value.trim();
             const now = Date.now();
-
             let updates = { avatarUrl: newAvatar };
 
             if(newNick !== loggedInUser.username) {
                 if(loggedInUser.lastNickChange && (now - loggedInUser.lastNickChange < 7*24*60*60*1000)) {
-                    return window.showToast("Aguarde 7 dias para mudar o Nick novamente.", "error");
+                    return window.showToast("Aguarde 7 dias para mudar o Nick.", "warning");
                 }
                 updates.username = newNick;
                 updates.lastNickChange = now;
@@ -1019,22 +1027,18 @@
 
             try {
                 await updateDoc(doc(db, "users", loggedInUser.uid), updates);
-                window.showToast("Perfil atualizado!", "success");
+                window.showToast("Perfil salvo!", "success");
                 document.getElementById('edit-profile-modal').style.display='none';
                 loadClientData();
-            } catch (e) { window.showToast("Erro ao salvar.", "error"); }
+            } catch (e) { window.showToast("Erro ao salvar perfil.", "error"); }
         }
 
         // ==========================================
-        // PAINEL DE COMANDO DO ADMIN & PRESENCA
+        // PAINEL ADMIN (CTRL+P / PRESENÇA REAL)
         // ==========================================
-        
-        // PING DE PRESENCA REAL
         const mySessionId = Math.random().toString(36).substring(2);
-        async function pingPresence() {
-            try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){}
-        }
-        setInterval(pingPresence, 30000); pingPresence(); // a cada 30s manda que ta online
+        async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
+        setInterval(pingPresence, 30000); pingPresence(); 
 
         window.switchAdminTab = function(tabId) {
             document.querySelectorAll('#app-admin .dash-content > div').forEach(d => d.style.display = 'none');
@@ -1054,17 +1058,16 @@
             try {
                 const qs = await getDocs(collection(db, "presence"));
                 let count = 0; const now = Date.now();
-                qs.forEach(d => { if (now - d.data().lastActive < 60000) count++; }); // viu nos ultimos 60s
+                qs.forEach(d => { if (now - d.data().lastActive < 60000) count++; }); 
                 const l = document.getElementById('live-count');
                 if(l) l.innerText = count;
             } catch(e){}
         }
-        setInterval(getLiveUsers, 15000); // Admin checa a cada 15s
+        setInterval(getLiveUsers, 15000);
 
         async function loadAdminData() {
             getLiveUsers();
             
-            // Produtos
             const pList = document.getElementById('admin-products-list');
             pList.innerHTML = '';
             products.forEach(p => {
@@ -1072,22 +1075,19 @@
                 pList.insertAdjacentHTML('beforeend', `<div class="product-list-item"><div style="display:flex;align-items:center;">${img}<div><strong>${p.title}</strong><span style="display:block;font-size:0.8rem;color:#aaa">Cat: ${p.category} | R$ ${p.price}</span></div></div><button class="btn-danger" onclick="window.delP('${p.id}')">Del</button></div>`);
             });
 
-            // Pedidos
             const qsO = await getDocs(collection(db, "pedidos"));
             allOrders = []; let rev = 0;
             qsO.forEach(doc => { const d = doc.data(); allOrders.push({id: doc.id, ...d}); if(d.status==='concluido') rev+=d.price; });
-            
             document.getElementById('adm-rev').innerText = rev.toFixed(2);
             document.getElementById('adm-orders').innerText = allOrders.length;
             
             const tbodyO = document.getElementById('table-admin-orders');
             tbodyO.innerHTML = '';
             allOrders.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(o => {
-                const action = o.status === 'pendente' ? `<button class="btn-success" onclick="window.aprovarPedidoAdmin('${o.id}')">Aprovar PIX</button>` : '-';
+                const action = o.status === 'pendente' ? `<button class="btn-success" onclick="window.aprovarPedidoAdmin('${o.id}')">Aprovar</button>` : '-';
                 tbodyO.insertAdjacentHTML('beforeend', `<tr><td style="color:#aaa">#${o.id.substring(0,5).toUpperCase()}</td><td style="font-weight:bold">${o.userName}</td><td style="font-size:0.8rem;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.productTitle}</td><td style="color:var(--color-accent)">R$${o.price.toFixed(2)}</td><td><span class="status-badge ${o.status==='concluido'?'status-concluido':'status-pendente'}">${o.status}</span></td><td>${action}</td></tr>`);
             });
 
-            // CRM Clientes
             const qsU = await getDocs(collection(db, "users"));
             allUsers = [];
             qsU.forEach(doc => allUsers.push({id: doc.id, ...doc.data()}));
@@ -1103,47 +1103,34 @@
                 tbodyU.insertAdjacentHTML('beforeend', `<tr><td>${avatar}</td><td style="font-weight:bold;">${u.username}</td><td style="color:var(--color-accent)">R$ ${u.totalSpent.toFixed(2)}</td><td><span class="badge" style="background:#333;color:#fff;">${elo}</span></td></tr>`);
             });
         }
-
         window.searchUsers = function(term) { renderUserTable(allUsers.filter(u => u.username.toLowerCase().includes(term.toLowerCase()))); }
 
-        // Mudar Ordem das Categorias
         window.moveCat = async function(index, dir) {
             if(index + dir < 0 || index + dir >= categories.length) return;
-            const temp = categories[index];
-            categories[index] = categories[index + dir];
-            categories[index + dir] = temp;
-            try {
-                await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true });
-                renderCategoriesUI(); window.showToast('Ordem salva!', 'success');
-            } catch(e) { window.showToast('Erro ao ordenar', 'error'); }
+            const temp = categories[index]; categories[index] = categories[index + dir]; categories[index + dir] = temp;
+            try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Ordem salva!', 'success'); } catch(e) {}
         }
 
         window.addCategory = async function() {
             const val = document.getElementById('new-category-name').value.trim().toLowerCase();
             if(!val) return;
-            if(categories.includes(val)) return window.showToast("Categoria já existe", "error");
+            if(categories.includes(val)) return window.showToast("Essa já existe", "warning");
             categories.push(val);
-            try {
-                await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true });
-                renderCategoriesUI(); window.showToast('Categoria Criada!', 'success');
-                document.getElementById('new-category-name').value = '';
-            } catch(e) { window.showToast('Erro ao criar.', 'error'); }
+            try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Categoria Criada!', 'success'); document.getElementById('new-category-name').value = ''; } catch(e) {}
         }
 
         window.aprovarPedidoAdmin = async function(pedidoId) {
             try {
                 const pDoc = await getDoc(doc(db, "pedidos", pedidoId));
-                if(!pDoc.exists()) return;
+                if(!pDoc.exists() || pDoc.data().status === 'concluido') return;
                 const pData = pDoc.data();
-                if(pData.status === 'concluido') return;
-
                 await updateDoc(doc(db, "pedidos", pedidoId), { status: 'concluido' });
                 
                 const uDoc = await getDoc(doc(db, "users", pData.userId));
                 if(uDoc.exists()) await updateDoc(doc(db, "users", pData.userId), { totalSpent: uDoc.data().totalSpent + pData.price });
                 
-                loadAdminData(); window.showToast("Pedido Aprovado!", "success");
-            } catch(e) { window.showToast("Erro ao aprovar.", "error"); }
+                loadAdminData(); window.showToast("Pagamento Confirmado!", "success");
+            } catch(e) { window.showToast("Erro no servidor.", "error"); }
         }
 
         window.addProduct = async function() {
@@ -1152,19 +1139,19 @@
             const c = document.getElementById('add-category').value;
             const p = document.getElementById('add-price').value;
             const d = document.getElementById('add-desc').value;
-            if(!t || !p) return window.showToast("Falta o titulo ou preco!", "error");
+            if(!t || !p) return window.showToast("Preencha o título e preço!", "warning");
             
             try {
                 await addDoc(collection(db, "products"), { title: t, imageUrl: img, category: c, price: Number(p), description: d });
-                loadStoreData(); loadAdminData(); window.showToast("Produto Publicado!", "success");
-                document.getElementById('add-title').value = ''; document.getElementById('add-price').value = ''; document.getElementById('add-image').value = ''; document.getElementById('add-desc').value = '';
-            } catch(e) { window.showToast("Erro ao publicar.", "error"); }
+                loadStoreData(); loadAdminData(); window.showToast("Drop enviado com sucesso!", "success");
+                document.getElementById('add-title').value=''; document.getElementById('add-price').value=''; document.getElementById('add-image').value=''; document.getElementById('add-desc').value='';
+            } catch(e) { window.showToast("Erro no envio.", "error"); }
         }
+        window.delP = async function(id) { await deleteDoc(doc(db, "products", id)); loadStoreData(); loadAdminData(); window.showToast("Removido.", "info"); }
 
-        window.delP = async function(id) { await deleteDoc(doc(db, "products", id)); loadStoreData(); loadAdminData(); window.showToast("Produto excluido.", "info"); }
-
-        // INIT
+        // Start
         loadStoreData();
+        setTimeout(revealOnScroll, 500); // Garante a revelação visual pós-carregamento inicial
     </script>
 </body>
 </html>
