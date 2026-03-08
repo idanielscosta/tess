@@ -15,31 +15,22 @@
            1. VARIÁVEIS GLOBAIS (DESIGN SYSTEM)
            ========================================================================== */
         :root {
-            /* Paleta de Cores Premium (Menos neon saturado, mais tons profundos) */
             --color-bg-base: #050505;
             --color-bg-surface: #111111;
             --color-bg-glass: rgba(17, 17, 17, 0.6);
             
-            --color-primary: #6B21A8; /* Roxo profundo/elétrico */
+            --color-primary: #6B21A8; /* Roxo profundo */
             --color-primary-glow: rgba(107, 33, 168, 0.4);
-            --color-accent: #10B981; /* Verde esmeralda para dar contraste street */
+            --color-accent: #10B981; /* Verde esmeralda (contraste street) */
             
             --color-text-main: #F3F4F6;
             --color-text-muted: #9CA3AF;
             --color-border: #27272A;
             
-            /* Tipografia */
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'Inter', sans-serif;
             
-            /* Espaçamentos e Layout */
-            --container-max: 1440px;
-            --spacing-sm: 1rem;
-            --spacing-md: 2rem;
-            --spacing-lg: 4rem;
-            --spacing-xl: 8rem;
-            
-            /* Transições */
+            --container-max: 1200px;
             --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             --transition-fast: all 0.3s ease;
         }
@@ -47,16 +38,8 @@
         /* ==========================================================================
            2. RESET E CONFIGURAÇÕES BASE
            ========================================================================== */
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html.smooth-scroll {
-            scroll-behavior: smooth;
-        }
-
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html.smooth-scroll { scroll-behavior: smooth; }
         body {
             background-color: var(--color-bg-base);
             color: var(--color-text-main);
@@ -64,310 +47,180 @@
             line-height: 1.6;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
+        ::selection { background: var(--color-primary); color: #fff; }
 
-        ::selection {
-            background: var(--color-primary);
-            color: #fff;
-        }
+        .container { max-width: var(--container-max); margin: 0 auto; padding: 0 2rem; }
+        .text-primary { color: var(--color-primary); }
+        .text-accent { color: var(--color-accent); }
 
-        /* ==========================================================================
-           3. UTILITÁRIOS E COMPONENTES
-           ========================================================================== */
-        .container {
-            max-width: var(--container-max);
-            margin: 0 auto;
-            padding: 0 var(--spacing-md);
-        }
-
+        /* Botões */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 2.5rem;
-            font-family: var(--font-body);
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            border: none;
-            position: relative;
-            overflow: hidden;
-            background: transparent;
-            color: var(--color-text-main);
-            transition: var(--transition-fast);
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600;
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px;
+            cursor: pointer; border: none; position: relative; overflow: hidden;
+            background: transparent; color: var(--color-text-main); transition: var(--transition-fast);
         }
-
-        .btn-primary {
-            background: var(--color-text-main);
-            color: var(--color-bg-base);
-            border-radius: 2px;
-        }
-
-        /* Efeito de hover "Varredura" no botão */
+        .btn-primary { background: var(--color-text-main); color: var(--color-bg-base); border-radius: 2px; }
         .btn-primary::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--color-primary);
-            transform: scaleY(0);
-            transform-origin: bottom;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 1;
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%;
+            background: var(--color-primary); transform: scaleY(0); transform-origin: bottom;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1;
         }
-        
-        .btn-primary:hover::after {
-            transform: scaleY(1);
-        }
-
-        .btn-primary span {
-            position: relative;
-            z-index: 2;
-            transition: var(--transition-fast);
-        }
-        
-        .btn-primary:hover span {
-            color: #fff;
-        }
+        .btn-primary:hover::after { transform: scaleY(1); }
+        .btn-primary span { position: relative; z-index: 2; transition: var(--transition-fast); }
+        .btn-primary:hover span { color: #fff; }
 
         /* ==========================================================================
-           4. NAVBAR (GLASSMORPHISM)
+           3. NAVBAR (GLASSMORPHISM)
            ========================================================================== */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 100;
-            padding: 1.5rem 0;
-            background: var(--color-bg-glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            transition: var(--transition-smooth);
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            padding: 1.5rem 0; background: var(--color-bg-glass);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: var(--transition-smooth);
         }
-
-        header.scrolled {
-            padding: 1rem 0;
-            background: rgba(5, 5, 5, 0.9);
-        }
-
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--color-text-main);
-            text-decoration: none;
-            letter-spacing: 3px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        /* Um detalhe sutil street no logo */
-        .brand span {
-            color: var(--color-primary);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-        }
-
-        .nav-links a {
-            color: var(--color-text-muted);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition-fast);
-            position: relative;
-        }
-
-        /* Efeito de underline moderno */
-        .nav-links a::before {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 0%;
-            height: 2px;
-            background: var(--color-primary);
-            transition: var(--transition-smooth);
-        }
-
-        .nav-links a:hover {
-            color: var(--color-text-main);
-        }
-
-        .nav-links a:hover::before {
-            width: 100%;
-        }
+        header.scrolled { padding: 1rem 0; background: rgba(5, 5, 5, 0.95); }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .brand { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); text-decoration: none; letter-spacing: 3px; }
+        .brand span { color: var(--color-primary); }
+        .nav-links { display: flex; gap: 2.5rem; }
+        .nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: var(--transition-fast); position: relative; }
+        .nav-links a::before { content: ''; position: absolute; bottom: -5px; left: 0; width: 0%; height: 2px; background: var(--color-primary); transition: var(--transition-smooth); }
+        .nav-links a:hover { color: var(--color-text-main); }
+        .nav-links a:hover::before { width: 100%; }
 
         /* ==========================================================================
-           5. HERO SECTION (PARALLAX + MODERN LAYOUT)
+           4. HERO SECTION (PARALLAX + 3D TILT)
            ========================================================================== */
-        .hero {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            padding-top: 80px; /* Compensa a navbar */
-        }
-
-        /* Grid de fundo street/tech */
+        .hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
         .hero-bg-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 1;
-            transform: translateZ(0); /* Aceleração de hardware */
+            position: absolute; top: 0; left: 0; width: 100%; height: 120%;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: 1; transform: translateZ(0);
         }
-
-        /* Gradiente de luz indireta para dar profundidade */
         .hero-glow {
-            position: absolute;
-            top: 20%;
-            left: 10%;
-            width: 50vw;
-            height: 50vw;
+            position: absolute; top: 20%; left: 10%; width: 50vw; height: 50vw;
             background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 60%);
-            filter: blur(80px);
-            z-index: 2;
-            opacity: 0.5;
-            animation: pulse-glow 8s infinite alternate;
+            filter: blur(80px); z-index: 2; opacity: 0.5; animation: pulse-glow 8s infinite alternate;
         }
+        @keyframes pulse-glow { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.1); opacity: 0.7; } }
+        .hero-content { position: relative; z-index: 10; width: 100%; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items: center; }
+        
+        .hero-badge { display: inline-block; padding: 0.4rem 1rem; border: 1px solid var(--color-border); border-radius: 50px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--color-accent); background: rgba(16, 185, 129, 0.05); margin-bottom: 1.5rem; }
+        .hero-title { font-family: var(--font-display); font-size: 6.5rem; line-height: 0.9; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .hero-title .outline { color: transparent; -webkit-text-stroke: 2px var(--color-text-main); display: block; }
+        .hero-desc { font-size: 1.2rem; color: var(--color-text-muted); max-width: 90%; font-weight: 300; margin-bottom: 2rem; }
+        
+        .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
+        .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
+        .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
 
-        @keyframes pulse-glow {
-            0% { transform: scale(1) translate(0, 0); opacity: 0.4; }
-            100% { transform: scale(1.1) translate(5%, 5%); opacity: 0.7; }
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .hero-text-area {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            align-items: flex-start;
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 0.4rem 1rem;
-            border: 1px solid var(--color-border);
-            border-radius: 50px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--color-accent);
-            background: rgba(16, 185, 129, 0.05);
-            backdrop-filter: blur(5px);
-        }
-
-        .hero-title {
-            font-family: var(--font-display);
-            font-size: 7vw; /* Tipografia ultra responsiva e massiva */
-            line-height: 0.9;
-            text-transform: uppercase;
-            margin: 0;
-        }
-
-        .hero-title .outline {
-            color: transparent;
-            -webkit-text-stroke: 2px var(--color-text-main);
-            display: block;
-        }
-
-        .hero-desc {
-            font-size: 1.2rem;
-            color: var(--color-text-muted);
-            max-width: 80%;
-            font-weight: 300;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--color-border);
-        }
-
-        .stat-item h4 {
-            font-family: var(--font-display);
-            font-size: 2.5rem;
-            color: var(--color-text-main);
-            line-height: 1;
-        }
-
-        .stat-item p {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--color-text-muted);
-        }
-
-        /* Objeto 3D/Parallax falso na direita (pode ser uma imagem depois) */
-        .hero-visual {
-            position: relative;
-            height: 600px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1000px; /* Para o efeito 3D que faremos depois */
-        }
-
+        .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
         .hero-visual-box {
-            width: 80%;
-            height: 80%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 20px;
-            backdrop-filter: blur(10px);
-            transform: rotateY(-15deg) rotateX(5deg);
-            transition: transform 0.5s ease-out;
-            box-shadow: -20px 20px 50px rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100%; height: 80%; background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; backdrop-filter: blur(10px);
+            transform: rotateY(-15deg) rotateX(5deg); transition: transform 0.5s ease-out;
+            box-shadow: -20px 20px 50px rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;
         }
 
         /* ==========================================================================
-           6. ESPAÇO PARA AS PRÓXIMAS SEÇÕES (SCROLL TEST)
+           5. SEÇÕES GERAIS E ANIMAÇÃO REVEAL
            ========================================================================== */
-        .spacer {
-            height: 150vh;
-            background: var(--color-bg-base);
-            position: relative;
-            z-index: 20;
+        section { padding: 6rem 0; position: relative; z-index: 20; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-title { font-family: var(--font-display); font-size: 4rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        .section-subtitle { color: var(--color-text-muted); font-size: 1.1rem; }
+        
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* ==========================================================================
+           6. PRODUTOS E FILTROS (GLOW EFFECT)
+           ========================================================================== */
+        .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        .filter-btn {
+            background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted);
+            padding: 0.8rem 2rem; border-radius: 50px; font-family: var(--font-body); font-weight: 600;
+            text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: var(--transition-fast);
+        }
+        .filter-btn:hover, .filter-btn.active {
+            background: rgba(107, 33, 168, 0.1); border-color: var(--color-primary);
+            color: var(--color-text-main); box-shadow: 0 0 15px var(--color-primary-glow);
+        }
+
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
+        .product-card {
+            background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 8px;
+            padding: 2rem; position: relative; overflow: hidden; transition: var(--transition-fast);
+            display: flex; flex-direction: column; gap: 1.5rem;
+        }
+        /* Glow Effect JS */
+        .product-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(107, 33, 168, 0.15), transparent 40%);
+            z-index: 0; opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+        }
+        .product-card:hover::before { opacity: 1; }
+        .product-card:hover { transform: translateY(-5px); border-color: rgba(107, 33, 168, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        
+        .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
+        .badge-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+        .badge { background: rgba(16, 185, 129, 0.1); color: var(--color-accent); padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
+        .card-title { font-family: var(--font-display); font-size: 2rem; line-height: 1.1; margin-bottom: 0.5rem; }
+        .card-desc { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; flex-grow: 1; }
+        .card-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--color-border); padding-top: 1.5rem; }
+        .price { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-text-main); }
+        .btn-outline { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 0.8rem 1.5rem; text-transform: uppercase; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: var(--transition-fast); }
+        .btn-outline:hover { background: var(--color-text-main); color: var(--color-bg-base); }
+
+        /* ==========================================================================
+           7. GARANTIA / TRUST SECTION
+           ========================================================================== */
+        .trust-section { background: #0a0a0a; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
+        .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: center; }
+        .trust-item h3 { font-family: var(--font-display); font-size: 1.8rem; margin: 1rem 0; color: var(--color-text-main); }
+        .trust-item p { color: var(--color-text-muted); font-size: 0.95rem; }
+        .trust-icon { font-size: 3rem; color: var(--color-primary); }
+
+        /* ==========================================================================
+           8. DEPOIMENTOS
+           ========================================================================== */
+        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .testimo-card { background: var(--color-bg-surface); padding: 2.5rem; border-radius: 8px; border-left: 4px solid var(--color-primary); position: relative; }
+        .testimo-text { font-style: italic; color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
+        .testimo-author { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-text-main); letter-spacing: 1px; }
+
+        /* ==========================================================================
+           9. FAQ
+           ========================================================================== */
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-item { background: var(--color-bg-surface); margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; }
+        .faq-btn { width: 100%; text-align: left; padding: 1.5rem; background: transparent; border: none; color: var(--color-text-main); font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-btn span { font-size: 1.5rem; color: var(--color-primary); transition: transform 0.3s; }
+        .faq-btn.active span { transform: rotate(45deg); }
+        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
+        .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
+
+        /* ==========================================================================
+           10. FOOTER
+           ========================================================================== */
+        footer { background: #000; padding: 4rem 0 2rem 0; border-top: 2px solid var(--color-primary); text-align: center; }
+        .footer-brand { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem; }
+        .footer-brand span { color: var(--color-primary); }
+        .footer-text { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 2rem; }
+        .footer-bottom { border-top: 1px solid var(--color-border); padding-top: 2rem; color: #666; font-size: 0.8rem; }
+
+        /* Responsividade Básica */
+        @media (max-width: 768px) {
+            .hero-content { grid-template-columns: 1fr; text-align: center; }
+            .hero-text-area { align-items: center; }
+            .hero-title { font-size: 4.5rem; }
+            .hero-desc { max-width: 100%; }
+            .hero-visual { display: none; } /* Esconde o box 3D no celular para limpar o visual */
+            .nav-links { display: none; } /* No futuro pode virar um menu hambúrguer */
+            .section-title { font-size: 3rem; }
         }
     </style>
 </head>
@@ -377,13 +230,13 @@
         <div class="container nav-wrapper">
             <a href="#" class="brand">DU<span>.</span>STORE</a>
             <nav class="nav-links">
-                <a href="#contas">Contas</a>
-                <a href="#boost">Boost</a>
-                <a href="#moedas">Moedas</a>
-                <a href="#sobre">A Marca</a>
+                <a href="#catalogo">Catálogo</a>
+                <a href="#garantia">Garantia</a>
+                <a href="#depoimentos">Feedbacks</a>
+                <a href="#faq">FAQ</a>
             </nav>
             <button class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;">
-                <span>Painel</span>
+                <span>Login</span>
             </button>
         </div>
     </header>
@@ -396,31 +249,18 @@
             <div class="hero-text-area">
                 <div class="hero-badge">A Nova Era do Gaming</div>
                 <h1 class="hero-title" id="parallax-title">
-                    Eleve o <br>
-                    <span class="outline">Seu Nível.</span>
+                    Eleve o <br><span class="outline">Seu Nível.</span>
                 </h1>
                 <p class="hero-desc">Esqueça o amadorismo. Contas premium, boosters de elite e mercado negro de moedas digitais. A estética das ruas com a performance que os servidores exigem.</p>
-                
-                <button class="btn btn-primary" style="margin-top: 1rem;">
+                <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView();">
                     <span>Acessar Arsenal</span>
                 </button>
-
                 <div class="hero-stats">
-                    <div class="stat-item">
-                        <h4>15K+</h4>
-                        <p>Clientes</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>0%</h4>
-                        <p>Taxa de Ban</p>
-                    </div>
-                    <div class="stat-item">
-                        <h4>24/7</h4>
-                        <p>Suporte</p>
-                    </div>
+                    <div class="stat-item"><h4>15K+</h4><p>Clientes</p></div>
+                    <div class="stat-item"><h4>0%</h4><p>Taxa de Ban</p></div>
+                    <div class="stat-item"><h4>24/7</h4><p>Suporte</p></div>
                 </div>
             </div>
-
             <div class="hero-visual" id="hero-visual-container">
                 <div class="hero-visual-box" id="hero-3d-box">
                     <span style="color: rgba(255,255,255,0.2); font-family: var(--font-display); font-size: 4rem; letter-spacing: 10px;">DU.STORE</span>
@@ -429,62 +269,245 @@
         </div>
     </section>
 
-    <div class="spacer"></div>
+    <section id="catalogo">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Nosso <span class="text-primary">Arsenal</span></h2>
+                <p class="section-subtitle">Escolha sua categoria e domine o servidor com vantagem tática.</p>
+            </div>
+            
+            <div class="filters reveal">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="contas">Contas</button>
+                <button class="filter-btn" data-filter="boost">Boost</button>
+                <button class="filter-btn" data-filter="moedas">Moedas</button>
+            </div>
+
+            <div class="products-grid" id="products-container">
+                <div class="product-card reveal" data-category="contas">
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge">Pronta Entrega</span>
+                            <span style="color: var(--color-text-muted); font-size: 0.8rem;">#VAL-01</span>
+                        </div>
+                        <h3 class="card-title">Smurf Valorant <br><span class="text-primary">Imortal 1</span></h3>
+                        <p class="card-desc">Conta Full Acesso, sem restrições. Acompanha Vandal Sublime e Phantom Reconhecimento. MMR alto.</p>
+                        <div class="card-footer">
+                            <div class="price">R$ 180<span style="font-size: 1rem; color: var(--color-text-muted);">,00</span></div>
+                            <button class="btn-outline">Ver Detalhes</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal" data-category="boost">
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge" style="background: rgba(107,33,168,0.2); color: #c084fc;">Sigilo Total</span>
+                            <span style="color: var(--color-text-muted); font-size: 0.8rem;">#LOL-B</span>
+                        </div>
+                        <h3 class="card-title">League of Legends <br><span class="text-primary">MD5 Garantida</span></h3>
+                        <p class="card-desc">Jogamos a sua MD5 com winrate mínimo de 80%. Operação feita offline via VPN para total segurança.</p>
+                        <div class="card-footer">
+                            <div class="price">R$ 85<span style="font-size: 1rem; color: var(--color-text-muted);">,00</span></div>
+                            <button class="btn-outline">Contratar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card reveal" data-category="moedas">
+                    <div class="card-content">
+                        <div class="badge-container">
+                            <span class="badge" style="background: rgba(234, 179, 8, 0.1); color: #facc15;">Entrega Auto</span>
+                            <span style="color: var(--color-text-muted); font-size: 0.8rem;">#FN-VB</span>
+                        </div>
+                        <h3 class="card-title">Fortnite <br><span class="text-primary">13.500 V-Bucks</span></h3>
+                        <p class="card-desc">Pacote massivo de moedas via gift card global. Resgate direto na sua conta Epic Games na hora.</p>
+                        <div class="card-footer">
+                            <div class="price">R$ 210<span style="font-size: 1rem; color: var(--color-text-muted);">,00</span></div>
+                            <button class="btn-outline">Comprar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="garantia" class="trust-section">
+        <div class="container reveal">
+            <div class="trust-grid">
+                <div class="trust-item">
+                    <div class="trust-icon">⚡</div>
+                    <h3>Drop Instantâneo</h3>
+                    <p>Nosso sistema roda 24/7. Pagou via Pix, as credenciais caem no seu email na mesma hora.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🛡️</div>
+                    <h3>Blindagem Anti-Ban</h3>
+                    <p>Operamos com HWID Spoofer e VPNs residenciais dedicadas nos serviços de boost.</p>
+                </div>
+                <div class="trust-item">
+                    <div class="trust-icon">🎧</div>
+                    <h3>Suporte Elite</h3>
+                    <p>Problemas? Nossa moderação no Discord resolve B.O. em menos de 10 minutos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="depoimentos">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Voz da <span class="text-primary">Rua</span></h2>
+                <p class="section-subtitle">Quem comprou, testou e validou nossa performance.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimo-card reveal">
+                    <p class="testimo-text">"Comprei a smurf de Valorant e chegou na hora. Os caras entregam o que prometem, já tô amassando nos lobbies High Elo. Recomendo demais!"</p>
+                    <div class="testimo-author">@FallenZin_FPS</div>
+                </div>
+                <div class="testimo-card reveal">
+                    <p class="testimo-text">"O serviço de boost do LoL é bizarro de bom. O cara logou de madrugada, fez 5 vitórias seguidas na minha MD5 e ninguém da minha friendlist percebeu."</p>
+                    <div class="testimo-author">JinxMain22</div>
+                </div>
+                <div class="testimo-card reveal">
+                    <p class="testimo-text">"Melhor preço de V-Bucks do mercado cinza. Fiquei com receio no começo, mas caiu em 2 minutos via código de resgate da Epic."</p>
+                    <div class="testimo-author">Carlos 'TRX'</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">Intel <span class="text-primary">(FAQ)</span></h2>
+                <p class="section-subtitle">Tudo o que você precisa saber antes de dropar na loja.</p>
+            </div>
+            <div class="faq-container reveal">
+                <div class="faq-item">
+                    <button class="faq-btn">Como recebo minha conta após o pagamento? <span>+</span></button>
+                    <div class="faq-content"><p>A entrega é 100% automatizada para pagamentos via Pix ou Cripto. O login e senha serão enviados para o email cadastrado no checkout assim que o banco aprovar.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn">O Boost tem risco de banimento? <span>+</span></button>
+                    <div class="faq-content"><p>Nosso risco é virtualmente zero. Exigimos que você ative o modo offline no jogo e nossos boosters utilizam VPNs da sua mesma cidade/estado para mascarar o IP.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-btn">Vocês aceitam reembolso? <span>+</span></button>
+                    <div class="faq-content"><p>Sim. Caso a conta entregue venha com algum bloqueio prévio não informado, garantimos a troca imediata ou devolução total do dinheiro em até 7 dias, conforme a lei.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-brand">DU<span>.</span>STORE</div>
+            <p class="footer-text">Elevando o padrão do e-commerce gaming. Da rua para os servidores.</p>
+            <div class="footer-bottom">
+                &copy; 2026 DU Store. Todos os direitos reservados. Não possuímos vínculo com Riot Games, Epic Games ou Valve.
+            </div>
+        </div>
+    </footer>
 
     <script>
-        /* ==========================================================================
-           JAVASCRIPT BASE (Interatividade de alto nível)
-           ========================================================================== */
-        
-        // 1. Navbar mudando ao dar Scroll
+        // 1. Header Scrolled
         const header = document.getElementById('main-header');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+
+        // 2. Parallax Hero
+        const parallaxBg = document.getElementById('parallax-bg');
+        const parallaxTitle = document.getElementById('parallax-title');
+        window.addEventListener('scroll', () => {
+            let scrollY = window.scrollY;
+            if(scrollY < 800) { // Otimização de performance
+                parallaxBg.style.transform = `translateY(${scrollY * 0.3}px)`;
+                parallaxTitle.style.transform = `translateY(${scrollY * 0.15}px)`;
             }
         });
 
-        // 2. Parallax Effect Sutil no Scroll
-        const parallaxBg = document.getElementById('parallax-bg');
-        const parallaxTitle = document.getElementById('parallax-title');
-        
-        window.addEventListener('scroll', () => {
-            let scrollY = window.scrollY;
-            // Move o background sutilmente para baixo
-            parallaxBg.style.transform = `translateY(${scrollY * 0.3}px)`;
-            // Move o título numa velocidade diferente para dar profundidade
-            parallaxTitle.style.transform = `translateY(${scrollY * 0.15}px)`;
-        });
-
-        // 3. Efeito 3D Tilt no Elemento Visual da Hero com o Mouse
+        // 3. 3D Tilt Effect
         const visualContainer = document.getElementById('hero-visual-container');
         const box3D = document.getElementById('hero-3d-box');
+        if(visualContainer && box3D) {
+            visualContainer.addEventListener('mousemove', (e) => {
+                const rect = visualContainer.getBoundingClientRect();
+                const x = e.clientX - rect.left, y = e.clientY - rect.top;
+                const centerX = rect.width / 2, centerY = rect.height / 2;
+                const rotateX = ((y - centerY) / centerY) * -15;
+                const rotateY = ((x - centerX) / centerX) * 15;
+                box3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                box3D.style.transition = 'none';
+            });
+            visualContainer.addEventListener('mouseleave', () => {
+                box3D.style.transform = `rotateX(5deg) rotateY(-15deg)`;
+                box3D.style.transition = 'transform 0.5s ease-out';
+            });
+        }
 
-        visualContainer.addEventListener('mousemove', (e) => {
-            const rect = visualContainer.getBoundingClientRect();
-            const x = e.clientX - rect.left; // Posição X do mouse dentro do container
-            const y = e.clientY - rect.top;  // Posição Y do mouse dentro do container
-            
-            // Calcula o centro do container
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-            
-            // Calcula a rotação (quanto mais longe do centro, maior a rotação)
-            const rotateX = ((y - centerY) / centerY) * -15; // Max 15 graus
-            const rotateY = ((x - centerX) / centerX) * 15;  // Max 15 graus
-
-            // Aplica a transformação
-            box3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            box3D.style.transition = 'none'; // Tira a transição para seguir o mouse rápido
+        // 4. Products Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filterValue = btn.getAttribute('data-filter');
+                
+                productCards.forEach(card => {
+                    if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                        card.style.display = 'flex';
+                        setTimeout(() => { card.style.opacity = '1'; card.style.transform = 'translateY(0)'; }, 50);
+                    } else {
+                        card.style.opacity = '0';
+                        card.style.transform = 'translateY(20px)';
+                        setTimeout(() => { card.style.display = 'none'; }, 300);
+                    }
+                });
+            });
         });
 
-        // Quando o mouse sai, volta ao normal de forma suave
-        visualContainer.addEventListener('mouseleave', () => {
-            box3D.style.transform = `rotateX(5deg) rotateY(-15deg)`;
-            box3D.style.transition = 'transform 0.5s ease-out';
+        // 5. Glow Effect em Cards
+        document.getElementById('products-container').addEventListener('mousemove', e => {
+            for(const card of document.querySelectorAll('.product-card')) {
+                const rect = card.getBoundingClientRect(),
+                      x = e.clientX - rect.left,
+                      y = e.clientY - rect.top;
+                card.style.setProperty("--mouse-x", `${x}px`);
+                card.style.setProperty("--mouse-y", `${y}px`);
+            }
         });
+
+        // 6. FAQ Accordion
+        const faqBtns = document.querySelectorAll('.faq-btn');
+        faqBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.classList.toggle('active');
+                const content = this.nextElementSibling;
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                } 
+            });
+        });
+
+        // 7. Scroll Reveal Animation
+        const reveals = document.querySelectorAll('.reveal');
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 100;
+            reveals.forEach(reveal => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Trigger initial
     </script>
 </body>
 </html>
