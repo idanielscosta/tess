@@ -44,7 +44,7 @@
         .text-primary { color: var(--color-primary); }
         .text-accent { color: var(--color-accent); }
         
-        /* formatacao scrollbar */
+        /* formatacao scrollbar estilo hacker */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
@@ -70,8 +70,8 @@
         .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; }
         .btn-success:hover { background: var(--color-accent); color: #000; }
         
-        /* botao discord ajustado */
-        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; width: auto; }
+        /* botao discord com largura dinamica resolvida */
+        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; padding: 1rem 2.5rem; width: max-content; }
         .btn-discord:hover { background: #4752C4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
         .btn-discord img { height: 20px; filter: brightness(0) invert(1); position: relative; z-index: 2;}
         .btn-discord span { position: relative; z-index: 2; }
@@ -99,7 +99,6 @@
         
         .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem;}
         
-        /* ESTATISTICAS HERO RESTAURADAS */
         .hero-stats { display: flex; gap: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
         .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
         .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
@@ -109,13 +108,13 @@
         
         /* MAGICA DO FADE NA LOGO (OPACIDADE NAS BORDAS) */
         .logo-mask {
-            max-width: 90%; 
-            max-height: 90%; 
+            max-width: 100%; 
+            max-height: 400px; 
             object-fit: contain; 
             filter: drop-shadow(0 0 30px var(--color-primary-glow));
-            /* O radial gradiente faz as bordas ficarem transparentes suavemente */
-            -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 60%, transparent 100%);
-            mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 60%, transparent 100%);
+            /* O gradiente radial queima as bordas pretas deixando transparente */
+            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%);
         }
 
         /* sessoes padrao do site e espacamentos */
@@ -124,8 +123,8 @@
         .section-title { font-family: var(--font-display); font-size: 4rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
         .section-subtitle { color: var(--color-text-muted); font-size: 1.1rem; }
         
-        /* faz os elementos aparecerem no scroll de forma segura */
-        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* animacao suave de aparecimento do scroll */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* vitrine de cards e filtros */
@@ -192,18 +191,25 @@
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
         .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
         
-        /* Area do Cliente - Redesign Supremo Gamificado Corrigido */
+        /* Area do Cliente - Redesign Gamificado Absoluto */
         .gamer-profile-header { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); overflow: hidden; margin-bottom: 2rem; position: relative; }
-        .gamer-banner { height: 150px; background: linear-gradient(45deg, #2a004d, #111); width: 100%; position: relative; }
+        .gamer-banner { height: 160px; background: linear-gradient(45deg, #1b0033, #050505); width: 100%; position: relative; }
         .gamer-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--color-bg-surface), transparent); }
-        .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -50px; position: relative; z-index: 2; }
         
-        /* Correção do Avatar vazando ou quebrando */
-        .gamer-avatar-wrapper { width: 100px; height: 100px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0; }
+        /* Container das informacoes da header (Avatar e Textos perfeitos) */
+        .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -60px; position: relative; z-index: 2; }
+        
+        /* A mascara perfeita que blinda o avatar para nao vazar ou dar erro visual */
+        .gamer-avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0; position: relative;}
         .gamer-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
-        .gamer-details h2 { font-family: var(--font-display); font-size: 3rem; margin: 0; line-height: 1; display:flex; align-items:center; gap: 10px;}
-        .gamer-tag { color: var(--color-primary); font-family: var(--font-body); font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; }
+        .gamer-details { flex-grow: 1; padding-bottom: 5px; }
+        .gamer-tag { color: var(--color-primary); font-family: var(--font-body); font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;}
+        .gamer-name-box { font-family: var(--font-display); font-size: 3rem; margin: 0; line-height: 1; display:flex; align-items:center; gap: 15px;}
+        
+        /* Botao de editar estiloso */
+        .btn-edit-profile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; font-size: 1rem; color: var(--color-text-main); }
+        .btn-edit-profile:hover { background: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px var(--color-primary-glow); }
         
         .gamer-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
         .gamer-card { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); padding: 2rem; }
@@ -257,8 +263,19 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
         .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 8px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto;}
         .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
-        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
-        .success-msg { color: var(--color-accent); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
+
+        /* Botoes Sociais */
+        .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
+        .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.9rem;}
+        .btn-social img { width: 20px; height: 20px; margin-right: 10px; }
+        .btn-google { background-color: #ffffff; color: #000000; }
+        .btn-google:hover { background-color: #e0e0e0; }
+        .btn-apple { background-color: #000000; color: #ffffff; border: 1px solid var(--color-border); }
+        .btn-apple:hover { background-color: #1a1a1a; }
+        .divider { display: flex; align-items: center; text-align: center; margin: 1.5rem 0; color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; font-family: var(--font-display); letter-spacing: 1px;}
+        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--color-border); }
+        .divider:not(:empty)::before { margin-right: 1em; }
+        .divider:not(:empty)::after { margin-left: 1em; }
 
         footer { background: #000; padding: 4rem 0 2rem 0; border-top: 2px solid var(--color-primary); text-align: center; }
 
@@ -355,11 +372,11 @@
                     <h2 class="section-title">Nosso <span class="text-primary">Arsenal</span></h2>
                     <p class="section-subtitle">Escolha sua categoria e adicione ao carrinho para dominar o servidor.</p>
                 </div>
-                <div class="filters reveal" id="dynamic-filters">
+                <div class="filters" id="dynamic-filters">
                     <button class="filter-btn active">Carregando Filtros...</button>
                 </div>
-                <div class="products-grid reveal" id="products-container">
-                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Iniciando conexão segura com a base...</div>
+                <div class="products-grid" id="products-container">
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando com o servidor da loja...</div>
                 </div>
             </div>
         </section>
@@ -398,7 +415,7 @@
         <footer>
             <div class="container text-center">
                 <div class="brand" style="font-size: 2rem; margin-bottom: 1rem;">DU<span>.</span>STORE</div>
-                <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados.</p>
+                <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados. (Shift+P para Comando)</p>
             </div>
         </footer>
     </div> <div id="app-checkout" class="app-view">
@@ -437,21 +454,24 @@
         <div class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
                 <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; font-size: 1rem; font-weight: bold;">← Voltar à Loja</button>
-                <button onclick="window.logoutUser()" class="btn-danger" style="border:none; border-radius: 4px;">Sair da Conta</button>
             </div>
 
             <div class="gamer-profile-header">
-                <div class="gamer-banner"></div>
+                <div class="gamer-banner">
+                    <button onclick="window.logoutUser()" class="btn-danger" style="position: absolute; top: 15px; right: 15px; z-index: 10; border-radius: 4px; border: none; padding: 0.5rem 1rem;">Sair da Conta</button>
+                </div>
+                
                 <div class="gamer-info-row">
                     <div class="gamer-avatar-wrapper">
-                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="Avatar">
+                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="">
                     </div>
+                    
                     <div class="gamer-details">
-                        <div class="gamer-tag">Operador Nível Elite</div>
-                        <h2>
-                            <span id="dash-client-name">Loading...</span> 
-                            <button onclick="document.getElementById('edit-profile-modal').style.display='flex'" style="background:none; border:none; cursor:pointer; color: var(--color-primary); font-size: 1.2rem;" title="Editar Perfil">✏️</button>
-                        </h2>
+                        <div class="gamer-tag">Operador Registrado</div>
+                        <div class="gamer-name-box">
+                            <span id="dash-client-name">Carregando...</span> 
+                            <button class="btn-edit-profile" onclick="document.getElementById('edit-profile-modal').style.display='flex'" title="Editar Perfil">✏️</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -604,7 +624,6 @@
         <div class="modal-box">
             <button class="close-modal" onclick="document.getElementById('user-login-modal').style.display='none'">×</button>
             <h2 class="modal-title" id="auth-title">Entrar na Base</h2>
-            <div class="error-msg" id="user-error"></div>
             
             <div class="form-group"><label>Operador (Nick)</label><input type="text" id="user-username" class="form-control" placeholder="Seu nick..."></div>
             <div class="form-group"><label>Senha</label><input type="password" id="user-password" class="form-control" placeholder="*******"></div>
@@ -680,19 +699,11 @@
         }
 
         // ==========================================
-        // SISTEMA DE NAVEGACAO SPA & VISUAL (ARRUMADO)
+        // SISTEMA DE NAVEGACAO SPA & VISUAL
         // ==========================================
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         
-        // Garante que o parallax nao vai quebrar nada
-        const pBg = document.getElementById('parallax-bg');
-        const pTitle = document.getElementById('parallax-title');
-        window.addEventListener('scroll', () => {
-            let s = window.scrollY; 
-            if(s < 800 && pBg && pTitle) { pBg.style.transform = `translateY(${s * 0.3}px)`; pTitle.style.transform = `translateY(${s * 0.15}px)`; }
-        });
-
-        // Revela as sessoes com seguranca (isso arrumou o bug de sumir tudo)
+        // Reveal Seguro
         const revealOnScroll = () => { 
             const reveals = document.querySelectorAll('.reveal');
             let wh = window.innerHeight; 
@@ -707,7 +718,7 @@
             document.getElementById(pageId).classList.add('active');
             window.scrollTo(0,0);
             document.getElementById('main-header').style.display = (pageId === 'app-home') ? 'block' : 'none';
-            if(pageId === 'app-home') setTimeout(revealOnScroll, 100); // Força aparecer a home
+            if(pageId === 'app-home') setTimeout(revealOnScroll, 100); 
             if(pageId === 'app-cliente') loadClientData();
             if(pageId === 'app-admin') loadAdminData();
         };
@@ -724,28 +735,27 @@
         // BANCO DE DADOS & RENDERIZACAO DE PRODUTOS
         // ==========================================
         async function loadStoreData() {
+            // Tenta puxar categorias
             try {
                 const cDoc = await getDoc(doc(db, "config", "storeData"));
-                if(cDoc.exists() && cDoc.data().categories) {
-                    categories = cDoc.data().categories;
-                } else {
-                    await setDoc(doc(db, "config", "storeData"), { categories });
-                }
-                renderCategoriesUI();
+                if(cDoc.exists() && cDoc.data().categories) categories = cDoc.data().categories;
+            } catch (e) { console.warn("Aviso Categorias: BD Bloqueado ou vazio."); }
+            renderCategoriesUI();
 
+            // Tenta puxar produtos
+            try {
                 const qs = await getDocs(collection(db, "products"));
                 products = [];
                 qs.forEach(doc => {
                     let data = doc.data();
-                    data.currentViews = Math.floor(Math.random() * 8) + 3; // Views iniciais realistas
+                    data.currentViews = Math.floor(Math.random() * 8) + 3; // Views iniciais
                     products.push({ id: doc.id, ...data });
                 });
                 renderStoreFront();
-                revealOnScroll(); // Chama a exibicao depois de carregar!
+                revealOnScroll(); // Destrava as secoes logo apos carregar!
             } catch (e) {
-                console.log(e);
-                document.getElementById('products-container').innerHTML = '<div class="empty-state">Nenhum produto cadastrado ou erro no servidor.</div>';
-                revealOnScroll(); 
+                document.getElementById('products-container').innerHTML = '<div class="empty-state" style="color:var(--color-danger);">Erro de Permissão no Firebase.<br>Vá no painel do Firestore > Regras > e coloque em Modo de Teste.</div>';
+                revealOnScroll(); // Destrava pra pelo menos o cliente ver o resto do site
             }
         }
 
@@ -780,7 +790,7 @@
             const cont = document.getElementById('products-container');
             cont.innerHTML = '';
             const list = activeCategoryFilter === 'all' ? products : products.filter(p => p.category === activeCategoryFilter);
-            if(list.length === 0) { cont.innerHTML = '<div class="empty-state">Sem estoque no momento.</div>'; return; }
+            if(list.length === 0) { cont.innerHTML = '<div class="empty-state">Sem estoque nesta categoria.</div>'; return; }
 
             list.forEach(p => {
                 const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
@@ -804,7 +814,7 @@
             });
         }
 
-        // Variacao de pessoas olhando mais natural
+        // Variacao de pessoas olhando natural
         setInterval(() => {
             products.forEach(p => {
                 if(Math.random() > 0.6) {
@@ -905,19 +915,21 @@
         }
 
         // ==========================================
-        // AUTH COMPLETO (Google, Apple, Manual)
+        // AUTH COMPLETO
         // ==========================================
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                const docSnap = await getDoc(doc(db, "users", user.uid));
-                if (docSnap.exists()) {
-                    loggedInUser = { uid: user.uid, ...docSnap.data() };
-                } else {
-                    let uname = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
-                    loggedInUser = { uid: user.uid, username: uname, totalSpent: 0, avatarUrl: user.photoURL || '' };
-                    await setDoc(doc(db, "users", user.uid), loggedInUser);
-                }
-                document.getElementById('header-btn-text').innerText = `Meu Perfil`;
+                try {
+                    const docSnap = await getDoc(doc(db, "users", user.uid));
+                    if (docSnap.exists()) {
+                        loggedInUser = { uid: user.uid, ...docSnap.data() };
+                    } else {
+                        let uname = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
+                        loggedInUser = { uid: user.uid, username: uname, totalSpent: 0, avatarUrl: user.photoURL || '' };
+                        await setDoc(doc(db, "users", user.uid), loggedInUser);
+                    }
+                    document.getElementById('header-btn-text').innerText = `Meu Perfil`;
+                } catch(e){ console.error(e); }
             } else {
                 loggedInUser = null;
                 document.getElementById('header-btn-text').innerText = `Login / Cadastro`;
@@ -941,17 +953,20 @@
             const fakeEmail = `${userText}@dustore.com`;
 
             try {
-                if(isRegisterMode) {
-                    const cred = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
-                    await setDoc(doc(db, "users", cred.user.uid), { username: userText, totalSpent: 0, avatarUrl: '' });
-                    window.showToast("Conta criada!", "success");
-                } else {
-                    await signInWithEmailAndPassword(auth, fakeEmail, pass);
-                    window.showToast("Acesso concedido.", "success");
-                }
+                let userCred;
+                if(isRegisterMode) userCred = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
+                else userCred = await signInWithEmailAndPassword(auth, fakeEmail, pass);
+                
+                try {
+                    if(isRegisterMode) await setDoc(doc(db, "users", userCred.user.uid), { username: userText, totalSpent: 0, avatarUrl: '' });
+                } catch(dbErr) { console.warn("Aviso regras BD:", dbErr); }
+
+                window.showToast("Acesso concedido!", "success");
                 document.getElementById('user-login-modal').style.display = 'none';
                 setTimeout(() => window.navegar('app-cliente'), 500);
-            } catch (e) { window.showToast("Erro na autenticação.", "error"); }
+            } catch (e) { 
+                window.showToast(e.message.includes('auth') ? "Credenciais inválidas." : "Erro na rede.", "error"); 
+            }
         }
 
         window.loginWithGoogle = async function() {
@@ -1019,7 +1034,7 @@
 
             if(newNick !== loggedInUser.username) {
                 if(loggedInUser.lastNickChange && (now - loggedInUser.lastNickChange < 7*24*60*60*1000)) {
-                    return window.showToast("Aguarde 7 dias para mudar o Nick.", "warning");
+                    return window.showToast("Aguarde 7 dias para mudar o Nick.", "error");
                 }
                 updates.username = newNick;
                 updates.lastNickChange = now;
@@ -1034,7 +1049,7 @@
         }
 
         // ==========================================
-        // PAINEL ADMIN (CTRL+P / PRESENÇA REAL)
+        // PAINEL DE COMANDO DO ADMIN & PRESENCA
         // ==========================================
         const mySessionId = Math.random().toString(36).substring(2);
         async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
@@ -1051,7 +1066,7 @@
             if(document.getElementById('secret-password').value === "@Kakaka5566") {
                 document.getElementById('admin-login-modal').style.display = 'none';
                 window.navegar('app-admin');
-            } else { document.getElementById('admin-login-error').style.display = 'block'; }
+            } else { window.showToast("Acesso Negado.", "error"); }
         }
 
         async function getLiveUsers() {
@@ -1114,7 +1129,7 @@
         window.addCategory = async function() {
             const val = document.getElementById('new-category-name').value.trim().toLowerCase();
             if(!val) return;
-            if(categories.includes(val)) return window.showToast("Essa já existe", "warning");
+            if(categories.includes(val)) return window.showToast("Essa já existe", "error");
             categories.push(val);
             try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Categoria Criada!', 'success'); document.getElementById('new-category-name').value = ''; } catch(e) {}
         }
@@ -1139,7 +1154,7 @@
             const c = document.getElementById('add-category').value;
             const p = document.getElementById('add-price').value;
             const d = document.getElementById('add-desc').value;
-            if(!t || !p) return window.showToast("Preencha o título e preço!", "warning");
+            if(!t || !p) return window.showToast("Preencha o título e preço!", "error");
             
             try {
                 await addDoc(collection(db, "products"), { title: t, imageUrl: img, category: c, price: Number(p), description: d });
@@ -1149,9 +1164,9 @@
         }
         window.delP = async function(id) { await deleteDoc(doc(db, "products", id)); loadStoreData(); loadAdminData(); window.showToast("Removido.", "info"); }
 
-        // Start
+        // Start da Loja
         loadStoreData();
-        setTimeout(revealOnScroll, 500); // Garante a revelação visual pós-carregamento inicial
+        
     </script>
 </body>
 </html>
