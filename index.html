@@ -18,36 +18,36 @@
             --color-bg-base: #050505;
             --color-bg-surface: #111111;
             --color-bg-glass: rgba(17, 17, 17, 0.6);
-            
             --color-primary: #6B21A8;
             --color-primary-glow: rgba(107, 33, 168, 0.4);
             --color-accent: #10B981;
             --color-danger: #EF4444;
-            
             --color-text-main: #F3F4F6;
             --color-text-muted: #9CA3AF;
             --color-border: #27272A;
-            
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'Inter', sans-serif;
-            
             --container-max: 1200px;
             --transition-smooth: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             --transition-fast: all 0.3s ease;
+            
+            /* Cores dos Elos */
+            --elo-bronze: #CD7F32;
+            --elo-prata: #C0C0C0;
+            --elo-esmeralda: #50C878;
+            --elo-diamante: #B9F2FF;
         }
 
         /* ==========================================================================
-           2. BASE
+           2. BASE & BOTÕES
            ========================================================================== */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html.smooth-scroll { scroll-behavior: smooth; }
         body { background-color: var(--color-bg-base); color: var(--color-text-main); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         ::selection { background: var(--color-primary); color: #fff; }
-
         .container { max-width: var(--container-max); margin: 0 auto; padding: 0 2rem; }
         .text-primary { color: var(--color-primary); }
 
-        /* Botões */
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: none; position: relative; overflow: hidden; background: transparent; color: var(--color-text-main); transition: var(--transition-fast); }
         .btn-primary { background: var(--color-text-main); color: var(--color-bg-base); border-radius: 2px; }
         .btn-primary::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--color-primary); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
@@ -112,6 +112,9 @@
         .product-card:hover::before { opacity: 1; }
         .product-card:hover { transform: translateY(-5px); border-color: rgba(107, 33, 168, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
+        /* Nova Imagem do Card */
+        .card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; border: 1px solid var(--color-border); z-index: 1; position: relative; }
+
         .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
         .badge-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
         .badge { background: rgba(107, 33, 168, 0.2); color: #c084fc; padding: 0.3rem 0.8rem; border-radius: 4px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; }
@@ -123,7 +126,7 @@
         .btn-outline:hover { background: var(--color-text-main); color: var(--color-bg-base); }
 
         /* ==========================================================================
-           5. GARANTIA / TRUST SECTION
+           5. GARANTIA, DEPOIMENTOS, FAQ & FOOTER
            ========================================================================== */
         .trust-section { background: #0a0a0a; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
         .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: center; }
@@ -131,17 +134,11 @@
         .trust-item p { color: var(--color-text-muted); font-size: 0.95rem; }
         .trust-icon { font-size: 3rem; color: var(--color-primary); }
 
-        /* ==========================================================================
-           6. DEPOIMENTOS
-           ========================================================================== */
         .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
         .testimo-card { background: var(--color-bg-surface); padding: 2.5rem; border-radius: 8px; border-left: 4px solid var(--color-primary); position: relative; }
         .testimo-text { font-style: italic; color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
         .testimo-author { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-text-main); letter-spacing: 1px; }
 
-        /* ==========================================================================
-           7. FAQ
-           ========================================================================== */
         .faq-container { max-width: 800px; margin: 0 auto; }
         .faq-item { background: var(--color-bg-surface); margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 4px; overflow: hidden; }
         .faq-btn { width: 100%; text-align: left; padding: 1.5rem; background: transparent; border: none; color: var(--color-text-main); font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
@@ -150,9 +147,6 @@
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
         .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
 
-        /* ==========================================================================
-           8. FOOTER
-           ========================================================================== */
         footer { background: #000; padding: 4rem 0 2rem 0; border-top: 2px solid var(--color-primary); text-align: center; }
         .footer-brand { font-family: var(--font-display); font-size: 3rem; margin-bottom: 1rem; }
         .footer-brand span { color: var(--color-primary); }
@@ -160,40 +154,55 @@
         .footer-bottom { border-top: 1px solid var(--color-border); padding-top: 2rem; color: #666; font-size: 0.8rem; }
 
         /* ==========================================================================
-           9. PAINEL ADMIN & MODAIS (SECRET AREA)
+           6. MODAIS, FORMS & ÁREA DO CLIENTE
            ========================================================================== */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; }
-        .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-primary); padding: 3rem; border-radius: 8px; width: 90%; max-width: 400px; box-shadow: 0 0 50px rgba(107, 33, 168, 0.2); position: relative; }
+        .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-primary); padding: 3rem; border-radius: 8px; width: 90%; max-width: 450px; box-shadow: 0 0 50px rgba(107, 33, 168, 0.2); position: relative; }
         .modal-title { font-family: var(--font-display); font-size: 2.5rem; text-align: center; margin-bottom: 2rem; color: var(--color-text-main); }
         
         .form-group { margin-bottom: 1.5rem; }
         .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.5rem; letter-spacing: 1px; }
         .form-control { width: 100%; background: #000; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 1rem; border-radius: 4px; font-family: var(--font-body); outline: none; transition: border 0.3s; }
         .form-control:focus { border-color: var(--color-primary); }
+        
         .error-msg { color: var(--color-danger); font-size: 0.8rem; text-align: center; margin-bottom: 1rem; display: none; }
+        .success-msg { color: var(--color-accent); font-size: 0.8rem; text-align: center; margin-bottom: 1rem; display: none; }
 
-        .admin-panel { max-width: 800px; max-height: 90vh; overflow-y: auto; padding: 2rem; }
+        .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
+        .close-modal:hover { color: var(--color-danger); }
+
+        /* Área do Cliente - ELOS */
+        .client-dashboard { max-width: 600px; text-align: center; }
+        .elo-badge { display: inline-block; padding: 0.5rem 1.5rem; border-radius: 50px; font-family: var(--font-display); font-size: 2rem; letter-spacing: 2px; margin: 1rem 0; color: #000; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+        
+        .elo-bronze { background: linear-gradient(135deg, #cd7f32, #8b5a2b); box-shadow: 0 0 15px rgba(205, 127, 50, 0.4); }
+        .elo-prata { background: linear-gradient(135deg, #e0e0e0, #a0a0a0); box-shadow: 0 0 15px rgba(192, 192, 192, 0.4); }
+        .elo-esmeralda { background: linear-gradient(135deg, #50c878, #2e8b57); box-shadow: 0 0 15px rgba(80, 200, 120, 0.4); }
+        .elo-diamante { background: linear-gradient(135deg, #b9f2ff, #7df9ff); box-shadow: 0 0 20px rgba(185, 242, 255, 0.6); }
+
+        .progress-container { width: 100%; background: #000; border: 1px solid var(--color-border); border-radius: 50px; height: 20px; margin: 1.5rem 0; overflow: hidden; position: relative; }
+        .progress-bar { height: 100%; background: var(--color-primary); width: 0%; transition: width 0.8s ease-out; box-shadow: 0 0 10px var(--color-primary-glow); }
+        .progress-text { position: absolute; top: 0; left: 0; width: 100%; text-align: center; font-size: 0.75rem; font-weight: bold; line-height: 20px; color: #fff; z-index: 2; text-shadow: 1px 1px 2px #000;}
+
+        /* Admin Layout */
+        .admin-panel { max-width: 900px; max-height: 90vh; overflow-y: auto; padding: 2rem; }
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 1rem; margin-bottom: 2rem; }
         .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        @media (max-width: 768px) { .admin-grid { grid-template-columns: 1fr; } }
-        
         .product-list-item { background: #000; border: 1px solid var(--color-border); padding: 1rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
         .product-list-info strong { display: block; color: var(--color-text-main); }
         .product-list-info span { font-size: 0.8rem; color: var(--color-text-muted); }
-        .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
-        .close-modal:hover { color: var(--color-danger); }
         
         .admin-panel::-webkit-scrollbar { width: 8px; }
         .admin-panel::-webkit-scrollbar-track { background: #000; }
         .admin-panel::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
         
-        /* Ajuste de responsividade */
         @media (max-width: 768px) {
             .hero-content { grid-template-columns: 1fr; text-align: center; }
             .hero-text-area { align-items: center; }
             .hero-title { font-size: 4.5rem; }
             .hero-visual { display: none; }
             .nav-links { display: none; }
+            .admin-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -208,7 +217,7 @@
                 <a href="#depoimentos">Feedbacks</a>
                 <a href="#faq">FAQ</a>
             </nav>
-            <button class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;" onclick="alert('Dica: Use Ctrl+P para acessar o painel secreto.')">
+            <button class="btn btn-primary" id="header-user-btn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem;" onclick="openUserArea()">
                 <span>Login</span>
             </button>
         </div>
@@ -217,22 +226,12 @@
     <section class="hero" id="hero-section">
         <div class="hero-bg-grid" id="parallax-bg"></div>
         <div class="hero-glow"></div>
-        
         <div class="container hero-content">
             <div class="hero-text-area">
                 <div class="hero-badge">A Nova Era do Gaming</div>
-                <h1 class="hero-title" id="parallax-title">
-                    Eleve o <br><span class="outline">Seu Nível.</span>
-                </h1>
+                <h1 class="hero-title" id="parallax-title">Eleve o <br><span class="outline">Seu Nível.</span></h1>
                 <p class="hero-desc">Esqueça o amadorismo. Contas premium, boosters de elite e mercado negro de moedas digitais. A estética das ruas com a performance que os servidores exigem.</p>
-                <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView();">
-                    <span>Acessar Arsenal</span>
-                </button>
-                <div class="hero-stats">
-                    <div class="stat-item"><h4>15K+</h4><p>Clientes</p></div>
-                    <div class="stat-item"><h4>0%</h4><p>Taxa de Ban</p></div>
-                    <div class="stat-item"><h4>24/7</h4><p>Suporte</p></div>
-                </div>
+                <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView();"><span>Acessar Arsenal</span></button>
             </div>
             <div class="hero-visual" id="hero-visual-container">
                 <div class="hero-visual-box" id="hero-3d-box">
@@ -248,14 +247,8 @@
                 <h2 class="section-title">Nosso <span class="text-primary">Arsenal</span></h2>
                 <p class="section-subtitle">Escolha sua categoria e domine o servidor com vantagem tática.</p>
             </div>
-            
-            <div class="filters reveal">
-                <button class="filter-btn active" data-filter="all">Todos</button>
-                <button class="filter-btn" data-filter="contas">Contas</button>
-                <button class="filter-btn" data-filter="boost">Boost</button>
-                <button class="filter-btn" data-filter="moedas">Moedas</button>
-            </div>
-
+            <div class="filters reveal" id="dynamic-filters">
+                </div>
             <div class="products-grid reveal" id="products-container">
                 </div>
         </div>
@@ -264,288 +257,372 @@
     <section id="garantia" class="trust-section">
         <div class="container reveal">
             <div class="trust-grid">
-                <div class="trust-item">
-                    <div class="trust-icon">⚡</div>
-                    <h3>Drop Instantâneo</h3>
-                    <p>Nosso sistema roda 24/7. Pagou via Pix, as credenciais caem no seu email na mesma hora.</p>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">🛡️</div>
-                    <h3>Blindagem Anti-Ban</h3>
-                    <p>Operamos com HWID Spoofer e VPNs residenciais dedicadas nos serviços de boost.</p>
-                </div>
-                <div class="trust-item">
-                    <div class="trust-icon">🎧</div>
-                    <h3>Suporte Elite</h3>
-                    <p>Problemas? Nossa moderação no Discord resolve B.O. em menos de 10 minutos.</p>
-                </div>
+                <div class="trust-item"><div class="trust-icon">⚡</div><h3>Drop Instantâneo</h3><p>Nosso sistema roda 24/7. Pagou, recebeu no email na mesma hora.</p></div>
+                <div class="trust-item"><div class="trust-icon">🛡️</div><h3>Blindagem Anti-Ban</h3><p>Operamos com HWID Spoofer e VPNs residenciais dedicadas.</p></div>
+                <div class="trust-item"><div class="trust-icon">🎧</div><h3>Suporte Elite</h3><p>Nossa moderação no Discord resolve B.O. em menos de 10 minutos.</p></div>
             </div>
         </div>
     </section>
-
     <section id="depoimentos">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Voz da <span class="text-primary">Rua</span></h2>
-                <p class="section-subtitle">Quem comprou, testou e validou nossa performance.</p>
-            </div>
+            <div class="section-header reveal"><h2 class="section-title">Voz da <span class="text-primary">Rua</span></h2><p class="section-subtitle">Quem comprou, testou e validou nossa performance.</p></div>
             <div class="testimonials-grid">
-                <div class="testimo-card reveal">
-                    <p class="testimo-text">"Comprei a smurf de Valorant e chegou na hora. Os caras entregam o que prometem, já tô amassando nos lobbies High Elo. Recomendo demais!"</p>
-                    <div class="testimo-author">@FallenZin_FPS</div>
-                </div>
-                <div class="testimo-card reveal">
-                    <p class="testimo-text">"O serviço de boost do LoL é bizarro de bom. O cara logou de madrugada, fez 5 vitórias seguidas na minha MD5 e ninguém da minha friendlist percebeu."</p>
-                    <div class="testimo-author">JinxMain22</div>
-                </div>
-                <div class="testimo-card reveal">
-                    <p class="testimo-text">"Melhor preço de V-Bucks do mercado cinza. Fiquei com receio no começo, mas caiu em 2 minutos via código de resgate da Epic."</p>
-                    <div class="testimo-author">Carlos 'TRX'</div>
-                </div>
+                <div class="testimo-card reveal"><p class="testimo-text">"Chegou na hora. Já tô amassando nos lobbies High Elo. Recomendo!"</p><div class="testimo-author">@FallenZin_FPS</div></div>
+                <div class="testimo-card reveal"><p class="testimo-text">"O boost é bizarro. O cara fez 5 vitórias seguidas na minha MD5 e ninguém percebeu."</p><div class="testimo-author">JinxMain22</div></div>
+                <div class="testimo-card reveal"><p class="testimo-text">"Melhor preço de V-Bucks do mercado cinza. Caiu em 2 minutos via código."</p><div class="testimo-author">Carlos 'TRX'</div></div>
             </div>
         </div>
     </section>
-
     <section id="faq">
         <div class="container">
-            <div class="section-header reveal">
-                <h2 class="section-title">Intel <span class="text-primary">(FAQ)</span></h2>
-                <p class="section-subtitle">Tudo o que você precisa saber antes de dropar na loja.</p>
-            </div>
+            <div class="section-header reveal"><h2 class="section-title">Intel <span class="text-primary">(FAQ)</span></h2></div>
             <div class="faq-container reveal">
-                <div class="faq-item">
-                    <button class="faq-btn">Como recebo minha conta após o pagamento? <span>+</span></button>
-                    <div class="faq-content"><p>A entrega é 100% automatizada para pagamentos via Pix ou Cripto. O login e senha serão enviados para o email cadastrado no checkout assim que o banco aprovar.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn">O Boost tem risco de banimento? <span>+</span></button>
-                    <div class="faq-content"><p>Nosso risco é virtualmente zero. Exigimos que você ative o modo offline no jogo e nossos boosters utilizam VPNs da sua mesma cidade/estado para mascarar o IP.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-btn">Vocês aceitam reembolso? <span>+</span></button>
-                    <div class="faq-content"><p>Sim. Caso a conta entregue venha com algum bloqueio prévio não informado, garantimos a troca imediata ou devolução total do dinheiro em até 7 dias, conforme a lei.</p></div>
-                </div>
+                <div class="faq-item"><button class="faq-btn">Como recebo após o pagamento? <span>+</span></button><div class="faq-content"><p>Entrega 100% automatizada. O login será enviado para o email cadastrado.</p></div></div>
+                <div class="faq-item"><button class="faq-btn">O Boost tem risco de banimento? <span>+</span></button><div class="faq-content"><p>Risco virtualmente zero. Utilizamos VPNs da sua mesma cidade.</p></div></div>
             </div>
         </div>
     </section>
-
     <footer>
         <div class="container">
             <div class="footer-brand">DU<span>.</span>STORE</div>
-            <p class="footer-text">Elevando o padrão do e-commerce gaming. Da rua para os servidores.</p>
-            <div class="footer-bottom">
-                &copy; 2026 DU Store. Todos os direitos reservados. Não possuímos vínculo com Riot Games, Epic Games ou Valve. <br>
-                <span style="font-size: 0.7rem; color: #444; margin-top: 10px; display: block;">Pressione Ctrl+P para Modo Admin.</span>
-            </div>
+            <p class="footer-text">Elevando o padrão do e-commerce gaming.</p>
+            <div class="footer-bottom">&copy; 2026 DU Store. Todos os direitos reservados.</div>
         </div>
     </footer>
 
-    <div class="modal-overlay" id="login-modal">
+    <div class="modal-overlay" id="user-login-modal">
         <div class="modal-box">
             <button class="close-modal" onclick="closeModals()">×</button>
-            <h2 class="modal-title">Acesso Restrito</h2>
-            <div class="error-msg" id="login-error">Senha Incorreta. Acesso Negado.</div>
-            <div class="form-group">
-                <label>Protocolo de Segurança (Senha)</label>
-                <input type="password" id="secret-password" class="form-control" placeholder="Insira a chave de acesso...">
+            <h2 class="modal-title" id="auth-title">Entrar na Base</h2>
+            <div class="error-msg" id="user-error"></div>
+            <div class="success-msg" id="user-success"></div>
+            <div class="form-group"><label>Nome de Operador</label><input type="text" id="user-username" class="form-control" placeholder="Digite seu nick..."></div>
+            <div class="form-group"><label>Senha</label><input type="password" id="user-password" class="form-control" placeholder="Sua senha..."></div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="handleAuth()" id="auth-btn"><span>Fazer Login</span></button>
+            <p style="text-align: center; margin-top: 1rem; font-size: 0.8rem; color: var(--color-text-muted);">Não tem conta? <a href="#" style="color: var(--color-primary);" onclick="toggleAuthMode()">Aliste-se aqui</a>.</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="client-dashboard-modal">
+        <div class="modal-box client-dashboard">
+            <button class="close-modal" onclick="closeModals()">×</button>
+            <h2 class="modal-title" style="margin-bottom: 0.5rem;">Área do <span class="text-primary">Cliente</span></h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Operador: <strong id="client-name" style="color:#fff;"></strong></p>
+            <div style="background: #000; border: 1px solid var(--color-border); padding: 2rem; border-radius: 8px;">
+                <h4 style="text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); font-size: 0.8rem;">Seu Elo Atual</h4>
+                <div id="client-elo-badge" class="elo-badge elo-bronze">BRONZE</div>
+                <p style="font-size: 0.9rem; margin-top: 1rem;">Total Investido: <span style="color: var(--color-accent); font-weight: bold;">R$ <span id="client-spent">0.00</span></span></p>
+                <div class="progress-container">
+                    <div class="progress-bar" id="client-progress"></div>
+                    <div class="progress-text" id="client-progress-text">R$ 0 / R$ 50 para Prata</div>
+                </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="attemptLogin()">
+            <button class="btn btn-danger" style="width: 100%; margin-top: 2rem;" onclick="logoutUser()">Desconectar</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="admin-login-modal">
+        <div class="modal-box">
+            <button class="close-modal" onclick="closeModals()">×</button>
+            <h2 class="modal-title">Acesso Restrito Admin</h2>
+            <div class="error-msg" id="admin-login-error">Senha Incorreta. Acesso Negado.</div>
+            <div class="form-group">
+                <label>Protocolo de Segurança</label>
+                <input type="password" id="secret-password" class="form-control" placeholder="Chave de acesso...">
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="attemptAdminLogin()">
                 <span>Verificar Protocolo</span>
             </button>
         </div>
     </div>
 
-    <div class="modal-overlay" id="admin-modal">
+    <div class="modal-overlay" id="admin-panel-modal">
         <div class="modal-box admin-panel">
             <button class="close-modal" onclick="closeModals()">×</button>
-            <div class="admin-header">
-                <h2 class="modal-title" style="margin: 0;">Centro de <span class="text-primary">Comando</span></h2>
-            </div>
-
+            <div class="admin-header"><h2 class="modal-title" style="margin: 0;">Centro de <span class="text-primary">Comando</span></h2></div>
             <div class="admin-grid">
+                
                 <div>
-                    <h3 style="margin-bottom: 1rem; color: var(--color-accent);">Novo Drop (Produto)</h3>
-                    <div class="form-group">
-                        <label>Título do Produto</label>
-                        <input type="text" id="add-title" class="form-control" placeholder="Ex: Smurf Imortal">
+                    <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 2rem;">
+                        <h3 style="margin-bottom: 1rem; color: #fff; font-size: 1.2rem;">Criar Categoria</h3>
+                        <div class="form-group">
+                            <input type="text" id="new-category-name" class="form-control" placeholder="Ex: Skins">
+                        </div>
+                        <button class="btn-outline" style="width: 100%;" onclick="addCategory()">Adicionar Categoria</button>
                     </div>
+
+                    <h3 style="margin-bottom: 1rem; color: var(--color-accent);">Novo Drop (Produto)</h3>
+                    <div class="form-group"><label>Título</label><input type="text" id="add-title" class="form-control" placeholder="Ex: Vandal Sublime"></div>
+                    <div class="form-group"><label>URL da Imagem (Link)</label><input type="text" id="add-image" class="form-control" placeholder="Ex: https://imgur.com/foto.png"></div>
                     <div class="form-group">
                         <label>Categoria</label>
                         <select id="add-category" class="form-control">
-                            <option value="contas">Contas</option>
-                            <option value="boost">Boost</option>
-                            <option value="moedas">Moedas</option>
-                        </select>
+                            </select>
                     </div>
-                    <div class="form-group">
-                        <label>Preço (R$)</label>
-                        <input type="number" id="add-price" class="form-control" placeholder="Ex: 150.00">
-                    </div>
-                    <div class="form-group">
-                        <label>Descrição</label>
-                        <textarea id="add-desc" class="form-control" rows="3" placeholder="Detalhes do serviço..."></textarea>
-                    </div>
-                    <button class="btn btn-primary" style="width: 100%;" onclick="addProduct()">
-                        <span>Salvar Produto</span>
-                    </button>
+                    <div class="form-group"><label>Preço (R$)</label><input type="number" id="add-price" class="form-control" placeholder="150.00"></div>
+                    <div class="form-group"><label>Descrição</label><textarea id="add-desc" class="form-control" rows="3"></textarea></div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="addProduct()"><span>Salvar Produto</span></button>
                 </div>
 
                 <div>
                     <h3 style="margin-bottom: 1rem; color: var(--color-primary);">Arsenal Ativo</h3>
-                    <div id="admin-products-list" style="max-height: 400px; overflow-y: auto;">
-                        </div>
+                    <div id="admin-products-list" style="max-height: 600px; overflow-y: auto;"></div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        /* 1. ANIMAÇÕES GERAIS E SCROLL */
-        const header = document.getElementById('main-header');
-        window.addEventListener('scroll', () => { header.classList.toggle('scrolled', window.scrollY > 50); });
-
-        const parallaxBg = document.getElementById('parallax-bg');
-        const parallaxTitle = document.getElementById('parallax-title');
+        /* 1. VISUAL & SCROLL (Mantido) */
+        window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         window.addEventListener('scroll', () => {
-            let scrollY = window.scrollY;
-            if(scrollY < 800) {
-                parallaxBg.style.transform = `translateY(${scrollY * 0.3}px)`;
-                parallaxTitle.style.transform = `translateY(${scrollY * 0.15}px)`;
-            }
+            let s = window.scrollY; if(s < 800) { document.getElementById('parallax-bg').style.transform = `translateY(${s * 0.3}px)`; document.getElementById('parallax-title').style.transform = `translateY(${s * 0.15}px)`; }
         });
-
-        // Efeito Tilt 3D
-        const visualContainer = document.getElementById('hero-visual-container');
-        const box3D = document.getElementById('hero-3d-box');
-        if(visualContainer && box3D) {
-            visualContainer.addEventListener('mousemove', (e) => {
-                const rect = visualContainer.getBoundingClientRect();
-                const x = e.clientX - rect.left, y = e.clientY - rect.top;
-                const centerX = rect.width / 2, centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -15;
-                const rotateY = ((x - centerX) / centerX) * 15;
-                box3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                box3D.style.transition = 'none';
-            });
-            visualContainer.addEventListener('mouseleave', () => {
-                box3D.style.transform = `rotateX(5deg) rotateY(-15deg)`;
-                box3D.style.transition = 'transform 0.5s ease-out';
-            });
-        }
-
         const reveals = document.querySelectorAll('.reveal');
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            reveals.forEach(reveal => {
-                const elementTop = reveal.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) reveal.classList.add('active');
-            });
-        };
-        window.addEventListener('scroll', revealOnScroll);
-        revealOnScroll();
+        const revealOnScroll = () => { let wh = window.innerHeight; reveals.forEach(r => { if (r.getBoundingClientRect().top < wh - 100) r.classList.add('active'); }); };
+        window.addEventListener('scroll', revealOnScroll); revealOnScroll();
+        document.querySelectorAll('.faq-btn').forEach(btn => { btn.addEventListener('click', function() { this.classList.toggle('active'); let c = this.nextElementSibling; c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px"; }); });
 
-        // FAQ Accordion
-        const faqBtns = document.querySelectorAll('.faq-btn');
-        faqBtns.forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.classList.toggle('active');
-                const content = this.nextElementSibling;
-                if (content.style.maxHeight) {
-                    content.style.maxHeight = null;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                } 
-            });
-        });
-
-        /* 2. GESTÃO DE PRODUTOS (LOCALSTORAGE E RENDERIZAÇÃO) */
+        /* 2. BANCO DE DADOS LOCAL (LocalStorage) */
         let products = JSON.parse(localStorage.getItem('dustore_products')) || [];
+        let users = JSON.parse(localStorage.getItem('dustore_users')) || [];
+        let loggedInUser = JSON.parse(localStorage.getItem('dustore_logged_in')) || null;
+        let categories = JSON.parse(localStorage.getItem('dustore_categories')) || ['contas', 'boost', 'moedas'];
+        let isRegisterMode = false;
 
-        function saveProducts() {
+        function saveDb() {
             localStorage.setItem('dustore_products', JSON.stringify(products));
+            localStorage.setItem('dustore_users', JSON.stringify(users));
+            localStorage.setItem('dustore_logged_in', JSON.stringify(loggedInUser));
+            localStorage.setItem('dustore_categories', JSON.stringify(categories));
         }
 
+        /* 3. SISTEMA DE CATEGORIAS DINÂMICAS */
+        function renderCategories() {
+            // Atualiza os botões de Filtro na página principal
+            const filterContainer = document.getElementById('dynamic-filters');
+            filterContainer.innerHTML = `<button class="filter-btn active" data-filter="all">Todos</button>`;
+            
+            categories.forEach(cat => {
+                const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
+                filterContainer.innerHTML += `<button class="filter-btn" data-filter="${cat}">${capitalized}</button>`;
+            });
+
+            // Adiciona evento de clique aos novos botões de filtro
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => { 
+                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); 
+                    btn.classList.add('active'); 
+                    renderStoreFront(); 
+                });
+            });
+
+            // Atualiza o Select no Painel Admin
+            const selectContainer = document.getElementById('add-category');
+            selectContainer.innerHTML = '';
+            categories.forEach(cat => {
+                const capitalized = cat.charAt(0).toUpperCase() + cat.slice(1);
+                selectContainer.innerHTML += `<option value="${cat}">${capitalized}</option>`;
+            });
+        }
+
+        function addCategory() {
+            const newCat = document.getElementById('new-category-name').value.trim().toLowerCase();
+            if(!newCat) { alert("Digite o nome da categoria."); return; }
+            if(categories.includes(newCat)) { alert("Categoria já existe!"); return; }
+            
+            categories.push(newCat);
+            saveDb();
+            renderCategories();
+            document.getElementById('new-category-name').value = '';
+            alert("Categoria adicionada com sucesso!");
+        }
+
+
+        /* 4. SISTEMA DE USUÁRIO E ELOS */
+        function checkLoginState() {
+            const headerBtn = document.getElementById('header-user-btn');
+            if(loggedInUser) {
+                headerBtn.innerHTML = `<span>Painel: ${loggedInUser.username}</span>`;
+                headerBtn.classList.add('btn-primary');
+                loggedInUser = users.find(u => u.username === loggedInUser.username);
+            } else {
+                headerBtn.innerHTML = `<span>Login</span>`;
+            }
+        }
+
+        function openUserArea() {
+            closeModals();
+            if(loggedInUser) {
+                updateClientDashboard();
+                document.getElementById('client-dashboard-modal').style.display = 'flex';
+            } else {
+                document.getElementById('user-login-modal').style.display = 'flex';
+            }
+        }
+
+        function toggleAuthMode() {
+            isRegisterMode = !isRegisterMode;
+            document.getElementById('auth-title').innerText = isRegisterMode ? "Alistar-se" : "Entrar na Base";
+            document.getElementById('auth-btn').innerHTML = isRegisterMode ? "<span>Criar Conta</span>" : "<span>Fazer Login</span>";
+            document.getElementById('user-error').style.display = 'none';
+            document.getElementById('user-success').style.display = 'none';
+        }
+
+        function handleAuth() {
+            const user = document.getElementById('user-username').value.trim();
+            const pass = document.getElementById('user-password').value.trim();
+            const err = document.getElementById('user-error');
+            const suc = document.getElementById('user-success');
+            err.style.display = 'none'; suc.style.display = 'none';
+
+            if(!user || !pass) { err.innerText = "Preencha todos os campos."; err.style.display = 'block'; return; }
+
+            if(isRegisterMode) {
+                if(users.find(u => u.username === user)) { err.innerText = "Usuário já existe."; err.style.display = 'block'; return; }
+                users.push({ username: user, password: pass, totalSpent: 0 });
+                saveDb();
+                suc.innerText = "Conta criada! Faça o login."; suc.style.display = 'block';
+                toggleAuthMode();
+                document.getElementById('user-password').value = '';
+            } else {
+                const found = users.find(u => u.username === user && u.password === pass);
+                if(found) {
+                    loggedInUser = found;
+                    saveDb();
+                    checkLoginState();
+                    closeModals();
+                    openUserArea();
+                } else {
+                    err.innerText = "Credenciais incorretas."; err.style.display = 'block';
+                }
+            }
+        }
+
+        function logoutUser() {
+            loggedInUser = null;
+            saveDb();
+            checkLoginState();
+            closeModals();
+        }
+
+        function getEloData(spent) {
+            if (spent < 50) return { name: 'BRONZE', class: 'elo-bronze', next: 50, nextName: 'Prata' };
+            if (spent < 150) return { name: 'PRATA', class: 'elo-prata', next: 150, nextName: 'Esmeralda' };
+            if (spent < 300) return { name: 'ESMERALDA', class: 'elo-esmeralda', next: 300, nextName: 'Diamante' };
+            return { name: 'DIAMANTE', class: 'elo-diamante', next: null, nextName: 'Max' };
+        }
+
+        function updateClientDashboard() {
+            if(!loggedInUser) return;
+            document.getElementById('client-name').innerText = loggedInUser.username;
+            document.getElementById('client-spent').innerText = parseFloat(loggedInUser.totalSpent).toFixed(2).replace('.', ',');
+            
+            const elo = getEloData(loggedInUser.totalSpent);
+            const badge = document.getElementById('client-elo-badge');
+            badge.className = `elo-badge ${elo.class}`;
+            badge.innerText = elo.name;
+
+            const progressText = document.getElementById('client-progress-text');
+            const progressBar = document.getElementById('client-progress');
+
+            if (elo.next) {
+                let min = 0;
+                if(elo.name === 'PRATA') min = 50;
+                if(elo.name === 'ESMERALDA') min = 150;
+                
+                let range = elo.next - min;
+                let currentProgress = loggedInUser.totalSpent - min;
+                let percent = (currentProgress / range) * 100;
+                
+                progressBar.style.width = `${percent}%`;
+                progressText.innerText = `R$ ${loggedInUser.totalSpent.toFixed(2)} / R$ ${elo.next} para ${elo.nextName}`;
+            } else {
+                progressBar.style.width = `100%`;
+                progressText.innerText = `Nível Máximo Atingido!`;
+            }
+        }
+
+        function buyItem(price) {
+            if(!loggedInUser) { alert("Você precisa estar logado para comprar e subir de Elo!"); openUserArea(); return; }
+            const p = parseFloat(price);
+            loggedInUser.totalSpent += p;
+            const userIndex = users.findIndex(u => u.username === loggedInUser.username);
+            users[userIndex].totalSpent = loggedInUser.totalSpent;
+            saveDb();
+            alert(`Compra de R$ ${p.toFixed(2)} aprovada! Seus gastos foram atualizados.`);
+            openUserArea();
+        }
+
+        /* 5. RENDERIZAÇÃO DA LOJA (COM IMAGENS) */
         function renderStoreFront() {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
-            
-            // Verifica o botão de filtro ativo atualmente
             const activeFilterBtn = document.querySelector('.filter-btn.active');
             const activeFilter = activeFilterBtn ? activeFilterBtn.getAttribute('data-filter') : 'all';
-
+            
             const filteredProducts = products.filter(p => activeFilter === 'all' || p.category === activeFilter);
 
             if (filteredProducts.length === 0) {
-                container.innerHTML = '<div class="empty-state">Nenhum drop disponível no momento. O mercado negro está reabastecendo.</div>';
+                container.innerHTML = '<div class="empty-state">Nenhum drop disponível nesta categoria.</div>';
                 return;
             }
 
             filteredProducts.forEach(p => {
+                // Condição para mostrar a imagem caso exista no BD
+                const imageTag = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img" alt="${p.title}">` : '';
+
                 const card = `
                 <div class="product-card">
+                    ${imageTag}
                     <div class="card-content">
-                        <div class="badge-container">
-                            <span class="badge">${p.category}</span>
-                        </div>
+                        <div class="badge-container"><span class="badge">${p.category}</span></div>
                         <h3 class="card-title">${p.title}</h3>
                         <p class="card-desc">${p.description}</p>
                         <div class="card-footer">
                             <div class="price">R$ ${parseFloat(p.price).toFixed(2).replace('.', ',')}</div>
-                            <button class="btn-outline">Comprar</button>
+                            <button class="btn-outline" onclick="buyItem(${p.price})">Comprar</button>
                         </div>
                     </div>
                 </div>`;
                 container.insertAdjacentHTML('beforeend', card);
             });
-
-            reattachGlowEffect();
-        }
-
-        function reattachGlowEffect() {
+            
+            // Re-aplica hover glow
             document.getElementById('products-container').addEventListener('mousemove', e => {
                 for(const card of document.querySelectorAll('.product-card')) {
-                    const rect = card.getBoundingClientRect(),
-                          x = e.clientX - rect.left,
-                          y = e.clientY - rect.top;
-                    card.style.setProperty("--mouse-x", `${x}px`);
-                    card.style.setProperty("--mouse-y", `${y}px`);
+                    const rect = card.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
+                    card.style.setProperty("--mouse-x", `${x}px`); card.style.setProperty("--mouse-y", `${y}px`);
                 }
             });
         }
 
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                renderStoreFront(); 
-            });
-        });
-
-        /* 3. PAINEL ADMIN SECRET AREA (CTRL+P) */
+        /* 6. ADMIN AREA (Ctrl+P) */
         window.addEventListener('keydown', (e) => {
             if (e.ctrlKey && e.key === 'p') {
                 e.preventDefault(); 
-                document.getElementById('login-modal').style.display = 'flex';
+                closeModals();
+                document.getElementById('admin-login-modal').style.display = 'flex';
                 document.getElementById('secret-password').focus();
             }
         });
 
         function closeModals() {
-            document.getElementById('login-modal').style.display = 'none';
-            document.getElementById('admin-modal').style.display = 'none';
-            document.getElementById('secret-password').value = '';
-            document.getElementById('login-error').style.display = 'none';
+            document.getElementById('user-login-modal').style.display = 'none';
+            document.getElementById('client-dashboard-modal').style.display = 'none';
+            document.getElementById('admin-login-modal').style.display = 'none';
+            document.getElementById('admin-panel-modal').style.display = 'none';
         }
 
-        function attemptLogin() {
+        function attemptAdminLogin() {
             const password = document.getElementById('secret-password').value;
-            const errorMsg = document.getElementById('login-error');
+            const errorMsg = document.getElementById('admin-login-error');
             
-            if (password === "") { // Senha invisível
+            if (password === "@Kakaka5566") { 
                 errorMsg.style.display = 'none';
-                document.getElementById('login-modal').style.display = 'none';
-                document.getElementById('admin-modal').style.display = 'flex';
+                document.getElementById('admin-login-modal').style.display = 'none';
+                document.getElementById('admin-panel-modal').style.display = 'flex';
+                document.getElementById('secret-password').value = '';
                 renderAdminList(); 
             } else {
                 errorMsg.style.display = 'block';
@@ -556,64 +633,53 @@
         function renderAdminList() {
             const list = document.getElementById('admin-products-list');
             list.innerHTML = '';
-
-            if (products.length === 0) {
-                list.innerHTML = '<p style="color: var(--color-text-muted); font-size: 0.9rem;">Nenhum produto cadastrado.</p>';
-                return;
-            }
-
+            if (products.length === 0) { list.innerHTML = '<p style="color:var(--color-text-muted);">Nenhum produto cadastrado.</p>'; return; }
+            
             products.forEach(p => {
-                const item = `
+                // Miniatura para o Admin
+                const thumb = p.imageUrl ? `<img src="${p.imageUrl}" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; margin-right: 15px;">` : '';
+                
+                list.insertAdjacentHTML('beforeend', `
                 <div class="product-list-item">
-                    <div class="product-list-info">
-                        <strong>${p.title}</strong>
-                        <span>Cat: ${p.category} | R$ ${p.price}</span>
+                    <div style="display: flex; align-items: center;">
+                        ${thumb}
+                        <div class="product-list-info">
+                            <strong>${p.title}</strong>
+                            <span>Cat: ${p.category} | R$ ${p.price}</span>
+                        </div>
                     </div>
-                    <button class="btn-danger" onclick="deleteProduct(${p.id})">Deletar</button>
-                </div>`;
-                list.insertAdjacentHTML('beforeend', item);
+                    <button class="btn-danger" onclick="deleteProduct(${p.id})">Del</button>
+                </div>`);
             });
         }
 
         function addProduct() {
-            const title = document.getElementById('add-title').value;
-            const category = document.getElementById('add-category').value;
-            const price = document.getElementById('add-price').value;
-            const desc = document.getElementById('add-desc').value;
+            const t = document.getElementById('add-title').value;
+            const img = document.getElementById('add-image').value;
+            const c = document.getElementById('add-category').value;
+            const p = document.getElementById('add-price').value;
+            const d = document.getElementById('add-desc').value;
 
-            if (!title || !price || !desc) {
-                alert("Preencha todos os campos do drops!");
-                return;
-            }
-
-            const newProduct = {
-                id: Date.now(), 
-                title: title,
-                category: category,
-                price: price,
-                description: desc
-            };
-
-            products.push(newProduct);
-            saveProducts(); 
+            if (!t || !p || !d) { alert("Preencha título, preço e descrição!"); return; }
             
-            document.getElementById('add-title').value = '';
-            document.getElementById('add-price').value = '';
+            products.push({ id: Date.now(), title: t, imageUrl: img, category: c, price: p, description: d });
+            saveDb(); 
+            renderAdminList(); 
+            renderStoreFront();
+            
+            // Limpa o form
+            document.getElementById('add-title').value = ''; 
+            document.getElementById('add-image').value = ''; 
+            document.getElementById('add-price').value = ''; 
             document.getElementById('add-desc').value = '';
-
-            renderAdminList();
-            renderStoreFront();
         }
 
-        function deleteProduct(id) {
-            products = products.filter(p => p.id !== id);
-            saveProducts();
-            renderAdminList();
-            renderStoreFront();
-        }
+        function deleteProduct(id) { products = products.filter(p => p.id !== id); saveDb(); renderAdminList(); renderStoreFront(); }
 
-        // Init
-        renderStoreFront();
+        // INICIALIZAÇÃO DO SITE
+        renderCategories(); // 1. Renderiza categorias (Filtros e Select)
+        checkLoginState();  // 2. Verifica se alguém ta logado
+        renderStoreFront(); // 3. Monta a vitrine
     </script>
 </body>
 </html>
