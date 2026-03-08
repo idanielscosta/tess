@@ -106,15 +106,15 @@
         .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
         .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.5s ease-out;}
         
-        /* MAGICA DO FADE NA LOGO (OPACIDADE NAS BORDAS) */
+        /* LOGO APRIMORADA - Mais forte no centro, só apaga o quadrado nas extremidades */
         .logo-mask {
             max-width: 100%; 
             max-height: 400px; 
             object-fit: contain; 
             filter: drop-shadow(0 0 30px var(--color-primary-glow));
-            /* O gradiente radial queima as bordas pretas deixando transparente */
-            -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%);
-            mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 100%);
+            /* Aumentei para 85% a area solida, apagando somente a linha reta de borda da imagem */
+            -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 75%, transparent 100%);
+            mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 75%, transparent 100%);
         }
 
         /* sessoes padrao do site e espacamentos */
@@ -163,7 +163,7 @@
         .cart-footer { padding: 2rem; border-top: 1px solid var(--color-border); background: #000; }
 
         /* Toasts Customizados */
-        #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+        #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
         .toast { min-width: 250px; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; animation: slideInLeft 0.3s forwards, fadeOut 0.5s forwards 3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-left: 5px solid transparent; background: var(--color-bg-surface); }
         .toast-success { border-color: var(--color-accent); }
         .toast-error { border-color: var(--color-danger); }
@@ -196,10 +196,8 @@
         .gamer-banner { height: 160px; background: linear-gradient(45deg, #1b0033, #050505); width: 100%; position: relative; }
         .gamer-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--color-bg-surface), transparent); }
         
-        /* Container das informacoes da header (Avatar e Textos perfeitos) */
         .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -60px; position: relative; z-index: 2; }
         
-        /* A mascara perfeita que blinda o avatar para nao vazar ou dar erro visual */
         .gamer-avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0; position: relative;}
         .gamer-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -207,7 +205,6 @@
         .gamer-tag { color: var(--color-primary); font-family: var(--font-body); font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;}
         .gamer-name-box { font-family: var(--font-display); font-size: 3rem; margin: 0; line-height: 1; display:flex; align-items:center; gap: 15px;}
         
-        /* Botao de editar estiloso */
         .btn-edit-profile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 50%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; font-size: 1rem; color: var(--color-text-main); }
         .btn-edit-profile:hover { background: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px var(--color-primary-glow); }
         
@@ -263,7 +260,7 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
         .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 8px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto;}
         .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
-
+        
         /* Botoes Sociais */
         .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
         .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.9rem;}
@@ -376,7 +373,7 @@
                     <button class="filter-btn active">Carregando Filtros...</button>
                 </div>
                 <div class="products-grid" id="products-container">
-                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando com o servidor da loja...</div>
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando com o servidor...</div>
                 </div>
             </div>
         </section>
@@ -418,13 +415,15 @@
                 <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados. (Shift+P para Comando)</p>
             </div>
         </footer>
-    </div> <div id="app-checkout" class="app-view">
+    </div>
+
+    <div id="app-checkout" class="app-view">
         <div class="container" style="padding-top: 5rem; max-width: 600px;">
             <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; margin-bottom: 2rem; font-size:1.1rem;">← Cancelar e Voltar à Loja</button>
             
             <div style="background: var(--color-bg-surface); padding: 3rem; border-radius: 8px; border: 1px solid var(--color-border); text-align: center;">
                 <h2 style="font-family: var(--font-display); font-size: 3rem; color: var(--color-accent); margin-bottom: 1rem;">Pagamento via PIX</h2>
-                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Referência da Transação <strong id="checkout-pedido-id" style="color:#fff;">#---</strong></p>
+                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">Referência <strong id="checkout-pedido-id" style="color:#fff;">#---</strong></p>
                 
                 <div style="font-size: 3rem; font-weight: bold; margin-bottom: 2rem; font-family: var(--font-display);" id="valor-pedido">R$ 0,00</div>
                 
@@ -463,11 +462,11 @@
                 
                 <div class="gamer-info-row">
                     <div class="gamer-avatar-wrapper">
-                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="">
+                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="Avatar">
                     </div>
                     
                     <div class="gamer-details">
-                        <div class="gamer-tag">Operador Registrado</div>
+                        <div class="gamer-tag">Operador Nível Elite</div>
                         <div class="gamer-name-box">
                             <span id="dash-client-name">Carregando...</span> 
                             <button class="btn-edit-profile" onclick="document.getElementById('edit-profile-modal').style.display='flex'" title="Editar Perfil">✏️</button>
@@ -481,12 +480,11 @@
                     <h3>Sistema de Patentes</h3>
                     <div class="elo-display">
                         <div id="client-elo-badge" class="elo-badge elo-bronze">BRONZE</div>
-                        
                         <div class="xp-bar-container">
                             <div class="xp-bar-fill" id="client-progress"></div>
-                            <div class="xp-text" id="client-progress-text">0 XP / 50 XP para Prata</div>
+                            <div class="xp-text" id="client-progress-text">0 XP</div>
                         </div>
-                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem;">1 BRL = 1 XP. Continue upando sua conta.</p>
+                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem;">1 BRL = 1 XP. Upe sua conta.</p>
                     </div>
 
                     <div class="client-stats-list">
@@ -495,19 +493,18 @@
                             <strong style="color: var(--color-accent);">VERIFICADA ✅</strong>
                         </div>
                         <div class="stat-row">
-                            <span>Total Investido (XP)</span>
+                            <span>Total Investido</span>
                             <strong>R$ <span id="client-spent">0.00</span></strong>
                         </div>
                     </div>
                 </div>
 
                 <div class="gamer-card" style="padding: 0;">
-                    <h3 style="padding: 2rem 2rem 1rem 2rem; margin: 0;">Registro de Missões (Pedidos)</h3>
+                    <h3 style="padding: 2rem 2rem 1rem 2rem; margin: 0;">Registro de Missões</h3>
                     <div style="overflow-x: auto;">
                         <table class="data-table" style="border: none; border-radius: 0;">
-                            <thead><tr><th>ID Pedido</th><th>Itens</th><th>Valor</th><th>Status</th></tr></thead>
-                            <tbody id="table-client-orders">
-                                </tbody>
+                            <thead><tr><th>ID</th><th>Itens</th><th>Valor</th><th>Status</th></tr></thead>
+                            <tbody id="table-client-orders"></tbody>
                         </table>
                     </div>
                 </div>
@@ -640,6 +637,8 @@
                     <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" style="filter: brightness(0) invert(1);"> Apple
                 </button>
             </div>
+            
+            <p style="font-size: 0.7rem; color: var(--color-danger); margin-top: 15px;">*Aviso Admin: Para o login Google funcionar, adicione seu site na aba "Authorized Domains" nas configs de Authentication do Firebase.</p>
         </div>
     </div>
 
@@ -677,7 +676,7 @@
         const MINHA_CIDADE_PIX = "Lavras";
 
         let products = [];
-        let categories = ['contas', 'boost', 'moedas']; // fallback emergencial
+        let categories = ['contas', 'boost', 'moedas']; 
         let cart = [];
         let allUsers = [];
         let loggedInUser = null; 
@@ -699,11 +698,10 @@
         }
 
         // ==========================================
-        // SISTEMA DE NAVEGACAO SPA & VISUAL
+        // NAVEGACAO SPA (Sem recarregar paginas)
         // ==========================================
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         
-        // Reveal Seguro
         const revealOnScroll = () => { 
             const reveals = document.querySelectorAll('.reveal');
             let wh = window.innerHeight; 
@@ -735,27 +733,25 @@
         // BANCO DE DADOS & RENDERIZACAO DE PRODUTOS
         // ==========================================
         async function loadStoreData() {
-            // Tenta puxar categorias
             try {
                 const cDoc = await getDoc(doc(db, "config", "storeData"));
                 if(cDoc.exists() && cDoc.data().categories) categories = cDoc.data().categories;
-            } catch (e) { console.warn("Aviso Categorias: BD Bloqueado ou vazio."); }
+            } catch (e) { console.warn("Aviso Categorias BD."); }
             renderCategoriesUI();
 
-            // Tenta puxar produtos
             try {
                 const qs = await getDocs(collection(db, "products"));
                 products = [];
                 qs.forEach(doc => {
                     let data = doc.data();
-                    data.currentViews = Math.floor(Math.random() * 8) + 3; // Views iniciais
+                    data.currentViews = Math.floor(Math.random() * 8) + 3; 
                     products.push({ id: doc.id, ...data });
                 });
                 renderStoreFront();
-                revealOnScroll(); // Destrava as secoes logo apos carregar!
+                revealOnScroll(); 
             } catch (e) {
-                document.getElementById('products-container').innerHTML = '<div class="empty-state" style="color:var(--color-danger);">Erro de Permissão no Firebase.<br>Vá no painel do Firestore > Regras > e coloque em Modo de Teste.</div>';
-                revealOnScroll(); // Destrava pra pelo menos o cliente ver o resto do site
+                document.getElementById('products-container').innerHTML = '<div class="empty-state">O Firebase bloqueou a leitura. Verifique as regras do Firestore.</div>';
+                revealOnScroll(); 
             }
         }
 
@@ -814,12 +810,11 @@
             });
         }
 
-        // Variacao de pessoas olhando natural
         setInterval(() => {
             products.forEach(p => {
                 if(Math.random() > 0.6) {
-                    const osc = Math.floor(Math.random() * 3) - 1; // -1, 0, 1
-                    p.currentViews = Math.max(2, p.currentViews + osc); // minimo 2
+                    const osc = Math.floor(Math.random() * 3) - 1; 
+                    p.currentViews = Math.max(2, p.currentViews + osc); 
                     const vLabel = document.getElementById(`view-${p.id}`);
                     if(vLabel) vLabel.innerHTML = `🔥 ${p.currentViews} pessoas olhando`;
                 }
@@ -839,7 +834,7 @@
         }
 
         // ==========================================
-        // SISTEMA DE CARRINHO E PIX
+        // SISTEMA DE CARRINHO E PIX (BLINDADO)
         // ==========================================
         window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
         
@@ -903,7 +898,30 @@
                 
                 pendingCheckoutOrderId = docRef.id;
                 
-                const payloadPix = gerarPayloadPix(MINHA_CHAVE_PIX, MEU_NOME_PIX, MINHA_CIDADE_PIX, total);
+                // MÁGICA DO PIX: O "pad" agora usa String() para nunca dar erro de length
+                const pad = (str) => { let s = String(str); return s.length < 2 ? '0' + s : s; };
+                const format = (id, value) => { let v = String(value); return id + pad(v.length) + v; };
+
+                const gui = format("00", "BR.GOV.BCB.PIX");
+                const key = format("01", MINHA_CHAVE_PIX);
+                const accInfo = format("26", gui + key);
+                const amount = format("54", total.toFixed(2));
+                const name = format("59", MEU_NOME_PIX.substring(0, 25).normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+                const city = format("60", MINHA_CIDADE_PIX.substring(0, 15).normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+                const txid = format("62", format("05", "DU" + Math.floor(Math.random() * 1000)));
+                const payload = "000201" + accInfo + "52040000" + "5303986" + amount + "5802BR" + name + city + txid + "6304";
+
+                let crc = 0xFFFF;
+                for (let i = 0; i < payload.length; i++) {
+                    crc ^= payload.charCodeAt(i) << 8;
+                    for (let j = 0; j < 8; j++) {
+                        if ((crc & 0x8000) !== 0) crc = (crc << 1) ^ 0x1021;
+                        else crc = crc << 1;
+                    }
+                    crc &= 0xFFFF;
+                }
+                const payloadPix = payload + crc.toString(16).toUpperCase().padStart(4, '0');
+
                 document.getElementById('valor-pedido').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
                 document.getElementById('pix-codigo').value = payloadPix;
                 document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(payloadPix)}`;
@@ -911,7 +929,7 @@
                 
                 cart = []; updateCartUI(); window.toggleCart();
                 window.navegar('app-checkout');
-            } catch (e) { window.showToast('Erro de comunicação com o banco.', 'error'); }
+            } catch (e) { console.error(e); window.showToast('Erro de comunicação com o banco.', 'error'); }
         }
 
         // ==========================================
@@ -959,23 +977,32 @@
                 
                 try {
                     if(isRegisterMode) await setDoc(doc(db, "users", userCred.user.uid), { username: userText, totalSpent: 0, avatarUrl: '' });
-                } catch(dbErr) { console.warn("Aviso regras BD:", dbErr); }
+                } catch(dbErr) { console.warn(dbErr); }
 
                 window.showToast("Acesso concedido!", "success");
                 document.getElementById('user-login-modal').style.display = 'none';
                 setTimeout(() => window.navegar('app-cliente'), 500);
-            } catch (e) { 
-                window.showToast(e.message.includes('auth') ? "Credenciais inválidas." : "Erro na rede.", "error"); 
-            }
+            } catch (e) { window.showToast("Credenciais incorretas.", "error"); }
         }
 
         window.loginWithGoogle = async function() {
-            try { await signInWithPopup(auth, new GoogleAuthProvider()); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado via Google!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Falha Google Auth", "error"); }
+            try { 
+                await signInWithPopup(auth, new GoogleAuthProvider()); 
+                document.getElementById('user-login-modal').style.display='none'; 
+                window.showToast("Logado via Google!", "success"); 
+                setTimeout(()=>window.navegar('app-cliente'), 500); 
+            } catch (e) { 
+                console.error(e);
+                window.showToast(`Erro Firebase: ${e.code}`, "error"); 
+            }
         }
         window.loginWithApple = async function() {
-            try { await signInWithPopup(auth, new OAuthProvider('apple.com')); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado via Apple!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Falha Apple Auth", "error"); }
+            try { 
+                await signInWithPopup(auth, new OAuthProvider('apple.com')); 
+                document.getElementById('user-login-modal').style.display='none'; 
+                window.showToast("Logado via Apple!", "success"); 
+                setTimeout(()=>window.navegar('app-cliente'), 500); 
+            } catch (e) { window.showToast(`Erro Firebase: ${e.code}`, "error"); }
         }
 
         window.logoutUser = function() { auth.signOut(); window.navegar('app-home'); window.showToast("Desconectado.", "info"); }
@@ -994,21 +1021,24 @@
             if(!loggedInUser) return;
             const uDoc = await getDoc(doc(db, "users", loggedInUser.uid));
             if(uDoc.exists()) loggedInUser = { uid: loggedInUser.uid, ...uDoc.data() };
+            
+            // Garantia de fallback se o spent sumir
+            const spent = loggedInUser.totalSpent || 0;
 
             document.getElementById('dash-client-name').innerText = loggedInUser.username;
-            document.getElementById('client-spent').innerText = loggedInUser.totalSpent.toFixed(2);
+            document.getElementById('client-spent').innerText = spent.toFixed(2);
             document.getElementById('dash-avatar').src = loggedInUser.avatarUrl || 'https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg';
             
             document.getElementById('edit-nick').value = loggedInUser.username;
             document.getElementById('edit-avatar').value = loggedInUser.avatarUrl || '';
 
-            let elo = getEloData(loggedInUser.totalSpent);
+            let elo = getEloData(spent);
             const b = document.getElementById('client-elo-badge');
             b.className = `elo-badge ${elo.c}`; b.innerText = elo.name;
             
-            const pct = Math.min((loggedInUser.totalSpent / elo.next) * 100, 100);
+            const pct = Math.min((spent / elo.next) * 100, 100);
             setTimeout(() => { document.getElementById('client-progress').style.width = pct + '%'; }, 300);
-            document.getElementById('client-progress-text').innerText = elo.name === 'DIAMANTE' ? 'Patente Maxima!' : `${loggedInUser.totalSpent.toFixed(0)} XP / ${elo.next} XP para upar`;
+            document.getElementById('client-progress-text').innerText = elo.name === 'DIAMANTE' ? 'Patente Maxima!' : `${spent.toFixed(0)} XP / ${elo.next} XP para upar`;
 
             const tbody = document.getElementById('table-client-orders');
             tbody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
@@ -1019,7 +1049,8 @@
                     const d = doc.data();
                     if(d.userId === loggedInUser.uid) {
                         const statusClass = d.status === 'concluido' ? 'status-concluido' : 'status-pendente';
-                        rows += `<tr><td style="color:#aaa">#${doc.id.substring(0,6).toUpperCase()}</td><td style="font-weight:bold;">${d.productTitle}</td><td class="text-accent">R$ ${d.price.toFixed(2)}</td><td><span class="status-badge ${statusClass}">${d.status}</span></td></tr>`;
+                        const price = d.price || 0;
+                        rows += `<tr><td style="color:#aaa">#${doc.id.substring(0,6).toUpperCase()}</td><td style="font-weight:bold;">${d.productTitle}</td><td class="text-accent">R$ ${price.toFixed(2)}</td><td><span class="status-badge ${statusClass}">${d.status}</span></td></tr>`;
                     }
                 });
                 tbody.innerHTML = rows || '<tr><td colspan="4" style="text-align:center;">Nenhuma missão ainda.</td></tr>';
@@ -1049,7 +1080,7 @@
         }
 
         // ==========================================
-        // PAINEL DE COMANDO DO ADMIN & PRESENCA
+        // PAINEL ADMIN E CRM CORRIGIDO
         // ==========================================
         const mySessionId = Math.random().toString(36).substring(2);
         async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
@@ -1092,7 +1123,11 @@
 
             const qsO = await getDocs(collection(db, "pedidos"));
             allOrders = []; let rev = 0;
-            qsO.forEach(doc => { const d = doc.data(); allOrders.push({id: doc.id, ...d}); if(d.status==='concluido') rev+=d.price; });
+            qsO.forEach(doc => { 
+                const d = doc.data(); 
+                allOrders.push({id: doc.id, ...d}); 
+                if(d.status==='concluido') rev+=(d.price || 0); 
+            });
             document.getElementById('adm-rev').innerText = rev.toFixed(2);
             document.getElementById('adm-orders').innerText = allOrders.length;
             
@@ -1100,7 +1135,8 @@
             tbodyO.innerHTML = '';
             allOrders.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(o => {
                 const action = o.status === 'pendente' ? `<button class="btn-success" onclick="window.aprovarPedidoAdmin('${o.id}')">Aprovar</button>` : '-';
-                tbodyO.insertAdjacentHTML('beforeend', `<tr><td style="color:#aaa">#${o.id.substring(0,5).toUpperCase()}</td><td style="font-weight:bold">${o.userName}</td><td style="font-size:0.8rem;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.productTitle}</td><td style="color:var(--color-accent)">R$${o.price.toFixed(2)}</td><td><span class="status-badge ${o.status==='concluido'?'status-concluido':'status-pendente'}">${o.status}</span></td><td>${action}</td></tr>`);
+                const p = o.price || 0;
+                tbodyO.insertAdjacentHTML('beforeend', `<tr><td style="color:#aaa">#${o.id.substring(0,5).toUpperCase()}</td><td style="font-weight:bold">${o.userName}</td><td style="font-size:0.8rem;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.productTitle}</td><td style="color:var(--color-accent)">R$${p.toFixed(2)}</td><td><span class="status-badge ${o.status==='concluido'?'status-concluido':'status-pendente'}">${o.status}</span></td><td>${action}</td></tr>`);
             });
 
             const qsU = await getDocs(collection(db, "users"));
@@ -1113,12 +1149,14 @@
             const tbodyU = document.getElementById('table-admin-users');
             tbodyU.innerHTML = '';
             list.forEach(u => {
-                let elo = getEloData(u.totalSpent).name;
+                // BLINDAGEM DO CRM: O erro era que novos usuarios logados com google nao tinham totalSpent salvo
+                const spent = u.totalSpent || 0;
+                let elo = getEloData(spent).name;
                 let avatar = u.avatarUrl ? `<img src="${u.avatarUrl}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">` : '🎮';
-                tbodyU.insertAdjacentHTML('beforeend', `<tr><td>${avatar}</td><td style="font-weight:bold;">${u.username}</td><td style="color:var(--color-accent)">R$ ${u.totalSpent.toFixed(2)}</td><td><span class="badge" style="background:#333;color:#fff;">${elo}</span></td></tr>`);
+                tbodyU.insertAdjacentHTML('beforeend', `<tr><td>${avatar}</td><td style="font-weight:bold;">${u.username || 'Google User'}</td><td style="color:var(--color-accent)">R$ ${spent.toFixed(2)}</td><td><span class="badge" style="background:#333;color:#fff;">${elo}</span></td></tr>`);
             });
         }
-        window.searchUsers = function(term) { renderUserTable(allUsers.filter(u => u.username.toLowerCase().includes(term.toLowerCase()))); }
+        window.searchUsers = function(term) { renderUserTable(allUsers.filter(u => (u.username || '').toLowerCase().includes(term.toLowerCase()))); }
 
         window.moveCat = async function(index, dir) {
             if(index + dir < 0 || index + dir >= categories.length) return;
@@ -1142,7 +1180,8 @@
                 await updateDoc(doc(db, "pedidos", pedidoId), { status: 'concluido' });
                 
                 const uDoc = await getDoc(doc(db, "users", pData.userId));
-                if(uDoc.exists()) await updateDoc(doc(db, "users", pData.userId), { totalSpent: uDoc.data().totalSpent + pData.price });
+                const userSpent = uDoc.exists() ? (uDoc.data().totalSpent || 0) : 0;
+                await setDoc(doc(db, "users", pData.userId), { totalSpent: userSpent + (pData.price || 0) }, {merge: true});
                 
                 loadAdminData(); window.showToast("Pagamento Confirmado!", "success");
             } catch(e) { window.showToast("Erro no servidor.", "error"); }
