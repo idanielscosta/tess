@@ -22,6 +22,7 @@
             --color-primary-glow: rgba(107, 33, 168, 0.4);
             --color-accent: #10B981;
             --color-danger: #EF4444;
+            --color-discord: #5865F2; /* Cor oficial do Discord */
             --color-text-main: #F3F4F6;
             --color-text-muted: #9CA3AF;
             --color-border: #27272A;
@@ -48,14 +49,23 @@
         .container { max-width: var(--container-max); margin: 0 auto; padding: 0 2rem; }
         .text-primary { color: var(--color-primary); }
 
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: none; position: relative; overflow: hidden; background: transparent; color: var(--color-text-main); transition: var(--transition-fast); }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: none; position: relative; overflow: hidden; background: transparent; color: var(--color-text-main); transition: var(--transition-fast); text-decoration: none; }
         .btn-primary { background: var(--color-text-main); color: var(--color-bg-base); border-radius: 2px; }
         .btn-primary::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--color-primary); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
         .btn-primary:hover::after { transform: scaleY(1); }
         .btn-primary span { position: relative; z-index: 2; transition: var(--transition-fast); }
         .btn-primary:hover span { color: #fff; }
+        
         .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .btn-danger:hover { background: var(--color-danger); color: #fff; }
+
+        /* Botão do Discord Específico */
+        .btn-discord { background: var(--color-discord); color: #fff; border-radius: 2px; gap: 10px; }
+        .btn-discord::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
+        .btn-discord:hover::after { transform: scaleY(1); }
+        .btn-discord:hover { box-shadow: 0 0 20px rgba(88, 101, 242, 0.5); }
+        .btn-discord img { height: 20px; filter: brightness(0) invert(1); position: relative; z-index: 2; }
+        .btn-discord span { position: relative; z-index: 2; }
 
         /* ==========================================================================
            3. NAVBAR & HERO
@@ -82,6 +92,8 @@
         .hero-title .outline { color: transparent; -webkit-text-stroke: 2px var(--color-text-main); display: block; }
         .hero-desc { font-size: 1.2rem; color: var(--color-text-muted); max-width: 90%; font-weight: 300; margin-bottom: 2rem; }
         
+        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+
         .hero-stats { display: flex; gap: 3rem; margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
         .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
         .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
@@ -112,7 +124,6 @@
         .product-card:hover::before { opacity: 1; }
         .product-card:hover { transform: translateY(-5px); border-color: rgba(107, 33, 168, 0.5); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         
-        /* Nova Imagem do Card */
         .card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 4px; margin-bottom: 1rem; border: 1px solid var(--color-border); z-index: 1; position: relative; }
 
         .card-content { position: relative; z-index: 1; display: flex; flex-direction: column; height: 100%; }
@@ -203,6 +214,7 @@
             .hero-visual { display: none; }
             .nav-links { display: none; }
             .admin-grid { grid-template-columns: 1fr; }
+            .hero-buttons { justify-content: center; }
         }
     </style>
 </head>
@@ -231,7 +243,17 @@
                 <div class="hero-badge">A Nova Era do Gaming</div>
                 <h1 class="hero-title" id="parallax-title">Eleve o <br><span class="outline">Seu Nível.</span></h1>
                 <p class="hero-desc">Esqueça o amadorismo. Contas premium, boosters de elite e mercado negro de moedas digitais. A estética das ruas com a performance que os servidores exigem.</p>
-                <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView();"><span>Acessar Arsenal</span></button>
+                
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView();">
+                        <span>Acessar Arsenal</span>
+                    </button>
+                    <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord">
+                        <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt="Discord Logo">
+                        <span>Nosso Discord</span>
+                    </a>
+                </div>
+
             </div>
             <div class="hero-visual" id="hero-visual-container">
                 <div class="hero-visual-box" id="hero-3d-box">
@@ -373,7 +395,7 @@
     </div>
 
     <script>
-        /* 1. VISUAL & SCROLL (Mantido) */
+        /* 1. VISUAL & SCROLL */
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
         window.addEventListener('scroll', () => {
             let s = window.scrollY; if(s < 800) { document.getElementById('parallax-bg').style.transform = `translateY(${s * 0.3}px)`; document.getElementById('parallax-title').style.transform = `translateY(${s * 0.15}px)`; }
@@ -399,7 +421,6 @@
 
         /* 3. SISTEMA DE CATEGORIAS DINÂMICAS */
         function renderCategories() {
-            // Atualiza os botões de Filtro na página principal
             const filterContainer = document.getElementById('dynamic-filters');
             filterContainer.innerHTML = `<button class="filter-btn active" data-filter="all">Todos</button>`;
             
@@ -408,7 +429,6 @@
                 filterContainer.innerHTML += `<button class="filter-btn" data-filter="${cat}">${capitalized}</button>`;
             });
 
-            // Adiciona evento de clique aos novos botões de filtro
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.addEventListener('click', () => { 
                     document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active')); 
@@ -417,7 +437,6 @@
                 });
             });
 
-            // Atualiza o Select no Painel Admin
             const selectContainer = document.getElementById('add-category');
             selectContainer.innerHTML = '';
             categories.forEach(cat => {
@@ -437,7 +456,6 @@
             document.getElementById('new-category-name').value = '';
             alert("Categoria adicionada com sucesso!");
         }
-
 
         /* 4. SISTEMA DE USUÁRIO E ELOS */
         function checkLoginState() {
@@ -569,7 +587,6 @@
             }
 
             filteredProducts.forEach(p => {
-                // Condição para mostrar a imagem caso exista no BD
                 const imageTag = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img" alt="${p.title}">` : '';
 
                 const card = `
@@ -588,7 +605,6 @@
                 container.insertAdjacentHTML('beforeend', card);
             });
             
-            // Re-aplica hover glow
             document.getElementById('products-container').addEventListener('mousemove', e => {
                 for(const card of document.querySelectorAll('.product-card')) {
                     const rect = card.getBoundingClientRect(), x = e.clientX - rect.left, y = e.clientY - rect.top;
@@ -636,7 +652,6 @@
             if (products.length === 0) { list.innerHTML = '<p style="color:var(--color-text-muted);">Nenhum produto cadastrado.</p>'; return; }
             
             products.forEach(p => {
-                // Miniatura para o Admin
                 const thumb = p.imageUrl ? `<img src="${p.imageUrl}" style="width: 40px; height: 40px; border-radius: 4px; object-fit: cover; margin-right: 15px;">` : '';
                 
                 list.insertAdjacentHTML('beforeend', `
@@ -667,7 +682,6 @@
             renderAdminList(); 
             renderStoreFront();
             
-            // Limpa o form
             document.getElementById('add-title').value = ''; 
             document.getElementById('add-image').value = ''; 
             document.getElementById('add-price').value = ''; 
@@ -677,9 +691,9 @@
         function deleteProduct(id) { products = products.filter(p => p.id !== id); saveDb(); renderAdminList(); renderStoreFront(); }
 
         // INICIALIZAÇÃO DO SITE
-        renderCategories(); // 1. Renderiza categorias (Filtros e Select)
-        checkLoginState();  // 2. Verifica se alguém ta logado
-        renderStoreFront(); // 3. Monta a vitrine
+        renderCategories(); 
+        checkLoginState();  
+        renderStoreFront(); 
     </script>
 </body>
 </html>
