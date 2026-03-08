@@ -11,7 +11,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     
     <style>
-        /* paleta de cores e variaveis mestre */
         :root {
             --color-bg-base: #050505;
             --color-bg-surface: #111111;
@@ -28,14 +27,12 @@
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'Inter', sans-serif;
             
-            /* cores dos ranks */
             --elo-bronze: #CD7F32;
             --elo-prata: #C0C0C0;
             --elo-esmeralda: #50C878;
             --elo-diamante: #B9F2FF;
         }
 
-        /* reset geral */
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         html.smooth-scroll { scroll-behavior: smooth; }
         body { background-color: var(--color-bg-base); color: var(--color-text-main); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
@@ -44,17 +41,14 @@
         .text-primary { color: var(--color-primary); }
         .text-accent { color: var(--color-accent); }
         
-        /* formatacao scrollbar estilo hacker */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #000; }
         ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
-        /* controle de views do spa (single page app) */
         .app-view { display: none; opacity: 0; transition: opacity 0.4s ease; min-height: 100vh; }
         .app-view.active { display: block; opacity: 1; }
 
-        /* botoes padroes da loja */
         .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2.5rem; font-family: var(--font-body); font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: none; position: relative; overflow: hidden; background: transparent; color: var(--color-text-main); transition: 0.3s; text-decoration: none; border-radius: 4px;}
         .btn-primary { background: var(--color-text-main); color: var(--color-bg-base); }
         .btn-primary::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: var(--color-primary); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); z-index: 1; }
@@ -65,18 +59,18 @@
         .btn-outline { border: 1px solid var(--color-primary); color: var(--color-text-main); background: rgba(107, 33, 168, 0.1); }
         .btn-outline:hover { background: var(--color-primary); color: #fff; box-shadow: 0 0 15px var(--color-primary-glow); }
 
-        .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; }
+        .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
         .btn-danger:hover { background: var(--color-danger); color: #fff; }
-        .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; }
+        .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
         .btn-success:hover { background: var(--color-accent); color: #000; }
+        .btn-edit { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--color-warning); color: var(--color-warning); padding: 0.5rem 1rem; cursor: pointer; font-weight: bold; border-radius:4px;}
+        .btn-edit:hover { background: var(--color-warning); color: #000; }
         
-        /* botao discord com largura dinamica resolvida */
         .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; padding: 1rem 2.5rem; width: max-content; }
         .btn-discord:hover { background: #4752C4; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); }
         .btn-discord img { height: 20px; filter: brightness(0) invert(1); position: relative; z-index: 2;}
         .btn-discord span { position: relative; z-index: 2; }
 
-        /* header navbar */
         header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.5rem 0; background: var(--color-bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; }
         header.scrolled { padding: 1rem 0; background: rgba(5, 5, 5, 0.95); }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
@@ -86,7 +80,6 @@
         .nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; position: relative; }
         .nav-links a:hover { color: var(--color-text-main); }
 
-        /* sessoes da vitrine (home) */
         .hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
         .hero-bg-grid { position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; z-index: 1; }
         .hero-glow { position: absolute; top: 20%; left: 10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 60%); filter: blur(80px); z-index: 2; opacity: 0.5; animation: pulse 8s infinite alternate; }
@@ -96,38 +89,33 @@
         .hero-title { font-family: var(--font-display); font-size: 6.5rem; line-height: 0.9; text-transform: uppercase; margin-bottom: 1.5rem; }
         .hero-title .outline { color: transparent; -webkit-text-stroke: 2px var(--color-text-main); display: block; }
         .hero-desc { font-size: 1.2rem; color: var(--color-text-muted); max-width: 90%; margin-bottom: 2rem; }
-        
         .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem;}
-        
         .hero-stats { display: flex; gap: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
         .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
         .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
 
         .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
-        .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.5s ease-out;}
         
-        /* LOGO APRIMORADA - Mais forte no centro, só apaga o quadrado nas extremidades */
+        /* 3D Box E Efeito Magico na Logo */
+        .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.1s; transform-style: preserve-3d; }
         .logo-mask {
             max-width: 100%; 
             max-height: 400px; 
             object-fit: contain; 
-            filter: drop-shadow(0 0 30px var(--color-primary-glow));
-            /* Aumentei para 85% a area solida, apagando somente a linha reta de borda da imagem */
-            -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 75%, transparent 100%);
-            mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 75%, transparent 100%);
+            filter: drop-shadow(0 0 40px var(--color-primary-glow));
+            /* Essa linha remove o fundo preto da imagem perfeitamente! */
+            mix-blend-mode: screen; 
+            transform: translateZ(50px);
         }
 
-        /* sessoes padrao do site e espacamentos */
         section { padding: 6rem 0; position: relative; z-index: 20; }
         .section-header { text-align: center; margin-bottom: 4rem; }
         .section-title { font-family: var(--font-display); font-size: 4rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
         .section-subtitle { color: var(--color-text-muted); font-size: 1.1rem; }
         
-        /* animacao suave de aparecimento do scroll */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* vitrine de cards e filtros */
         .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
         .filter-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 0.8rem 2rem; border-radius: 50px; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
         .filter-btn:hover, .filter-btn.active { background: rgba(107, 33, 168, 0.1); border-color: var(--color-primary); color: var(--color-text-main); }
@@ -143,7 +131,6 @@
         .price { font-family: var(--font-display); font-size: 1.8rem; color: var(--color-accent); }
         .btn-add-cart { padding: 0.8rem 1.5rem; border-radius: 4px; z-index: 5;}
 
-        /* Carrinho Lateral e Float */
         .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 900; box-shadow: 0 0 20px rgba(107,33,168,0.5); transition: 0.3s; }
         .cart-float:hover { transform: scale(1.1); }
         .cart-float .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--color-danger); font-size: 0.8rem; font-weight: bold; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
@@ -162,7 +149,6 @@
         .cart-item-price { color: var(--color-accent); font-weight: bold; }
         .cart-footer { padding: 2rem; border-top: 1px solid var(--color-border); background: #000; }
 
-        /* Toasts Customizados */
         #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
         .toast { min-width: 250px; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; animation: slideInLeft 0.3s forwards, fadeOut 0.5s forwards 3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-left: 5px solid transparent; background: var(--color-bg-surface); }
         .toast-success { border-color: var(--color-accent); }
@@ -171,7 +157,6 @@
         @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         @keyframes fadeOut { to { opacity: 0; display: none; } }
 
-        /* blocos de garantia, depoimentos, faq */
         .trust-section { background: #0a0a0a; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
         .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: center; }
         .trust-item h3 { font-family: var(--font-display); font-size: 1.8rem; margin: 1rem 0; color: var(--color-text-main); }
@@ -191,13 +176,11 @@
         .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
         .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
         
-        /* Area do Cliente - Redesign Gamificado Absoluto */
         .gamer-profile-header { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); overflow: hidden; margin-bottom: 2rem; position: relative; }
         .gamer-banner { height: 160px; background: linear-gradient(45deg, #1b0033, #050505); width: 100%; position: relative; }
         .gamer-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--color-bg-surface), transparent); }
         
         .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -60px; position: relative; z-index: 2; }
-        
         .gamer-avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0; position: relative;}
         .gamer-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
         
@@ -228,7 +211,6 @@
         .stat-row { display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--color-border); color: var(--color-text-muted); font-size: 0.9rem; }
         .stat-row strong { color: var(--color-text-main); font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1px; }
 
-        /* design do dashboard admin */
         .dash-layout { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; background: var(--color-bg-base); }
         .dash-sidebar { background: var(--color-bg-surface); border-right: 1px solid var(--color-border); padding: 2rem; display: flex; flex-direction: column; }
         .dash-content { padding: 3rem; overflow-y: auto; height: 100vh;}
@@ -241,7 +223,6 @@
         .stat-card h4 { color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
         .stat-card .value { font-family: var(--font-display); font-size: 2.5rem; color: #fff; }
 
-        /* tabelas mestre */
         .data-table { width: 100%; border-collapse: collapse; background: var(--color-bg-surface); border-radius: 8px; overflow: hidden; border: 1px solid var(--color-border); }
         .data-table th, .data-table td { padding: 1.2rem 1rem; text-align: left; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; }
         .data-table th { background: rgba(0,0,0,0.5); font-family: var(--font-display); letter-spacing: 1px; color: var(--color-text-muted); font-size: 1.1rem; }
@@ -251,7 +232,6 @@
         .status-pendente { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); border: 1px solid var(--color-warning); }
         .status-concluido { background: rgba(16, 185, 129, 0.1); color: var(--color-accent); border: 1px solid var(--color-accent); }
 
-        /* modais popup */
         .form-group { margin-bottom: 1.5rem; text-align: left; }
         .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.5rem; letter-spacing: 1px; }
         .form-control { width: 100%; background: #000; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 1rem; border-radius: 4px; font-family: var(--font-body); outline: none; transition: 0.3s; }
@@ -260,8 +240,8 @@
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
         .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 8px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto;}
         .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; }
+        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; }
         
-        /* Botoes Sociais */
         .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
         .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 4px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.9rem;}
         .btn-social img { width: 20px; height: 20px; margin-right: 10px; }
@@ -279,6 +259,10 @@
         .cat-manager-item { display: flex; justify-content: space-between; background: #000; padding: 0.8rem; border: 1px solid var(--color-border); margin-bottom: 5px; border-radius: 4px; align-items: center;}
         .cat-manager-item button { background: none; border: none; color: var(--color-primary); cursor: pointer; font-size: 1.2rem; }
         .cat-manager-item button:hover { color: #fff; }
+        
+        .radio-option { display: block; padding: 10px; border: 1px solid var(--color-border); margin-bottom: 5px; border-radius: 4px; cursor: pointer; transition: 0.3s; text-align: left; }
+        .radio-option:hover { border-color: var(--color-primary); background: rgba(107, 33, 168, 0.1); }
+        .radio-option input { margin-right: 10px; }
 
         @media (max-width: 768px) {
             .dash-layout { grid-template-columns: 1fr; }
@@ -290,6 +274,7 @@
             .gamer-info-row { flex-direction: column; align-items: center; text-align: center; }
             .gamer-avatar-wrapper { margin-right: 0; margin-bottom: 1rem; }
             .cart-sidebar { width: 100%; right: -100%; }
+            .hero-buttons { justify-content: center; }
         }
     </style>
 </head>
@@ -373,7 +358,7 @@
                     <button class="filter-btn active">Carregando Filtros...</button>
                 </div>
                 <div class="products-grid" id="products-container">
-                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando com o servidor...</div>
+                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando com o servidor da loja...</div>
                 </div>
             </div>
         </section>
@@ -412,7 +397,7 @@
         <footer>
             <div class="container text-center">
                 <div class="brand" style="font-size: 2rem; margin-bottom: 1rem;">DU<span>.</span>STORE</div>
-                <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados. (Shift+P para Comando)</p>
+                <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados.</p>
             </div>
         </footer>
     </div>
@@ -443,8 +428,6 @@
                     <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt="Discord"> 
                     <span>Enviar Comprovante no Discord</span>
                 </a>
-                
-                <button onclick="window.simularAprovacaoPix()" style="margin-top: 3rem; background: transparent; border: 1px dashed #333; color: #555; padding: 5px 10px; cursor: pointer; font-size: 0.7rem;">(Dev Test) Simular PIX Pago</button>
             </div>
         </div>
     </div>
@@ -466,7 +449,7 @@
                     </div>
                     
                     <div class="gamer-details">
-                        <div class="gamer-tag">Operador Nível Elite</div>
+                        <div class="gamer-tag">Operador Registrado</div>
                         <div class="gamer-name-box">
                             <span id="dash-client-name">Carregando...</span> 
                             <button class="btn-edit-profile" onclick="document.getElementById('edit-profile-modal').style.display='flex'" title="Editar Perfil">✏️</button>
@@ -503,7 +486,7 @@
                     <h3 style="padding: 2rem 2rem 1rem 2rem; margin: 0;">Registro de Missões</h3>
                     <div style="overflow-x: auto;">
                         <table class="data-table" style="border: none; border-radius: 0;">
-                            <thead><tr><th>ID</th><th>Itens</th><th>Valor</th><th>Status</th></tr></thead>
+                            <thead><tr><th>ID Pedido</th><th>Itens</th><th>Valor</th><th>Status</th></tr></thead>
                             <tbody id="table-client-orders"></tbody>
                         </table>
                     </div>
@@ -562,13 +545,29 @@
                         </div>
 
                         <div style="background: #000; padding: 2rem; border-radius: 8px; border: 1px solid var(--color-border);">
-                            <h3 style="color: var(--color-accent); margin-bottom: 1rem;">Novo Drop (Produto)</h3>
+                            <h3 id="admin-form-title" style="color: var(--color-accent); margin-bottom: 1rem;">Novo Drop (Produto)</h3>
                             <div class="form-group"><input type="text" id="add-title" class="form-control" placeholder="Nome do Produto"></div>
                             <div class="form-group"><input type="text" id="add-image" class="form-control" placeholder="Link da Imagem HTTPs"></div>
                             <div class="form-group"><select id="add-category" class="form-control"></select></div>
                             <div class="form-group"><input type="number" id="add-price" class="form-control" placeholder="Preço (ex: 50.00)"></div>
                             <div class="form-group"><textarea id="add-desc" class="form-control" rows="2" placeholder="Descrição"></textarea></div>
-                            <button class="btn btn-primary" style="width: 100%;" onclick="window.addProduct()"><span>Publicar Produto</span></button>
+                            
+                            <div class="form-group" style="background: rgba(255,255,255,0.02); padding:1rem; border:1px solid #333; border-radius:4px;">
+                                <label><input type="checkbox" id="add-has-subcats" onchange="window.toggleSubcatsUI()" style="margin-right: 10px;"> Ativar Variações (Subcategorias)</label>
+                                <div id="subcats-ui" style="display:none; margin-top: 15px;">
+                                    <div id="subcats-list"></div>
+                                    <div style="display:flex; gap:10px; margin-top: 10px;">
+                                        <input type="text" id="sub-name" class="form-control" placeholder="Opção (Ex: Ouro)">
+                                        <input type="number" id="sub-price" class="form-control" placeholder="Preço">
+                                        <button class="btn-success" onclick="window.addSubcat()">Adicionar</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style="display: flex; gap: 10px;">
+                                <button id="btn-save-prod" class="btn btn-primary" style="flex-grow: 1;" onclick="window.addProduct()"><span>Publicar Produto</span></button>
+                                <button id="btn-cancel-prod" class="btn-danger" style="display: none;" onclick="window.cancelEditP()">Cancelar</button>
+                            </div>
                         </div>
                     </div>
                     <div>
@@ -597,6 +596,9 @@
                 <span id="pm-cat" class="badge"></span>
                 <h2 id="pm-title" style="font-family: var(--font-display); font-size: 2.5rem; margin: 1rem 0;">--</h2>
                 <p id="pm-desc" style="color: var(--color-text-muted); margin-bottom: 2rem;">--</p>
+                
+                <div id="pm-subcats-container" style="display: none; margin-bottom: 2rem;"></div>
+
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <div id="pm-price" class="price">--</div>
                     <button class="btn btn-primary" id="pm-add-btn"><span>Adicionar ao Carrinho</span></button>
@@ -610,7 +612,6 @@
             <button class="close-modal" onclick="document.getElementById('edit-profile-modal').style.display='none'">×</button>
             <h2 class="modal-title">Configurar Perfil</h2>
             <p style="color: var(--color-warning); font-size: 0.8rem; margin-bottom: 1.5rem;">Atenção: O Nickname só pode ser alterado a cada 7 dias.</p>
-            
             <div class="form-group"><label>URL da Foto (Avatar)</label><input type="text" id="edit-avatar" class="form-control" placeholder="https://imgur.com/foto.jpg"></div>
             <div class="form-group"><label>Nickname</label><input type="text" id="edit-nick" class="form-control" placeholder="Novo nick..."></div>
             <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="window.saveProfile()"><span>Salvar Alteraçoes</span></button>
@@ -638,7 +639,7 @@
                 </button>
             </div>
             
-            <p style="font-size: 0.7rem; color: var(--color-danger); margin-top: 15px;">*Aviso Admin: Para o login Google funcionar, adicione seu site na aba "Authorized Domains" nas configs de Authentication do Firebase.</p>
+            <p style="font-size: 0.7rem; color: var(--color-danger); margin-top: 15px;">*Admin: Google Auth requer liberar o dominio do site no console do Firebase.</p>
         </div>
     </div>
 
@@ -656,7 +657,7 @@
         import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
-        // SUA CHAVE DA DU STORE
+        // FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyARnKCFkE3irJWBPb5ivn7G-jfgieNlnJg",
             authDomain: "dust-e1c8b.firebaseapp.com",
@@ -670,7 +671,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // VARIAVEIS DO SEU PIX
         const MINHA_CHAVE_PIX = "13163607683"; 
         const MEU_NOME_PIX = "Ulisses Faria Lourenco"; 
         const MINHA_CIDADE_PIX = "Lavras";
@@ -683,10 +683,11 @@
         let isRegisterMode = false;
         let pendingCheckoutOrderId = null;
         let activeCategoryFilter = 'all';
+        
+        let editProductId = null; // pra editar
+        let tempSubcats = []; // pra adicionar variacoes
 
-        // ==========================================
-        // UI & HELPERS (TOASTS LINDOS)
-        // ==========================================
+        // UI Helpers
         window.showToast = function(msg, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -697,11 +698,29 @@
             setTimeout(() => toast.remove(), 3500);
         }
 
-        // ==========================================
-        // NAVEGACAO SPA (Sem recarregar paginas)
-        // ==========================================
+        // Animacoes 3D e Parallax
         window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
-        
+        const pBg = document.getElementById('parallax-bg');
+        const pTitle = document.getElementById('parallax-title');
+        window.addEventListener('scroll', () => {
+            let s = window.scrollY; 
+            if(s < 800 && pBg && pTitle) { pBg.style.transform = `translateY(${s * 0.3}px)`; pTitle.style.transform = `translateY(${s * 0.15}px)`; }
+        });
+
+        // 3D Tilt Restabelecido
+        const visualContainer = document.getElementById('hero-visual-container');
+        const box3D = document.getElementById('hero-3d-box');
+        if(visualContainer && box3D) {
+            visualContainer.addEventListener('mousemove', (e) => {
+                const r = visualContainer.getBoundingClientRect();
+                const x = e.clientX - r.left, y = e.clientY - r.top;
+                const rotateX = ((y - r.height/2)/r.height) * -20;
+                const rotateY = ((x - r.width/2)/r.width) * 20;
+                box3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+            visualContainer.addEventListener('mouseleave', () => box3D.style.transform = `rotateX(5deg) rotateY(-15deg)`);
+        }
+
         const revealOnScroll = () => { 
             const reveals = document.querySelectorAll('.reveal');
             let wh = window.innerHeight; 
@@ -721,7 +740,6 @@
             if(pageId === 'app-admin') loadAdminData();
         };
 
-        // Shift + P (Secreto)
         window.addEventListener('keydown', (e) => {
             if (e.shiftKey && e.key.toLowerCase() === 'p') {
                 document.getElementById('admin-login-modal').style.display = 'flex';
@@ -730,7 +748,7 @@
         });
 
         // ==========================================
-        // BANCO DE DADOS & RENDERIZACAO DE PRODUTOS
+        // BD PRODUTOS & VITRINE
         // ==========================================
         async function loadStoreData() {
             try {
@@ -750,7 +768,7 @@
                 renderStoreFront();
                 revealOnScroll(); 
             } catch (e) {
-                document.getElementById('products-container').innerHTML = '<div class="empty-state">O Firebase bloqueou a leitura. Verifique as regras do Firestore.</div>';
+                document.getElementById('products-container').innerHTML = '<div class="empty-state">Erro ao ler produtos. Firebase bloqueado.</div>';
                 revealOnScroll(); 
             }
         }
@@ -790,6 +808,16 @@
 
             list.forEach(p => {
                 const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
+                
+                // Trata exibicao se tiver subcategoria
+                let priceLabel = `R$ ${p.price.toFixed(2)}`;
+                let actionBtn = `<button class="btn-outline btn-add-cart" onclick="event.stopPropagation(); window.addToCart('${p.id}')">Adicionar</button>`;
+                
+                if(p.subcategories && p.subcategories.length > 0) {
+                    priceLabel = `<span style="font-size:1rem; color:var(--color-text-muted);">A partir de</span><br>R$ ${p.price.toFixed(2)}`;
+                    actionBtn = `<button class="btn-primary btn-add-cart" onclick="event.stopPropagation(); window.openProduct('${p.id}')">Opções</button>`;
+                }
+
                 cont.insertAdjacentHTML('beforeend', `
                     <div class="product-card" onclick="window.openProduct('${p.id}')">
                         ${img}
@@ -800,9 +828,9 @@
                             </div>
                             <h3 class="card-title">${p.title}</h3>
                             <p class="card-desc">${p.description}</p>
-                            <div class="card-footer" style="margin-top:auto;">
-                                <div class="price">R$ ${p.price.toFixed(2)}</div>
-                                <button class="btn-outline btn-add-cart" onclick="event.stopPropagation(); window.addToCart('${p.id}')">Adicionar</button>
+                            <div class="card-footer" style="margin-top:auto; align-items:flex-end;">
+                                <div class="price" style="line-height:1;">${priceLabel}</div>
+                                ${actionBtn}
                             </div>
                         </div>
                     </div>
@@ -821,6 +849,7 @@
             });
         }, 40000);
 
+        // Modal de Produto Comporta Subcategorias
         window.openProduct = function(id) {
             const p = products.find(x => x.id === id);
             if(!p) return;
@@ -828,19 +857,55 @@
             document.getElementById('pm-cat').innerText = p.category;
             document.getElementById('pm-title').innerText = p.title;
             document.getElementById('pm-desc').innerText = p.description;
-            document.getElementById('pm-price').innerText = `R$ ${p.price.toFixed(2)}`;
-            document.getElementById('pm-add-btn').onclick = () => { window.addToCart(p.id); document.getElementById('product-modal').style.display='none'; };
+            
+            const subCont = document.getElementById('pm-subcats-container');
+            if(p.subcategories && p.subcategories.length > 0) {
+                let html = '<h4 style="margin-bottom:10px; color:var(--color-text-muted);">Selecione a versão:</h4>';
+                p.subcategories.forEach((sub, i) => {
+                    html += `
+                    <label class="radio-option">
+                        <input type="radio" name="pm_subcat" value="${i}" ${i===0?'checked':''}>
+                        <strong>${sub.name}</strong> - R$ ${parseFloat(sub.price).toFixed(2)}
+                    </label>`;
+                });
+                subCont.innerHTML = html;
+                subCont.style.display = 'block';
+                document.getElementById('pm-price').innerText = `A partir de R$ ${p.price.toFixed(2)}`;
+            } else {
+                subCont.style.display = 'none';
+                document.getElementById('pm-price').innerText = `R$ ${p.price.toFixed(2)}`;
+            }
+
+            document.getElementById('pm-add-btn').onclick = () => { window.addToCartFromModal(p); };
             document.getElementById('product-modal').style.display = 'flex';
         }
 
+        window.addToCartFromModal = function(p) {
+            let finalPrice = parseFloat(p.price);
+            let finalTitle = p.title;
+
+            if(p.subcategories && p.subcategories.length > 0) {
+                const selected = document.querySelector('input[name="pm_subcat"]:checked');
+                if(!selected) return window.showToast('Escolha uma opção!', 'error');
+                const sub = p.subcategories[selected.value];
+                finalPrice = parseFloat(sub.price);
+                finalTitle = `${p.title} (${sub.name})`;
+            }
+
+            cart.push({ id: p.id, title: finalTitle, price: finalPrice, imageUrl: p.imageUrl });
+            updateCartUI();
+            window.showToast(`${finalTitle} adicionado!`, 'success');
+            document.getElementById('product-modal').style.display = 'none';
+        }
+
         // ==========================================
-        // SISTEMA DE CARRINHO E PIX (BLINDADO)
+        // CARRINHO E PIX
         // ==========================================
         window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
         
         window.addToCart = function(id) {
             const p = products.find(x => x.id === id);
-            cart.push(p);
+            cart.push({ id: p.id, title: p.title, price: parseFloat(p.price), imageUrl: p.imageUrl });
             updateCartUI();
             window.showToast(`Adicionado ao arsenal!`, 'success');
         }
@@ -898,7 +963,6 @@
                 
                 pendingCheckoutOrderId = docRef.id;
                 
-                // MÁGICA DO PIX: O "pad" agora usa String() para nunca dar erro de length
                 const pad = (str) => { let s = String(str); return s.length < 2 ? '0' + s : s; };
                 const format = (id, value) => { let v = String(value); return id + pad(v.length) + v; };
 
@@ -929,11 +993,11 @@
                 
                 cart = []; updateCartUI(); window.toggleCart();
                 window.navegar('app-checkout');
-            } catch (e) { console.error(e); window.showToast('Erro de comunicação com o banco.', 'error'); }
+            } catch (e) { window.showToast('Erro ao criar Pix.', 'error'); }
         }
 
         // ==========================================
-        // AUTH COMPLETO
+        // AUTH
         // ==========================================
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -977,7 +1041,7 @@
                 
                 try {
                     if(isRegisterMode) await setDoc(doc(db, "users", userCred.user.uid), { username: userText, totalSpent: 0, avatarUrl: '' });
-                } catch(dbErr) { console.warn(dbErr); }
+                } catch(dbErr) {}
 
                 window.showToast("Acesso concedido!", "success");
                 document.getElementById('user-login-modal').style.display = 'none';
@@ -986,29 +1050,18 @@
         }
 
         window.loginWithGoogle = async function() {
-            try { 
-                await signInWithPopup(auth, new GoogleAuthProvider()); 
-                document.getElementById('user-login-modal').style.display='none'; 
-                window.showToast("Logado via Google!", "success"); 
-                setTimeout(()=>window.navegar('app-cliente'), 500); 
-            } catch (e) { 
-                console.error(e);
-                window.showToast(`Erro Firebase: ${e.code}`, "error"); 
-            }
+            try { await signInWithPopup(auth, new GoogleAuthProvider()); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado Google!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
+            catch (e) { window.showToast("Libere dominios no Firebase Auth.", "error"); }
         }
         window.loginWithApple = async function() {
-            try { 
-                await signInWithPopup(auth, new OAuthProvider('apple.com')); 
-                document.getElementById('user-login-modal').style.display='none'; 
-                window.showToast("Logado via Apple!", "success"); 
-                setTimeout(()=>window.navegar('app-cliente'), 500); 
-            } catch (e) { window.showToast(`Erro Firebase: ${e.code}`, "error"); }
+            try { await signInWithPopup(auth, new OAuthProvider('apple.com')); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado Apple!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
+            catch (e) { window.showToast("Libere dominios no Firebase Auth.", "error"); }
         }
 
         window.logoutUser = function() { auth.signOut(); window.navegar('app-home'); window.showToast("Desconectado.", "info"); }
 
         // ==========================================
-        // PERFIL E DASHBOARD CLIENTE
+        // DASHBOARD CLIENTE
         // ==========================================
         function getEloData(spent) {
             if (spent < 50) return { name: 'BRONZE', c: 'elo-bronze', next: 50 };
@@ -1022,14 +1075,12 @@
             const uDoc = await getDoc(doc(db, "users", loggedInUser.uid));
             if(uDoc.exists()) loggedInUser = { uid: loggedInUser.uid, ...uDoc.data() };
             
-            // Garantia de fallback se o spent sumir
             const spent = loggedInUser.totalSpent || 0;
-
-            document.getElementById('dash-client-name').innerText = loggedInUser.username;
+            document.getElementById('dash-client-name').innerText = loggedInUser.username || 'Operador';
             document.getElementById('client-spent').innerText = spent.toFixed(2);
             document.getElementById('dash-avatar').src = loggedInUser.avatarUrl || 'https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg';
             
-            document.getElementById('edit-nick').value = loggedInUser.username;
+            document.getElementById('edit-nick').value = loggedInUser.username || '';
             document.getElementById('edit-avatar').value = loggedInUser.avatarUrl || '';
 
             let elo = getEloData(spent);
@@ -1080,7 +1131,7 @@
         }
 
         // ==========================================
-        // PAINEL ADMIN E CRM CORRIGIDO
+        // PAINEL ADMIN
         // ==========================================
         const mySessionId = Math.random().toString(36).substring(2);
         async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
@@ -1118,16 +1169,22 @@
             pList.innerHTML = '';
             products.forEach(p => {
                 const img = p.imageUrl ? `<img src="${p.imageUrl}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;margin-right:10px;">` : '';
-                pList.insertAdjacentHTML('beforeend', `<div class="product-list-item"><div style="display:flex;align-items:center;">${img}<div><strong>${p.title}</strong><span style="display:block;font-size:0.8rem;color:#aaa">Cat: ${p.category} | R$ ${p.price}</span></div></div><button class="btn-danger" onclick="window.delP('${p.id}')">Del</button></div>`);
+                pList.insertAdjacentHTML('beforeend', `
+                <div class="product-list-item">
+                    <div style="display:flex;align-items:center;">
+                        ${img}
+                        <div><strong>${p.title}</strong><span style="display:block;font-size:0.8rem;color:#aaa">Cat: ${p.category} | R$ ${p.price}</span></div>
+                    </div>
+                    <div>
+                        <button class="btn-edit" onclick="window.editP('${p.id}')">✏️</button>
+                        <button class="btn-danger" onclick="window.delP('${p.id}')">X</button>
+                    </div>
+                </div>`);
             });
 
             const qsO = await getDocs(collection(db, "pedidos"));
             allOrders = []; let rev = 0;
-            qsO.forEach(doc => { 
-                const d = doc.data(); 
-                allOrders.push({id: doc.id, ...d}); 
-                if(d.status==='concluido') rev+=(d.price || 0); 
-            });
+            qsO.forEach(doc => { const d = doc.data(); allOrders.push({id: doc.id, ...d}); if(d.status==='concluido') rev+=(d.price || 0); });
             document.getElementById('adm-rev').innerText = rev.toFixed(2);
             document.getElementById('adm-orders').innerText = allOrders.length;
             
@@ -1139,17 +1196,23 @@
                 tbodyO.insertAdjacentHTML('beforeend', `<tr><td style="color:#aaa">#${o.id.substring(0,5).toUpperCase()}</td><td style="font-weight:bold">${o.userName}</td><td style="font-size:0.8rem;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.productTitle}</td><td style="color:var(--color-accent)">R$${p.toFixed(2)}</td><td><span class="status-badge ${o.status==='concluido'?'status-concluido':'status-pendente'}">${o.status}</span></td><td>${action}</td></tr>`);
             });
 
-            const qsU = await getDocs(collection(db, "users"));
-            allUsers = [];
-            qsU.forEach(doc => allUsers.push({id: doc.id, ...doc.data()}));
-            renderUserTable(allUsers);
+            // CRM BLINDADO contra erros se o Firebase nao tiver a table
+            const tbodyU = document.getElementById('table-admin-users');
+            tbodyU.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
+            try {
+                const qsU = await getDocs(collection(db, "users"));
+                allUsers = [];
+                qsU.forEach(doc => allUsers.push({id: doc.id, ...doc.data()}));
+                renderUserTable(allUsers);
+            } catch(e) {
+                tbodyU.innerHTML = '<tr><td colspan="4">Regras do Firestore bloqueando a leitura da tabela "users".</td></tr>';
+            }
         }
 
         function renderUserTable(list) {
             const tbodyU = document.getElementById('table-admin-users');
             tbodyU.innerHTML = '';
             list.forEach(u => {
-                // BLINDAGEM DO CRM: O erro era que novos usuarios logados com google nao tinham totalSpent salvo
                 const spent = u.totalSpent || 0;
                 let elo = getEloData(spent).name;
                 let avatar = u.avatarUrl ? `<img src="${u.avatarUrl}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">` : '🎮';
@@ -1187,25 +1250,103 @@
             } catch(e) { window.showToast("Erro no servidor.", "error"); }
         }
 
+        // ==========================================
+        // GESTAO DE SUBCATEGORIAS & EDITAR PRODUTO
+        // ==========================================
+        window.toggleSubcatsUI = function() {
+            const isChecked = document.getElementById('add-has-subcats').checked;
+            document.getElementById('subcats-ui').style.display = isChecked ? 'block' : 'none';
+        }
+
+        window.addSubcat = function() {
+            const n = document.getElementById('sub-name').value.trim();
+            const p = document.getElementById('sub-price').value;
+            if(!n || !p) return;
+            tempSubcats.push({ name: n, price: Number(p) });
+            renderSubcatsAdmin();
+            document.getElementById('sub-name').value = '';
+            document.getElementById('sub-price').value = '';
+        }
+
+        window.delSubcat = function(index) { tempSubcats.splice(index, 1); renderSubcatsAdmin(); }
+
+        function renderSubcatsAdmin() {
+            const div = document.getElementById('subcats-list');
+            div.innerHTML = '';
+            tempSubcats.forEach((s, i) => {
+                div.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:space-between; background:#111; padding:5px 10px; margin-bottom:5px; border-radius:4px; border:1px solid #333;">
+                    <span>${s.name} - R$ ${s.price}</span>
+                    <button style="background:none; border:none; color:var(--color-danger); cursor:pointer;" onclick="window.delSubcat(${i})">x</button>
+                </div>`);
+            });
+        }
+
+        window.editP = function(id) {
+            const p = products.find(x => x.id === id);
+            if(!p) return;
+            editProductId = p.id;
+            document.getElementById('add-title').value = p.title;
+            document.getElementById('add-image').value = p.imageUrl || '';
+            document.getElementById('add-category').value = p.category;
+            document.getElementById('add-price').value = p.price;
+            document.getElementById('add-desc').value = p.description;
+            
+            if(p.subcategories && p.subcategories.length > 0) {
+                document.getElementById('add-has-subcats').checked = true;
+                tempSubcats = [...p.subcategories];
+                window.toggleSubcatsUI();
+                renderSubcatsAdmin();
+            } else {
+                document.getElementById('add-has-subcats').checked = false;
+                tempSubcats = [];
+                window.toggleSubcatsUI();
+            }
+
+            document.getElementById('btn-save-prod').innerHTML = '<span>Atualizar Produto</span>';
+            document.getElementById('btn-cancel-prod').style.display = 'block';
+            document.getElementById('admin-form-title').innerText = 'Editando Produto';
+        }
+
+        window.cancelEditP = function() {
+            editProductId = null; tempSubcats = [];
+            document.getElementById('add-title').value=''; document.getElementById('add-price').value=''; document.getElementById('add-image').value=''; document.getElementById('add-desc').value='';
+            document.getElementById('add-has-subcats').checked = false; window.toggleSubcatsUI();
+            document.getElementById('btn-save-prod').innerHTML = '<span>Publicar Produto</span>';
+            document.getElementById('btn-cancel-prod').style.display = 'none';
+            document.getElementById('admin-form-title').innerText = 'Novo Drop (Produto)';
+        }
+
         window.addProduct = async function() {
             const t = document.getElementById('add-title').value;
             const img = document.getElementById('add-image').value;
             const c = document.getElementById('add-category').value;
             const p = document.getElementById('add-price').value;
             const d = document.getElementById('add-desc').value;
-            if(!t || !p) return window.showToast("Preencha o título e preço!", "error");
+            const hasSub = document.getElementById('add-has-subcats').checked;
+
+            if(!t || !p) return window.showToast("Preencha o título e preço base!", "error");
             
+            const dataObj = { 
+                title: t, imageUrl: img, category: c, price: Number(p), description: d,
+                subcategories: hasSub ? tempSubcats : []
+            };
+
             try {
-                await addDoc(collection(db, "products"), { title: t, imageUrl: img, category: c, price: Number(p), description: d });
-                loadStoreData(); loadAdminData(); window.showToast("Drop enviado com sucesso!", "success");
-                document.getElementById('add-title').value=''; document.getElementById('add-price').value=''; document.getElementById('add-image').value=''; document.getElementById('add-desc').value='';
-            } catch(e) { window.showToast("Erro no envio.", "error"); }
+                if(editProductId) {
+                    await updateDoc(doc(db, "products", editProductId), dataObj);
+                    window.showToast("Atualizado com sucesso!", "success");
+                } else {
+                    await addDoc(collection(db, "products"), dataObj);
+                    window.showToast("Drop enviado!", "success");
+                }
+                window.cancelEditP(); // limpa form
+                loadStoreData(); loadAdminData(); 
+            } catch(e) { window.showToast("Erro ao processar.", "error"); }
         }
+
         window.delP = async function(id) { await deleteDoc(doc(db, "products", id)); loadStoreData(); loadAdminData(); window.showToast("Removido.", "info"); }
 
-        // Start da Loja
         loadStoreData();
-        
     </script>
 </body>
 </html>
