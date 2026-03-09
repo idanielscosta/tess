@@ -3,734 +3,1295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="DU Store - A principal loja de contas, boosts e serviços gaming.">
-    <title>DU Store | Premium Gaming</title>
+    <meta name="robots" content="index, follow">
+    <title>DU Store | Arsenal de Elite para Pro-Players</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
-        /* paleta de cores e variaveis mestre */
+        /* --------------------------------------------------------------------------
+        1. DESIGN SYSTEM & VARIÁVEIS GLOBAIS
+        --------------------------------------------------------------------------
+        */
         :root {
+            /* Cores de Fundo */
             --color-bg-base: #050505;
             --color-bg-surface: #111111;
-            --color-bg-glass: rgba(17, 17, 17, 0.8);
-            --color-primary: #8a2be2; /* Roxo mais vibrante */
-            --color-primary-dark: #5a189a;
-            --color-primary-glow: rgba(138, 43, 226, 0.5);
+            --color-bg-glass: rgba(17, 17, 17, 0.85);
+            
+            /* Identidade Visual (Neon Roxo) */
+            --color-primary: #8A2BE2;
+            --color-primary-hover: #9D4EDD;
+            --color-primary-dark: #5A189A;
+            --color-primary-glow: rgba(138, 43, 226, 0.45);
+            
+            /* Cores de Estado */
             --color-accent: #10B981;
+            --color-accent-glow: rgba(16, 185, 129, 0.3);
             --color-warning: #F59E0B;
             --color-danger: #EF4444;
+            --color-info: #3B82F6;
             --color-discord: #5865F2;
+            
+            /* Tipografia e Hierarquia */
             --color-text-main: #F3F4F6;
             --color-text-muted: #9CA3AF;
-            --color-border: #2a2a2a; /* Borda levemente mais clara para dar destaque */
+            --color-border: #262626;
+            
+            /* Fontes */
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'Inter', sans-serif;
             
-            /* cores dos ranks */
+            /* Transições */
+            --transition-speed: 0.3s;
+            --transition-bezier: cubic-bezier(0.16, 1, 0.3, 1);
+            
+            /* Fidelidade (Ranks) */
             --elo-bronze: #CD7F32;
             --elo-prata: #C0C0C0;
             --elo-esmeralda: #50C878;
             --elo-diamante: #B9F2FF;
         }
 
-        /* reset geral */
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        html.smooth-scroll { scroll-behavior: smooth; }
-        body { background-color: var(--color-bg-base); color: var(--color-text-main); font-family: var(--font-body); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
-        ::selection { background: var(--color-primary); color: #fff; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-        .text-primary { color: var(--color-primary); }
-        .text-accent { color: var(--color-accent); }
-        
-        /* formatacao scrollbar estilo hacker */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
-
-        /* controle de views do spa (single page app) */
-        .app-view { display: none; opacity: 0; transition: opacity 0.4s ease; min-height: 100vh; }
-        .app-view.active { display: block; opacity: 1; }
-
-        /* ==========================================================================
-           BOTOES MODERNIZADOS (DESIGN PREMIUM)
-           ========================================================================== */
-        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 1rem 2rem; font-family: var(--font-body); font-weight: 700; font-size: 0.95rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; border: none; border-radius: 8px; position: relative; overflow: hidden; transition: all 0.3s ease; text-decoration: none; }
-        
-        .btn-primary { background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark)); color: #fff; box-shadow: 0 4px 15px rgba(138, 43, 226, 0.3); border: 1px solid rgba(255,255,255,0.1); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6); background: linear-gradient(135deg, #9d4edd, var(--color-primary)); }
-        
-        .btn-outline { background: rgba(138, 43, 226, 0.05); color: #fff; border: 1px solid var(--color-primary); box-shadow: inset 0 0 10px rgba(138, 43, 226, 0.1); }
-        .btn-outline:hover { background: rgba(138, 43, 226, 0.15); border-color: #9d4edd; box-shadow: inset 0 0 15px rgba(138, 43, 226, 0.3), 0 4px 15px rgba(138, 43, 226, 0.2); transform: translateY(-2px); }
-
-        .btn-danger { background: rgba(239, 68, 68, 0.1); border: 1px solid var(--color-danger); color: var(--color-danger); padding: 0.5rem 1rem; border-radius: 6px; }
-        .btn-danger:hover { background: var(--color-danger); color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
-        
-        .btn-success { background: rgba(16, 185, 129, 0.1); border: 1px solid var(--color-accent); color: var(--color-accent); padding: 0.5rem 1rem; border-radius: 6px; }
-        .btn-success:hover { background: var(--color-accent); color: #000; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
-        
-        .btn-discord { background: var(--color-discord); color: #fff; gap: 10px; width: max-content; padding: 1rem 2rem; box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3); border: 1px solid rgba(255,255,255,0.1);}
-        .btn-discord:hover { background: #4752C4; box-shadow: 0 6px 20px rgba(88, 101, 242, 0.6); transform: translateY(-2px); }
-        .btn-discord img { height: 20px; filter: brightness(0) invert(1); }
-
-        /* header navbar */
-        header { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; padding: 1.5rem 0; background: var(--color-bg-glass); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); transition: 0.4s; }
-        header.scrolled { padding: 1rem 0; background: rgba(5, 5, 5, 0.95); }
-        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .brand { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); text-decoration: none; letter-spacing: 3px; cursor: pointer;}
-        .brand span { color: var(--color-primary); }
-        .nav-links { display: flex; gap: 2.5rem; }
-        .nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; position: relative; }
-        .nav-links a:hover { color: var(--color-text-main); }
-
-        /* sessoes da vitrine (home) */
-        .hero { position: relative; height: 100vh; display: flex; align-items: center; overflow: hidden; padding-top: 80px; }
-        .hero-bg-grid { position: absolute; top: 0; left: 0; width: 100%; height: 120%; background-image: linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 50px 50px; z-index: 1; }
-        .hero-glow { position: absolute; top: 20%; left: 10%; width: 50vw; height: 50vw; background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 60%); filter: blur(80px); z-index: 2; opacity: 0.5; animation: pulse 8s infinite alternate; }
-        @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
-        .hero-content { position: relative; z-index: 10; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 2rem; align-items: center; width: 100%;}
-        .hero-badge { display: inline-block; padding: 0.4rem 1rem; border: 1px solid var(--color-border); border-radius: 50px; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--color-accent); background: rgba(16, 185, 129, 0.05); margin-bottom: 1.5rem; }
-        .hero-title { font-family: var(--font-display); font-size: 6.5rem; line-height: 0.9; text-transform: uppercase; margin-bottom: 1.5rem; }
-        .hero-title .outline { color: transparent; -webkit-text-stroke: 2px var(--color-text-main); display: block; }
-        .hero-desc { font-size: 1.2rem; color: var(--color-text-muted); max-width: 90%; margin-bottom: 2rem; }
-        
-        .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3rem;}
-        
-        .hero-stats { display: flex; gap: 3rem; padding-top: 2rem; border-top: 1px solid var(--color-border); }
-        .stat-item h4 { font-family: var(--font-display); font-size: 2.5rem; color: var(--color-text-main); line-height: 1; }
-        .stat-item p { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--color-text-muted); }
-
-        .hero-visual { position: relative; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; perspective: 1000px; z-index: 10; }
-        .hero-visual-box { width: 100%; height: 80%; display: flex; justify-content: center; align-items: center; transition: transform 0.1s; transform-style: preserve-3d; }
-        
-        /* LOGO APRIMORADA - BLEND MODE + MASK */
-        .logo-mask {
-            max-width: 100%; 
-            max-height: 450px; 
-            object-fit: contain; 
-            filter: drop-shadow(0 0 50px var(--color-primary-glow));
-            /* O screen ignora o preto. Deixa a fumaça perfeita no fundo escuro. */
-            mix-blend-mode: screen; 
-            transform: translateZ(60px);
-            opacity: 1;
-            /* Mascara radial agressiva para garantir que qualquer borda reta da imagem suma */
-            -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
-            mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+        /* --------------------------------------------------------------------------
+        2. RESET E ESTILOS BASE (DETALHADO)
+        --------------------------------------------------------------------------
+        */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        section { padding: 6rem 0; position: relative; z-index: 20; }
-        .section-header { text-align: center; margin-bottom: 4rem; }
-        .section-title { font-family: var(--font-display); font-size: 4rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
-        .section-subtitle { color: var(--color-text-muted); font-size: 1.1rem; }
-        
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        html, body {
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-bg-base);
+            color: var(--color-text-main);
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
 
-        /* vitrine de cards e filtros */
-        .filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
-        .filter-btn { background: transparent; border: 1px solid var(--color-border); color: var(--color-text-muted); padding: 0.8rem 2rem; border-radius: 50px; font-family: var(--font-body); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: 0.3s; }
-        .filter-btn:hover, .filter-btn.active { background: rgba(138, 43, 226, 0.1); border-color: var(--color-primary); color: #fff; box-shadow: 0 0 15px rgba(138, 43, 226, 0.2); }
-        
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
-        
-        /* CARDS REFINADOS */
-        .product-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; cursor: pointer; overflow: hidden;}
-        .product-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(138, 43, 226, 0.1), transparent 40%); z-index: 0; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
-        .product-card:hover::before { opacity: 1; }
-        .product-card:hover { transform: translateY(-5px); border-color: var(--color-primary); box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 15px rgba(138,43,226,0.1); }
-        
-        .card-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 1.2rem; border: 1px solid var(--color-border); z-index: 1; position: relative;}
-        .badge { background: rgba(138, 43, 226, 0.15); color: #c084fc; border: 1px solid rgba(138,43,226,0.3); padding: 0.3rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;}
-        .view-count { font-size: 0.7rem; color: var(--color-danger); display: flex; align-items: center; gap: 5px; font-weight: bold; }
-        .card-title { font-family: var(--font-display); font-size: 2.2rem; margin: 0.8rem 0 0.5rem 0; line-height: 1;}
-        .card-desc { color: var(--color-text-muted); font-size: 0.9rem; flex-grow: 1; margin-bottom: 1.5rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.5;}
-        .price { font-family: var(--font-display); font-size: 2rem; color: #fff; }
-        .price span { font-family: var(--font-body); font-size: 0.8rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; display: block; margin-bottom: -5px;}
-        
-        .btn-add-cart { padding: 0.8rem 1.5rem; border-radius: 6px; z-index: 5; font-size: 0.85rem;}
+        body {
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        /* Carrinho Lateral e Float */
-        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--color-primary); color: #fff; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; cursor: pointer; z-index: 900; box-shadow: 0 5px 20px rgba(138, 43, 226, 0.5); transition: 0.3s; border: 2px solid rgba(255,255,255,0.1);}
-        .cart-float:hover { transform: scale(1.1) rotate(5deg); background: var(--color-primary-dark); }
-        .cart-float .cart-badge { position: absolute; top: -5px; right: -5px; background: var(--color-danger); font-size: 0.8rem; font-weight: bold; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid var(--color-bg-base);}
-        
-        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 450px; height: 100vh; background: var(--color-bg-surface); border-left: 1px solid var(--color-border); z-index: 1000; transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1); display: flex; flex-direction: column; box-shadow: -10px 0 30px rgba(0,0,0,0.8); }
-        .cart-sidebar.open { right: 0; }
-        .cart-header { padding: 2rem; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.3);}
-        .cart-header h2 { font-family: var(--font-display); font-size: 2.5rem; margin: 0; }
-        .close-cart { background: none; border: none; color: var(--color-text-muted); font-size: 2rem; cursor: pointer; transition: 0.3s; }
-        .close-cart:hover { color: var(--color-danger); }
-        .cart-items { flex-grow: 1; overflow-y: auto; padding: 2rem; display: flex; flex-direction: column; gap: 1rem; }
-        .cart-item { display: flex; align-items: center; gap: 1rem; background: #000; padding: 1rem; border-radius: 8px; border: 1px solid var(--color-border); transition: 0.3s;}
-        .cart-item:hover { border-color: #333; }
-        .cart-item img { width: 70px; height: 70px; border-radius: 6px; object-fit: cover; }
-        .cart-item-info { flex-grow: 1; }
-        .cart-item-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; color: #fff;}
-        .cart-item-price { color: var(--color-accent); font-weight: bold; font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1px;}
-        .cart-footer { padding: 2rem; border-top: 1px solid var(--color-border); background: rgba(0,0,0,0.5); }
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: var(--transition-speed);
+        }
 
-        /* Toasts Customizados */
-        #toast-container { position: fixed; bottom: 20px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;}
-        .toast { min-width: 250px; padding: 1rem 1.5rem; border-radius: 8px; font-weight: 600; color: #fff; display: flex; align-items: center; gap: 10px; animation: slideInLeft 0.3s forwards, fadeOut 0.5s forwards 3s; box-shadow: 0 5px 15px rgba(0,0,0,0.5); border-left: 5px solid transparent; background: var(--color-bg-surface); }
-        .toast-success { border-color: var(--color-accent); }
-        .toast-error { border-color: var(--color-danger); }
-        .toast-info { border-color: var(--color-primary); }
-        @keyframes slideInLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        @keyframes fadeOut { to { opacity: 0; display: none; } }
+        ul {
+            list-style: none;
+        }
 
-        /* Sessoes Institucionais */
-        .trust-section { background: #0a0a0a; border-top: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border); }
-        .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; text-align: center; }
-        .trust-item h3 { font-family: var(--font-display); font-size: 1.8rem; margin: 1rem 0; color: var(--color-text-main); }
-        .trust-item p { color: var(--color-text-muted); font-size: 0.95rem; }
-        .trust-icon { font-size: 3rem; color: var(--color-primary); }
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
 
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .testimo-card { background: var(--color-bg-surface); padding: 2.5rem; border-radius: 12px; border-left: 4px solid var(--color-primary); position: relative; border-top: 1px solid var(--color-border); border-right: 1px solid var(--color-border); border-bottom: 1px solid var(--color-border);}
-        .testimo-text { font-style: italic; color: var(--color-text-muted); margin-bottom: 1.5rem; font-size: 1.05rem; }
-        .testimo-author { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-text-main); letter-spacing: 1px; }
+        /* Seleção de texto customizada */
+        ::selection {
+            background: var(--color-primary);
+            color: #ffffff;
+        }
 
-        .faq-container { max-width: 800px; margin: 0 auto; }
-        .faq-item { background: var(--color-bg-surface); margin-bottom: 1rem; border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; }
-        .faq-btn { width: 100%; text-align: left; padding: 1.5rem; background: transparent; border: none; color: var(--color-text-main); font-family: var(--font-body); font-size: 1.1rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .faq-btn span { font-size: 1.5rem; color: var(--color-primary); transition: transform 0.3s; }
-        .faq-btn.active span { transform: rotate(45deg); }
-        .faq-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: #0a0a0a; }
-        .faq-content p { padding: 0 1.5rem 1.5rem 1.5rem; color: var(--color-text-muted); }
-        
-        /* ==========================================================================
-           PÁGINA DO PRODUTO (NOVA VIEW DEDICADA)
-           ========================================================================== */
-        .product-page-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 2rem; }
-        .pp-image-container { position: sticky; top: 100px; border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); box-shadow: 0 10px 40px rgba(0,0,0,0.5); background: #000; display: flex; align-items: center; justify-content: center; height: max-content;}
-        .pp-image-container img { width: 100%; height: auto; object-fit: cover; }
-        .pp-details { padding-bottom: 4rem; }
-        .pp-title { font-family: var(--font-display); font-size: 4rem; line-height: 1; margin: 1rem 0; }
-        .pp-desc { font-size: 1.1rem; color: var(--color-text-muted); margin-bottom: 2rem; line-height: 1.7; }
-        
-        /* Cards de Variação (Subcategorias) */
-        .variations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-        .variation-tile { display: block; cursor: pointer; }
-        .variation-tile input { display: none; }
-        .variation-tile .tile-content { border: 2px solid var(--color-border); background: var(--color-bg-surface); padding: 1.5rem; border-radius: 8px; transition: 0.3s; text-align: center; }
-        .variation-tile:hover .tile-content { border-color: #555; background: #1a1a1a; }
-        .variation-tile input:checked + .tile-content { border-color: var(--color-primary); background: rgba(138, 43, 226, 0.1); box-shadow: 0 0 15px rgba(138, 43, 226, 0.2); }
-        .tile-name { display: block; font-weight: 700; margin-bottom: 0.5rem; font-size: 1.1rem; color: #fff;}
-        .tile-price { display: block; font-family: var(--font-display); font-size: 1.5rem; color: var(--color-accent); }
+        /* Scrollbar Personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
 
-        .pp-action-bar { background: var(--color-bg-surface); padding: 2rem; border-radius: 12px; border: 1px solid var(--color-border); display: flex; align-items: center; justify-content: space-between; position: sticky; bottom: 20px; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); z-index: 10;}
-        .pp-final-price { font-family: var(--font-display); font-size: 3rem; color: #fff; line-height: 1;}
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
 
-        /* Area do Cliente - Gamificada */
-        .gamer-profile-header { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); overflow: hidden; margin-bottom: 2rem; position: relative; }
-        .gamer-banner { height: 160px; background: linear-gradient(45deg, #1b0033, #050505); width: 100%; position: relative; }
-        .gamer-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to top, var(--color-bg-surface), transparent); }
-        
-        .gamer-info-row { display: flex; align-items: flex-end; padding: 0 2rem 2rem 2rem; margin-top: -60px; position: relative; z-index: 2; }
-        .gamer-avatar-wrapper { width: 120px; height: 120px; border-radius: 50%; background: #000; border: 4px solid var(--color-bg-surface); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-right: 1.5rem; box-shadow: 0 0 20px rgba(107,33,168,0.5); flex-shrink: 0;}
-        .gamer-avatar-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        
-        .gamer-details { flex-grow: 1; padding-bottom: 5px; }
-        .gamer-tag { color: var(--color-primary); font-family: var(--font-body); font-weight: 600; letter-spacing: 1px; font-size: 0.9rem; text-transform: uppercase; margin-bottom: 5px;}
-        .gamer-name-box { font-family: var(--font-display); font-size: 3rem; margin: 0; line-height: 1; display:flex; align-items:center; gap: 15px;}
-        
-        .btn-edit-profile { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; font-size: 1rem; color: var(--color-text-main); }
-        .btn-edit-profile:hover { background: var(--color-primary); border-color: var(--color-primary); box-shadow: 0 0 10px var(--color-primary-glow); }
-        
-        .gamer-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; }
-        .gamer-card { background: var(--color-bg-surface); border-radius: 12px; border: 1px solid var(--color-border); padding: 2rem; }
-        .gamer-card h3 { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--color-border); padding-bottom: 0.5rem; }
-        
-        .elo-display { text-align: center; }
-        .elo-badge { display: inline-block; padding: 0.5rem 1.5rem; border-radius: 50px; font-family: var(--font-display); font-size: 2.5rem; letter-spacing: 2px; margin: 1rem 0; color: #000; }
-        .elo-bronze { background: linear-gradient(135deg, #cd7f32, #8b5a2b); box-shadow: 0 0 20px rgba(205, 127, 50, 0.4); }
-        .elo-prata { background: linear-gradient(135deg, #e0e0e0, #a0a0a0); box-shadow: 0 0 20px rgba(192, 192, 192, 0.4); }
-        .elo-esmeralda { background: linear-gradient(135deg, #50c878, #2e8b57); box-shadow: 0 0 20px rgba(80, 200, 120, 0.4); }
-        .elo-diamante { background: linear-gradient(135deg, #b9f2ff, #7df9ff); box-shadow: 0 0 30px rgba(185, 242, 255, 0.6); }
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-border);
+            border-radius: 10px;
+        }
 
-        .xp-bar-container { background: #000; border-radius: 50px; height: 30px; border: 1px solid #333; overflow: hidden; position: relative; margin-top: 1.5rem; }
-        .xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), #9d00ff); width: 0%; transition: width 1s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .xp-bar-fill::after { content: ''; position: absolute; top: 0; right: 0; bottom: 0; left: 0; background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 20px); }
-        .xp-text { position: absolute; width: 100%; text-align: center; top: 0; line-height: 30px; font-size: 0.85rem; font-weight: bold; text-shadow: 1px 1px 2px #000; z-index: 2; }
-        
-        .client-stats-list { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-        .stat-row { display: flex; justify-content: space-between; padding-bottom: 0.5rem; border-bottom: 1px dashed var(--color-border); color: var(--color-text-muted); font-size: 0.9rem; }
-        .stat-row strong { color: var(--color-text-main); font-family: var(--font-display); font-size: 1.2rem; letter-spacing: 1px; }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary);
+        }
 
-        /* dash admin */
-        .dash-layout { display: grid; grid-template-columns: 250px 1fr; min-height: 100vh; background: var(--color-bg-base); }
-        .dash-sidebar { background: var(--color-bg-surface); border-right: 1px solid var(--color-border); padding: 2rem; display: flex; flex-direction: column; }
-        .dash-content { padding: 3rem; overflow-y: auto; height: 100vh;}
-        .dash-menu { margin-top: 3rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .dash-menu button { background: transparent; border: none; color: var(--color-text-muted); text-align: left; padding: 1rem; font-family: var(--font-body); font-weight: 600; cursor: pointer; border-radius: 8px; transition: 0.3s; }
-        .dash-menu button:hover, .dash-menu button.active { background: rgba(255,255,255,0.05); color: var(--color-text-main); border-left: 3px solid var(--color-primary); }
-        
-        .stat-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-        .stat-card { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--color-primary); }
-        .stat-card h4 { color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .stat-card .value { font-family: var(--font-display); font-size: 2.5rem; color: #fff; }
+        /* --------------------------------------------------------------------------
+        3. UTILITÁRIOS E COMPONENTES GLOBAIS
+        --------------------------------------------------------------------------
+        */
+        .container {
+            width: 100%;
+            max-width: 1240px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
 
-        .data-table { width: 100%; border-collapse: collapse; background: var(--color-bg-surface); border-radius: 12px; overflow: hidden; border: 1px solid var(--color-border); }
-        .data-table th, .data-table td { padding: 1.2rem 1rem; text-align: left; border-bottom: 1px solid var(--color-border); font-size: 0.95rem; }
-        .data-table th { background: rgba(0,0,0,0.5); font-family: var(--font-display); letter-spacing: 1px; color: var(--color-text-muted); font-size: 1.1rem; }
-        .data-table tr:hover { background: rgba(255,255,255,0.02); }
-        
-        .status-badge { padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px;}
-        .status-pendente { background: rgba(245, 158, 11, 0.1); color: var(--color-warning); border: 1px solid rgba(245,158,11,0.3); }
-        .status-concluido { background: rgba(16, 185, 129, 0.1); color: var(--color-accent); border: 1px solid rgba(16,185,129,0.3); }
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
 
-        /* modais popup com design limpo */
-        .form-group { margin-bottom: 1.5rem; text-align: left; }
-        .form-group label { display: block; font-size: 0.8rem; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 0.5rem; letter-spacing: 1px; font-weight: 600;}
-        .form-control { width: 100%; background: #000; border: 1px solid var(--color-border); color: var(--color-text-main); padding: 1rem; border-radius: 8px; font-family: var(--font-body); outline: none; transition: 0.3s; }
-        .form-control:focus { border-color: var(--color-primary); box-shadow: 0 0 10px rgba(138,43,226,0.1); }
-        
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 9999; display: none; justify-content: center; align-items: center; padding: 1rem;}
-        .modal-box { background: var(--color-bg-surface); border: 1px solid var(--color-border); padding: 3rem; border-radius: 12px; width: 100%; max-width: 450px; position: relative; text-align: center; max-height: 95vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.5);}
-        .close-modal { position: absolute; top: 1rem; right: 1rem; background: transparent; border: none; color: var(--color-text-muted); font-size: 1.5rem; cursor: pointer; transition: 0.3s; width: 40px; height: 40px; border-radius: 50%; display: flex; justify-content: center; align-items: center;}
-        .close-modal:hover { background: rgba(255,255,255,0.05); color: #fff; }
-        .error-msg { color: var(--color-danger); font-size: 0.8rem; margin-bottom: 1rem; display: none; background: rgba(239,68,68,0.1); padding: 10px; border-radius: 8px;}
-        
-        /* Botoes Sociais Limpos (Arrumou o bloco branco) */
-        .social-btns { display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1.5rem;}
-        .btn-social { width: 100%; display: flex; align-items: center; justify-content: center; padding: 0.8rem; border-radius: 8px; cursor: pointer; font-family: var(--font-body); font-weight: 600; transition: 0.3s; border: none; font-size: 0.95rem;}
-        .btn-social img { width: 20px; height: 20px; margin-right: 10px; }
-        .btn-google { background-color: #fff; color: #000; }
-        .btn-google:hover { background-color: #e0e0e0; }
-        .btn-apple { background-color: #000; color: #fff; border: 1px solid var(--color-border); }
-        .btn-apple:hover { background-color: #1a1a1a; border-color: #333;}
-        
-        .divider { display: flex; align-items: center; text-align: center; margin: 1.5rem 0; color: var(--color-text-muted); font-size: 0.8rem; text-transform: uppercase; font-family: var(--font-display); letter-spacing: 1px;}
-        .divider::before, .divider::after { content: ''; flex: 1; border-bottom: 1px solid var(--color-border); }
-        .divider:not(:empty)::before { margin-right: 1em; }
-        .divider:not(:empty)::after { margin-left: 1em; }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 4.5rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            line-height: 1;
+        }
 
-        footer { background: #000; padding: 4rem 0 2rem 0; border-top: 1px solid var(--color-border); text-align: center; }
+        .section-title span {
+            color: var(--color-primary);
+            text-shadow: 0 0 20px var(--color-primary-glow);
+        }
 
-        .cat-manager-item { display: flex; justify-content: space-between; background: #000; padding: 0.8rem 1.2rem; border: 1px solid var(--color-border); margin-bottom: 8px; border-radius: 8px; align-items: center;}
-        .cat-manager-item button { background: none; border: none; color: var(--color-text-muted); cursor: pointer; font-size: 1.2rem; padding: 5px; transition: 0.3s;}
-        .cat-manager-item button:hover { color: #fff; }
+        .section-subtitle {
+            color: var(--color-text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
 
-        @media (max-width: 768px) {
-            .dash-layout { grid-template-columns: 1fr; }
-            .dash-sidebar { display: none; } 
-            .hero-content { grid-template-columns: 1fr; text-align: center; }
-            .hero-visual { display: none; }
-            .nav-links { display: none; }
-            .gamer-grid { grid-template-columns: 1fr; }
-            .gamer-info-row { flex-direction: column; align-items: center; text-align: center; margin-top: -80px;}
-            .gamer-avatar-wrapper { margin-right: 0; margin-bottom: 1rem; width: 100px; height: 100px;}
-            .cart-sidebar { width: 100%; right: -100%; }
-            .hero-buttons { justify-content: center; }
-            .product-page-layout { grid-template-columns: 1fr; gap: 2rem;}
-            .pp-image-container { position: relative; top: 0; }
+        /* Botoes Premium */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.1rem 2.5rem;
+            font-weight: 800;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            border-radius: 8px;
+            transition: all 0.4s var(--transition-bezier);
+            position: relative;
+            z-index: 1;
+            gap: 12px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+            color: #ffffff;
+            box-shadow: 0 10px 25px rgba(138, 43, 226, 0.35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(138, 43, 226, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .btn-outline {
+            border: 2px solid var(--color-primary);
+            color: #ffffff;
+            background: rgba(138, 43, 226, 0.05);
+        }
+
+        .btn-outline:hover {
+            background: var(--color-primary);
+            box-shadow: 0 0 25px var(--color-primary-glow);
+            transform: translateY(-3px);
+        }
+
+        .btn-discord {
+            background-color: var(--color-discord);
+            color: #ffffff;
+        }
+
+        .btn-discord img {
+            height: 22px;
+            filter: brightness(0) invert(1);
+        }
+
+        .btn-discord:hover {
+            background-color: #4752C4;
+            box-shadow: 0 10px 30px rgba(88, 101, 242, 0.4);
+            transform: translateY(-3px);
+        }
+
+        /* --------------------------------------------------------------------------
+        4. NAVEGAÇÃO E HEADER
+        --------------------------------------------------------------------------
+        */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1.5rem 0;
+            background: var(--color-bg-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s var(--transition-bezier);
+        }
+
+        header.scrolled {
+            padding: 1rem 0;
+            background: rgba(5, 5, 5, 0.95);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            letter-spacing: 3px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .brand span {
+            color: var(--color-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+        }
+
+        .nav-links a {
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--color-text-muted);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ffffff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--color-primary);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* --------------------------------------------------------------------------
+        5. HERO SECTION & LOGO 3D (CORRIGIDA)
+        --------------------------------------------------------------------------
+        */
+        .hero {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 1;
+        }
+
+        .hero-glow-radial {
+            position: absolute;
+            top: 20%;
+            left: 10%;
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--color-primary-glow) 0%, transparent 70%);
+            filter: blur(80px);
+            z-index: 2;
+            opacity: 0.6;
+        }
+
+        .hero-content-grid {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 4rem;
+            align-items: center;
+            width: 100%;
+        }
+
+        .hero-title-main {
+            font-family: var(--font-display);
+            font-size: 7.5rem;
+            line-height: 0.85;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+        }
+
+        .hero-title-main .outline-text {
+            color: transparent;
+            -webkit-text-stroke: 2px #ffffff;
+            display: block;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--color-text-muted);
+            max-width: 550px;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+
+        /* Visual da Logo 3D Integrada */
+        .hero-visual-wrapper {
+            position: relative;
+            height: 600px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+        }
+
+        .logo-3d-box {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.15s ease-out;
+        }
+
+        /* CORRECAO DA LOGO: Mix Blend Mode resolve o corte preto */
+        .main-store-logo {
+            max-width: 100%;
+            max-height: 480px;
+            object-fit: contain;
+            mix-blend-mode: screen; 
+            filter: drop-shadow(0 0 50px var(--color-primary-glow));
+            transform: translateZ(80px);
+            /* Máscara radial garante que as bordas da fumaça sumam sem corte seco */
+            -webkit-mask-image: radial-gradient(circle at center, black 50%, transparent 98%);
+            mask-image: radial-gradient(circle at center, black 50%, transparent 98%);
+        }
+
+        .hero-stats-bar {
+            display: flex;
+            gap: 4rem;
+            margin-top: 4rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        .stat-block h4 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            line-height: 1;
+            color: #ffffff;
+        }
+
+        .stat-block p {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--color-text-muted);
+            font-weight: 700;
+        }
+
+        /* --------------------------------------------------------------------------
+        6. VITRINE DE PRODUTOS E FILTROS
+        --------------------------------------------------------------------------
+        */
+        .catalog-section {
+            background-color: var(--color-bg-base);
+            padding: 8rem 0;
+        }
+
+        .filter-nav {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-bottom: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn-gaming {
+            background: #0a0a0a;
+            border: 1px solid var(--color-border);
+            color: var(--color-text-muted);
+            padding: 0.9rem 2.2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+        }
+
+        .filter-btn-gaming:hover, 
+        .filter-btn-gaming.active {
+            background: rgba(138, 43, 226, 0.15);
+            border-color: var(--color-primary);
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.2);
+        }
+
+        .products-main-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* Card de Produto de Alta Fidelidade */
+        .du-product-card {
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            transition: all 0.4s var(--transition-bezier);
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .du-product-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--color-primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), 0 0 20px rgba(138,43,226,0.15);
+        }
+
+        .card-image-wrapper {
+            width: 100%;
+            height: 190px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--color-border);
+            position: relative;
+        }
+
+        .card-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.5s;
+        }
+
+        .du-product-card:hover .card-image-wrapper img {
+            transform: scale(1.1);
+        }
+
+        .card-tag {
+            background: rgba(138, 43, 226, 0.2);
+            color: #c084fc;
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            border: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .live-viewer-badge {
+            font-size: 0.7rem;
+            color: var(--color-danger);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 800;
+            margin-top: 10px;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-danger);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(0.9); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(0.9); opacity: 1; }
+        }
+
+        .card-title-text {
+            font-family: var(--font-display);
+            font-size: 2.4rem;
+            margin: 1rem 0 0.5rem 0;
+            line-height: 1.1;
+            color: #ffffff;
+        }
+
+        .card-description-text {
+            color: var(--color-text-muted);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-footer-action {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+            border-top: 1px solid var(--color-border);
+            padding-top: 1.5rem;
+        }
+
+        .card-price-box {
+            line-height: 1;
+        }
+
+        .price-prefix {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+            text-transform: uppercase;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .price-value {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        /* --------------------------------------------------------------------------
+        7. SLIDER DE AVALIAÇÕES (CARROSSEL INFINITO)
+        --------------------------------------------------------------------------
+        */
+        .feedback-section {
+            background: rgba(255,255,255,0.02);
+            padding: 6rem 0;
+            overflow: hidden;
+        }
+
+        .slider-track-infinite {
+            display: flex;
+            width: max-content;
+            gap: 2.5rem;
+            animation: scrollSlider 50s linear infinite;
+            padding: 2rem 0;
+        }
+
+        @keyframes scrollSlider {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .feedback-card-gamer {
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            padding: 2.5rem;
+            border-radius: 20px;
+            width: 380px;
+            border-left: 5px solid var(--color-primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+
+        .feedback-quote {
+            color: var(--color-text-main);
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .feedback-user-nick {
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--color-primary);
+            letter-spacing: 1px;
+        }
+
+        /* --------------------------------------------------------------------------
+        8. VIEW DO PRODUTO SOLO (SPA)
+        --------------------------------------------------------------------------
+        */
+        .product-solo-view {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+
+        .ps-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 5rem;
+            margin-bottom: 5rem;
+        }
+
+        .ps-image-gallery {
+            position: sticky;
+            top: 120px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--color-border);
+            background: #000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            height: max-content;
+        }
+
+        .ps-image-gallery img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .ps-info-content h1 {
+            font-family: var(--font-display);
+            font-size: 5rem;
+            line-height: 0.9;
+            margin: 1.5rem 0;
+        }
+
+        .ps-description-full {
+            font-size: 1.1rem;
+            color: var(--color-text-muted);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 3rem;
+        }
+
+        /* Seletor de Variações Moderno */
+        .variation-tiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin: 2rem 0 3rem 0;
+        }
+
+        .variation-card-input {
+            display: none;
+        }
+
+        .variation-tile-label {
+            display: block;
+            cursor: pointer;
+        }
+
+        .tile-ui-box {
+            background: #0a0a0a;
+            border: 2px solid var(--color-border);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .variation-tile-label:hover .tile-ui-box {
+            border-color: #444;
+            background: #111;
+        }
+
+        .variation-card-input:checked + .tile-ui-box {
+            border-color: var(--color-primary);
+            background: rgba(138, 43, 226, 0.1);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.2);
+        }
+
+        .tile-label-name {
+            display: block;
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .tile-label-price {
+            display: block;
+            font-family: var(--font-display);
+            font-size: 1.6rem;
+            color: var(--color-accent);
+        }
+
+        .checkout-summary-bar {
+            background: var(--color-bg-surface);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            bottom: 30px;
+            box-shadow: 0 -15px 40px rgba(0,0,0,0.6);
+            z-index: 100;
+        }
+
+        .final-price-display {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            line-height: 1;
+            color: #ffffff;
+        }
+
+        /* --------------------------------------------------------------------------
+        9. DASHBOARD DO CLIENTE E ADMIN (CRM)
+        --------------------------------------------------------------------------
+        */
+        .dashboard-container-full {
+            padding-top: 100px;
+            min-height: 100vh;
+        }
+
+        .dash-sidebar-nav {
+            background: var(--color-bg-surface);
+            border-radius: 16px;
+            border: 1px solid var(--color-border);
+            padding: 2rem;
+            height: max-content;
+        }
+
+        .dash-nav-btn {
+            width: 100%;
+            text-align: left;
+            padding: 1.2rem;
+            color: var(--color-text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+        .dash-nav-btn:hover, .dash-nav-btn.active {
+            background: rgba(255,255,255,0.05);
+            color: #ffffff;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        /* Perfil Gamer XP */
+        .xp-system-box {
+            background: #000;
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--color-border);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .rank-badge-mega {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            letter-spacing: 5px;
+            margin: 1rem 0;
+            padding: 0.5rem 2rem;
+            border-radius: 100px;
+            display: inline-block;
+            color: #000;
+        }
+
+        .xp-bar-outer {
+            width: 100%;
+            height: 35px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 50px;
+            overflow: hidden;
+            position: relative;
+            margin-top: 2rem;
+        }
+
+        .xp-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg, var(--color-primary), #D400FF);
+            width: 0%;
+            transition: width 1.5s var(--transition-bezier);
+            box-shadow: 0 0 20px var(--color-primary-glow);
+        }
+
+        .xp-bar-text {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            top: 0;
+            line-height: 35px;
+            font-weight: 900;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        /* --------------------------------------------------------------------------
+        10. TOASTS E NOTIFICAÇÕES (BEAUTIFUL)
+        --------------------------------------------------------------------------
+        */
+        #toast-master-container {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast-du {
+            min-width: 320px;
+            padding: 1.2rem 1.8rem;
+            border-radius: 12px;
+            background: var(--color-bg-surface);
+            border-left: 6px solid var(--color-primary);
+            color: #ffffff;
+            font-weight: 600;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            animation: toastSlideIn 0.4s var(--transition-bezier) forwards;
+        }
+
+        @keyframes toastSlideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast-du.success { border-color: var(--color-accent); }
+        .toast-du.error { border-color: var(--color-danger); }
+        .toast-du.warning { border-color: var(--color-warning); }
+
+        /* --------------------------------------------------------------------------
+        11. LOGIN MODAL E ADMIN MODAL
+        --------------------------------------------------------------------------
+        */
+        .auth-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.92);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .auth-card-modern {
+            background: var(--color-bg-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+        }
+
+        .close-auth-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: var(--color-text-muted);
+            font-size: 2rem;
+            transition: 0.3s;
+        }
+
+        .close-auth-modal:hover {
+            color: #ffffff;
+            transform: rotate(90deg);
+        }
+
+        /* --------------------------------------------------------------------------
+        12. RESPONSIVIDADE ADICIONAL
+        --------------------------------------------------------------------------
+        */
+        @media (max-width: 1024px) {
+            .hero-title-main { font-size: 5rem; }
+            .hero-content-grid { grid-template-columns: 1fr; text-align: center; }
+            .hero-visual-wrapper { display: none; }
+            .ps-grid-layout { grid-template-columns: 1fr; }
+            .hero-stats-bar { justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <div id="toast-container"></div>
+    <div id="toast-master-container"></div>
 
-    <div id="cart-float" class="cart-float" onclick="window.toggleCart()">
-        🛒 <span id="cart-count" class="cart-badge" style="display: none;">0</span>
+    <div id="cart-float-trigger" class="cart-float" onclick="window.toggleCartSidebar()">
+        🛒 <span id="cart-count-badge" class="cart-badge" style="display: none;">0</span>
     </div>
     
-    <div id="cart-sidebar" class="cart-sidebar">
+    <div id="cart-sidebar-panel" class="cart-sidebar">
         <div class="cart-header">
             <h2>Seu Arsenal</h2>
-            <button class="close-cart" onclick="window.toggleCart()">×</button>
+            <button class="close-cart" onclick="window.toggleCartSidebar()">×</button>
         </div>
-        <div class="cart-items" id="cart-items-container">
-            <p style="color: var(--color-text-muted); text-align: center; margin-top: 50%;">Seu carrinho está vazio.</p>
-        </div>
-        <div class="cart-footer">
-            <div style="display: flex; justify-content: space-between; font-size: 1.2rem; margin-bottom: 1rem; font-weight: bold;">
-                <span>Total:</span>
-                <span class="text-accent" id="cart-total">R$ 0,00</span>
+        <div id="cart-items-list" class="cart-items">
             </div>
-            <button class="btn btn-primary" style="width: 100%;" onclick="window.checkoutCart()">Finalizar Compra (PIX)</button>
+        <div class="cart-footer">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+                <span style="font-weight: 700; color: var(--color-text-muted);">Total:</span>
+                <span id="cart-total-price" style="font-family: var(--font-display); font-size: 2rem;">R$ 0,00</span>
+            </div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="window.processCartCheckout()">Finalizar via PIX</button>
         </div>
     </div>
 
-    <div id="app-home" class="app-view active">
+    <div id="app-view-home" class="app-view active">
         <header id="main-header">
             <div class="container nav-wrapper">
-                <a onclick="window.navegar('app-home')" class="brand">DU<span>.</span>STORE</a>
+                <a onclick="window.navegar('app-view-home')" class="brand">DU<span>.</span>STORE</a>
                 <nav class="nav-links">
-                    <a href="#catalogo">Catálogo</a>
-                    <a href="#garantia">Garantia</a>
-                    <a href="#faq">FAQ</a>
+                    <a href="#catalogo">Arsenal</a>
+                    <a href="#garantia">Confiança</a>
+                    <a href="#feedback">Voz da Rua</a>
                 </nav>
-                <button class="btn btn-outline" id="header-user-btn" style="padding: 0.6rem 1.5rem; font-size: 0.8rem; border-radius: 50px;" onclick="window.openLoginOrDash()">
-                    <span id="header-btn-text">Login / Cadastro</span>
+                <button class="btn btn-outline" style="padding: 0.6rem 1.8rem; border-radius: 50px;" onclick="window.openAuthOrDash()">
+                    <span id="nav-auth-text">Acessar Conta</span>
                 </button>
             </div>
         </header>
 
         <section class="hero">
             <div class="hero-bg-grid"></div>
-            <div class="hero-glow"></div>
-            <div class="container hero-content">
+            <div class="hero-glow-radial"></div>
+            <div class="container hero-content-grid">
                 <div>
-                    <div class="hero-badge">A Nova Era do Gaming</div>
-                    <h1 class="hero-title">Eleve o <br><span class="outline">Seu Nível.</span></h1>
-                    <p class="hero-desc">Esqueça o amadorismo. Contas premium, boosters de elite e mercado negro de moedas digitais. A estética das ruas com a performance que os servidores exigem.</p>
+                    <div class="hero-badge">A New Era of Gaming</div>
+                    <h1 class="hero-title-main">Domine <br><span class="outline-text">O Servidor.</span></h1>
+                    <p class="hero-description">Contas high-elo, serviços de boosting sigilosos e o melhor preço de moedas in-game do mercado cinza brasileiro.</p>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView();"><span>Acessar Arsenal</span></button>
+                        <button class="btn btn-primary" onclick="document.getElementById('catalogo').scrollIntoView()"><span>Ver Catálogo</span></button>
                         <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord">
-                            <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt="Discord"> 
-                            <span>Nosso Discord</span>
+                            <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt=""> <span>Comunidade</span>
                         </a>
                     </div>
-                    
-                    <div class="hero-stats">
-                        <div class="stat-item"><h4>15K+</h4><p>Clientes</p></div>
-                        <div class="stat-item"><h4>0%</h4><p>Taxa de Ban</p></div>
-                        <div class="stat-item"><h4>24/7</h4><p>Suporte</p></div>
+                    <div class="hero-stats-bar">
+                        <div class="stat-block"><h4>15K+</h4><p>Operadores</p></div>
+                        <div class="stat-block"><h4>0%</h4><p>Taxa de Ban</p></div>
+                        <div class="stat-block"><h4>24/7</h4><p>Plantão</p></div>
                     </div>
                 </div>
-                <div class="hero-visual" id="hero-visual-container">
-                    <div class="hero-visual-box" id="hero-3d-box">
-                        <img src="https://i.postimg.cc/L5jQKs8M/Design-sem-nome-(2).png" alt="DU Store Logo" class="logo-mask">
+                <div class="hero-visual-wrapper" id="hero-tilt-area">
+                    <div class="logo-3d-box" id="logo-3d-target">
+                        <img src="https://i.postimg.cc/L5jQKs8M/Design-sem-nome-(2).png" alt="Logo DU Store" class="logo-mask">
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="catalogo">
+        <section id="catalogo" class="catalog-section">
             <div class="container">
-                <div class="section-header reveal">
-                    <h2 class="section-title">Nosso <span class="text-primary">Arsenal</span></h2>
-                    <p class="section-subtitle">Escolha sua categoria e adicione ao carrinho para dominar o servidor.</p>
+                <div class="section-header">
+                    <h2 class="section-title">Nosso <span>Arsenal</span></h2>
+                    <p class="section-subtitle">Filtre por categoria e escolha sua vantagem competitiva agora.</p>
                 </div>
-                <div class="filters" id="dynamic-filters">
-                    <button class="filter-btn active">Carregando Filtros...</button>
-                </div>
-                <div class="products-grid" id="products-container">
-                    <div style="grid-column: 1/-1; text-align: center; color: var(--color-text-muted); padding: 3rem;">Conectando com o servidor da loja...</div>
-                </div>
+                <div class="filter-nav" id="dynamic-filters-list">
+                    </div>
+                <div class="products-main-grid" id="main-store-container">
+                    </div>
             </div>
         </section>
 
         <section id="garantia" class="trust-section">
-            <div class="container reveal">
+            <div class="container">
                 <div class="trust-grid">
-                    <div class="trust-item"><div class="trust-icon">⚡</div><h3>Drop Instantâneo</h3><p>Nosso sistema roda 24/7. Pagou, recebeu no email na mesma hora.</p></div>
-                    <div class="trust-item"><div class="trust-icon">🛡️</div><h3>Blindagem Anti-Ban</h3><p>Operamos com HWID Spoofer e VPNs residenciais dedicadas.</p></div>
-                    <div class="trust-item"><div class="trust-icon">🎧</div><h3>Suporte Elite</h3><p>Nossa moderação no Discord resolve B.O. em menos de 10 minutos.</p></div>
+                    <div class="trust-item"><div class="trust-icon">⚡</div><h3>Entrega Jato</h3><p>Automatizada e instantânea no seu e-mail.</p></div>
+                    <div class="trust-item"><div class="trust-icon">🛡️</div><h3>Blindagem Total</h3><p>Métodos anti-ban testados exaustivamente.</p></div>
+                    <div class="trust-item"><div class="trust-icon">🎧</div><h3>Suporte Elite</h3><p>Operadores reais no Discord em minutos.</p></div>
                 </div>
             </div>
         </section>
 
-        <section id="depoimentos">
-            <div class="container">
-                <div class="section-header reveal"><h2 class="section-title">Voz da <span class="text-primary">Rua</span></h2><p class="section-subtitle">Quem comprou, testou e validou nossa performance.</p></div>
-                <div class="testimonials-grid">
-                    <div class="testimo-card reveal"><p class="testimo-text">"Chegou na hora. Já tô amassando nos lobbies High Elo. Recomendo!"</p><div class="testimo-author">@FallenZin_FPS</div></div>
-                    <div class="testimo-card reveal"><p class="testimo-text">"O boost é bizarro. O cara fez 5 vitórias seguidas na minha MD5 e ninguém percebeu."</p><div class="testimo-author">JinxMain22</div></div>
-                    <div class="testimo-card reveal"><p class="testimo-text">"Melhor preço de V-Bucks do mercado cinza. Caiu em 2 minutos via código."</p><div class="testimo-author">Carlos 'TRX'</div></div>
+        <section id="feedback" class="feedback-section">
+            <div class="container"><h2 class="section-title" style="font-size: 2.5rem;">Voz da <span>Rua</span></h2></div>
+            <div class="slider-track-infinite" id="infinite-review-slider">
                 </div>
-            </div>
         </section>
 
-        <section id="faq">
-            <div class="container">
-                <div class="section-header reveal"><h2 class="section-title">FAQ</h2></div>
-                <div class="faq-container reveal">
-                    <div class="faq-item"><button class="faq-btn">Como recebo após o pagamento? <span>+</span></button><div class="faq-content"><p>Entrega 100% automatizada. O login será enviado para o email cadastrado.</p></div></div>
-                    <div class="faq-item"><button class="faq-btn">O Boost tem risco de banimento? <span>+</span></button><div class="faq-content"><p>Risco virtualmente zero. Utilizamos VPNs da sua mesma cidade.</p></div></div>
-                </div>
+        <section id="faq" class="container" style="padding: 8rem 0;">
+            <div class="section-header"><h2 class="section-title">Dúvidas <span>Frequentes</span></h2></div>
+            <div class="faq-container" id="main-faq-accordion">
+                <div class="faq-item"><button class="faq-btn">Como recebo minha conta? <span>+</span></button><div class="faq-content"><p>Após a confirmação do PIX, os dados de login são enviados imediatamente para o seu e-mail e ficam salvos na sua Área do Cliente.</p></div></div>
+                <div class="faq-item"><button class="faq-btn">É seguro comprar moedas? <span>+</span></button><div class="faq-content"><p>Sim. Utilizamos métodos de gifting e códigos oficiais que não violam as diretrizes de segurança das desenvolvedoras.</p></div></div>
             </div>
         </section>
-
-        <footer>
-            <div class="container text-center">
-                <div class="brand" style="font-size: 2rem; margin-bottom: 1rem;">DU<span>.</span>STORE</div>
-                <p style="color: var(--color-text-muted); font-size: 0.8rem;">&copy; 2026 DU Store. Todos os direitos reservados.</p>
-            </div>
-        </footer>
     </div>
 
-    <div id="app-product" class="app-view">
-        <header style="position: relative; background: transparent; border: none; padding-top: 2rem;">
-            <div class="container nav-wrapper">
-                <a onclick="window.navegar('app-home')" class="brand">DU<span>.</span>STORE</a>
-                <button class="btn btn-outline" style="padding: 0.6rem 1.5rem; font-size: 0.8rem; border-radius: 50px;" onclick="window.navegar('app-home')">
-                    <span>← Voltar à Loja</span>
-                </button>
+    <div id="app-view-product" class="app-view container product-solo-view">
+        <div class="ps-grid-layout">
+            <div class="ps-image-gallery">
+                <img id="ps-main-image" src="" alt="">
             </div>
-        </header>
-
-        <div class="container product-page-layout">
-            <div class="pp-image-container">
-                <img id="page-p-img" src="" alt="Produto">
-            </div>
-            
-            <div class="pp-details">
-                <span id="page-p-cat" class="badge"></span>
-                <h1 id="page-p-title" class="pp-title">--</h1>
-                <p id="page-p-desc" class="pp-desc">--</p>
+            <div class="ps-info-content">
+                <span id="ps-category-label" class="card-tag">Categoria</span>
+                <h1 id="ps-product-title">Título do Produto</h1>
+                <p id="ps-product-desc" class="ps-description-full">Descrição completa...</p>
                 
-                <div id="page-p-subcats-container" style="display: none;">
-                    <h4 style="margin-bottom: 15px; color: var(--color-text-main); font-family: var(--font-display); font-size: 1.5rem; letter-spacing: 1px;">Escolha a sua versão:</h4>
-                    <div class="variations-grid" id="page-p-subcats-list">
+                <div id="ps-variations-section">
+                    <div class="variation-tiles-grid" id="ps-variations-list">
                         </div>
                 </div>
 
-                <div class="pp-action-bar">
+                <div class="checkout-summary-bar">
                     <div>
-                        <div style="font-size: 0.9rem; color: var(--color-text-muted); text-transform: uppercase; font-weight: bold; letter-spacing: 1px; margin-bottom: -5px;">Investimento</div>
-                        <div id="page-p-price" class="pp-final-price">R$ 0,00</div>
+                        <span class="price-prefix">Valor Total do Drop</span>
+                        <div id="ps-dynamic-price" class="final-price-display">R$ 0,00</div>
                     </div>
-                    <button class="btn btn-primary" id="page-p-add-btn" style="padding: 1.2rem 3rem; font-size: 1.1rem; border-radius: 8px;">
-                        <span>Adicionar ao Carrinho</span>
+                    <button class="btn btn-primary" id="ps-add-to-cart-btn" style="padding: 1.3rem 3.5rem; font-size: 1rem;">
+                        <span>Acrescentar ao Arsenal</span>
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="app-checkout" class="app-view">
-        <div class="container" style="padding-top: 5rem; max-width: 600px;">
-            <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; margin-bottom: 2rem; font-size:1.1rem; font-weight: bold; transition: 0.3s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='var(--color-text-muted)'">← Cancelar e Voltar</button>
-            
-            <div style="background: var(--color-bg-surface); padding: 3rem; border-radius: 12px; border: 1px solid var(--color-border); text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
-                <h2 style="font-family: var(--font-display); font-size: 3rem; color: var(--color-accent); margin-bottom: 0.5rem; line-height: 1;">Pagamento via PIX</h2>
-                <p style="color: var(--color-text-muted); margin-bottom: 2rem; font-size: 0.9rem;">Pedido <strong id="checkout-pedido-id" style="color:#fff;">#---</strong></p>
+    <div id="app-view-checkout" class="app-view container" style="padding-top: 100px;">
+        <div style="max-width: 650px; margin: 0 auto;">
+            <div style="background: var(--color-bg-surface); padding: 4rem; border-radius: 24px; border: 1px solid var(--color-border); text-align: center;">
+                <h2 style="font-family: var(--font-display); font-size: 3.5rem; color: var(--color-accent); margin-bottom: 0.5rem;">Concluir Operação</h2>
+                <p style="color: var(--color-text-muted); margin-bottom: 2rem;">ID do Pedido: <strong id="checkout-order-id" style="color: #fff;">#---</strong></p>
                 
-                <div style="font-size: 3.5rem; font-weight: bold; margin-bottom: 2rem; font-family: var(--font-display); line-height: 1;" id="valor-pedido">R$ 0,00</div>
+                <div style="font-size: 4rem; font-weight: 900; font-family: var(--font-display); margin-bottom: 2.5rem; line-height: 1;" id="checkout-final-value">R$ 0,00</div>
                 
-                <div style="background: #fff; padding: 15px; display: inline-block; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);">
-                    <img id="qr-code-img" alt="QR Code Pix" src="" style="width: 250px; height: 250px; display: block;">
+                <div style="background: #ffffff; padding: 20px; display: inline-block; border-radius: 16px; margin-bottom: 2.5rem; box-shadow: 0 10px 40px rgba(16, 185, 129, 0.2);">
+                    <img id="checkout-qr-code" alt="QR Code PIX" src="" style="width: 250px; height: 250px; display: block;">
                 </div>
 
-                <div class="form-group" style="text-align: left;">
+                <div class="form-group">
                     <label>PIX Copia e Cola</label>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="pix-codigo" class="form-control" readonly>
-                        <button id="btn-copiar" class="btn btn-primary" style="padding: 0 1.5rem;">Copiar</button>
+                        <input type="text" id="checkout-pix-input" class="form-control" readonly style="font-size: 0.8rem; height: 55px;">
+                        <button id="checkout-copy-btn" class="btn btn-primary" style="padding: 0 2rem; border-radius: 8px;">Copiar</button>
                     </div>
                 </div>
 
-                <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord" style="margin-top: 1rem; width: 100%; display:flex; justify-content:center;">
-                    <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt="Discord"> 
-                    <span>Enviar Comprovante no Ticket</span>
+                <a href="https://discord.gg/4YJjx62meu" target="_blank" class="btn btn-discord" style="margin-top: 2rem; width: 100%; height: 60px;">
+                    <img src="https://logos-world.net/wp-content/uploads/2020/12/Discord-Logo.png" alt=""> <span>Enviar Comprovante</span>
                 </a>
             </div>
         </div>
     </div>
 
-    <div id="app-cliente" class="app-view">
-        <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
-                <button onclick="window.navegar('app-home')" style="background:none; border:none; color: var(--color-text-muted); cursor:pointer; font-size: 1rem; font-weight: bold;">← Voltar à Loja</button>
+    <div id="app-view-client" class="app-view container dashboard-container-full">
+        <div class="gamer-profile-header">
+            <div class="gamer-banner">
+                <button onclick="window.handleLogout()" class="btn-danger" style="position: absolute; top: 15px; right: 15px;">Encerrar Sessão</button>
             </div>
-
-            <div class="gamer-profile-header">
-                <div class="gamer-banner">
-                    <button onclick="window.logoutUser()" class="btn-danger" style="position: absolute; top: 15px; right: 15px; z-index: 10;">Sair da Conta</button>
+            <div class="gamer-info-row">
+                <div class="gamer-avatar-wrapper">
+                    <img src="" id="client-dash-avatar" alt="Avatar" onerror="this.src='https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg'">
                 </div>
-                
-                <div class="gamer-info-row">
-                    <div class="gamer-avatar-wrapper">
-                        <img src="https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg" id="dash-avatar" alt="Avatar" onerror="this.src='https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg'">
-                    </div>
-                    
-                    <div class="gamer-details">
-                        <div class="gamer-tag">Operador Registrado</div>
-                        <div class="gamer-name-box">
-                            <span id="dash-client-name">Carregando...</span> 
-                            <button class="btn-edit-profile" onclick="document.getElementById('edit-profile-modal').style.display='flex'" title="Editar Perfil">✏️</button>
-                        </div>
+                <div class="gamer-details">
+                    <div class="gamer-tag">Operador Certificado</div>
+                    <div class="gamer-name-box">
+                        <span id="client-dash-nick">Operador</span> 
+                        <button class="btn-edit-profile" onclick="document.getElementById('profile-edit-modal').style.display='flex'">✏️</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="gamer-grid">
-                <div class="gamer-card">
-                    <h3>Sistema de Patentes</h3>
-                    <div class="elo-display">
-                        <div id="client-elo-badge" class="elo-badge elo-bronze">BRONZE</div>
-                        <div class="xp-bar-container">
-                            <div class="xp-bar-fill" id="client-progress"></div>
-                            <div class="xp-text" id="client-progress-text">0 XP</div>
-                        </div>
-                        <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem;">1 BRL = 1 XP. Upe sua conta.</p>
+        <div class="gamer-grid">
+            <div class="gamer-card">
+                <h3>Sua Patente</h3>
+                <div class="elo-display">
+                    <div id="client-rank-badge" class="rank-badge-mega elo-bronze">BRONZE</div>
+                    <div class="xp-bar-outer">
+                        <div id="client-xp-fill" class="xp-bar-inner"></div>
+                        <div id="client-xp-text" class="xp-bar-text">0 / 50 XP</div>
                     </div>
-
-                    <div class="client-stats-list">
-                        <div class="stat-row">
-                            <span>Status da Conta</span>
-                            <strong style="color: var(--color-accent);">VERIFICADA ✅</strong>
-                        </div>
-                        <div class="stat-row">
-                            <span>Total Investido</span>
-                            <strong>R$ <span id="client-spent">0.00</span></strong>
-                        </div>
-                    </div>
+                    <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-top: 1rem;">1 Real = 1 XP. Suba de nível para desbloquear perks.</p>
                 </div>
-
-                <div class="gamer-card" style="padding: 0;">
-                    <h3 style="padding: 2rem 2rem 1rem 2rem; margin: 0;">Registro de Missões</h3>
-                    <div style="overflow-x: auto;">
-                        <table class="data-table" style="border: none; border-radius: 0;">
-                            <thead><tr><th>ID Pedido</th><th>Itens</th><th>Valor</th><th>Status</th></tr></thead>
-                            <tbody id="table-client-orders"></tbody>
-                        </table>
-                    </div>
+                <div class="client-stats-list">
+                    <div class="stat-row"><span>Total Gasto</span><strong id="client-stat-spent">R$ 0.00</strong></div>
+                </div>
+            </div>
+            <div class="gamer-card" style="padding: 0;">
+                <h3 style="padding: 2rem;">Minhas Aquisições</h3>
+                <div style="overflow-x: auto;">
+                    <table class="data-table">
+                        <thead><tr><th>Referência</th><th>Produto</th><th>Valor</th><th>Status</th></tr></thead>
+                        <tbody id="client-orders-table"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="app-admin" class="app-view dash-layout">
-        <div class="dash-sidebar">
-            <h2 class="brand" style="font-size: 2rem; margin-bottom: 2rem;" onclick="window.navegar('app-home')">DU<span>.</span>ADMIN</h2>
+    <div id="app-view-admin" class="app-view dash-layout">
+        <aside class="dash-sidebar">
+            <h2 class="brand">DU<span>.</span>ADM</h2>
             <div class="dash-menu">
                 <button class="active" onclick="window.switchAdminTab('resumo')">Visão Geral</button>
                 <button onclick="window.switchAdminTab('vendas')">Gerenciar Vendas</button>
-                <button onclick="window.switchAdminTab('produtos')">Estoque & Produtos</button>
-                <button onclick="window.switchAdminTab('clientes')">Gestão de Operadores</button>
-                <button onclick="window.navegar('app-home')" style="margin-top: 2rem; border: 1px solid var(--color-border);">← Sair do Painel</button>
+                <button onclick="window.switchAdminTab('estoque')">Produtos & Estoque</button>
+                <button onclick="window.switchAdminTab('clientes')">Operadores (CRM)</button>
+                <button onclick="window.navegar('app-view-home')" style="margin-top: 3rem; color: var(--color-danger);">Sair do Sistema</button>
             </div>
-        </div>
-
+        </aside>
+        
         <div class="dash-content">
             <div id="admin-tab-resumo">
-                <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Central de <span class="text-primary">Comando</span></h2>
+                <h2 class="section-title">Status do <span>Sistema</span></h2>
                 <div class="stat-cards">
-                    <div class="stat-card"><h4>Receita Total</h4><div class="value text-accent">R$ <span id="adm-rev">0.00</span></div></div>
-                    <div class="stat-card"><h4>Vendas Concluídas</h4><div class="value" id="adm-orders">0</div></div>
-                    <div class="stat-card" style="border-color: var(--color-danger);">
-                        <h4 style="color: var(--color-danger);">Conexões Ativas no Site</h4>
-                        <div class="value" style="display:flex; align-items:center; gap:10px;">
-                            <span style="width:15px; height:15px; background:var(--color-danger); border-radius:50%; display:block; animation: pulse 1.5s infinite alternate;"></span>
-                            <span id="live-count">0</span>
-                        </div>
+                    <div class="stat-card"><h4>Receita Bruta</h4><div class="value" id="adm-stat-revenue">R$ 0.00</div></div>
+                    <div class="stat-card"><h4>Missões Concluídas</h4><div class="value" id="adm-stat-sales">0</div></div>
+                    <div class="stat-card" style="border-left-color: var(--color-danger);">
+                        <h4 style="color: var(--color-danger);">Operadores Online Agora</h4>
+                        <div class="value" id="live-users-count">0</div>
                     </div>
                 </div>
             </div>
 
             <div id="admin-tab-vendas" style="display: none;">
-                <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Caixa & <span class="text-primary">Pedidos</span></h2>
+                <h2 class="section-title">Gestão de <span>Vendas</span></h2>
                 <table class="data-table">
-                    <thead><tr><th>ID Pedido</th><th>Cliente</th><th>Info</th><th>Valor</th><th>Status</th><th>Ação</th></tr></thead>
-                    <tbody id="table-admin-orders"></tbody>
+                    <thead><tr><th>ID</th><th>Operador</th><th>Drop</th><th>Valor</th><th>Status</th><th>Ação</th></tr></thead>
+                    <tbody id="admin-table-sales-body"></tbody>
                 </table>
-            </div>
-
-            <div id="admin-tab-produtos" style="display: none;">
-                <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Gerenciar <span class="text-primary">Estoque</span></h2>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
-                    <div>
-                        <div style="background: rgba(255,255,255,0.02); padding: 1.5rem; border: 1px solid var(--color-border); border-radius: 12px; margin-bottom: 2rem;">
-                            <h3 style="margin-bottom: 1rem; color: #fff; font-size: 1.2rem;">Ordenar Categorias</h3>
-                            <div id="admin-cat-list" style="margin-bottom: 1rem;"></div>
-                            <div style="display:flex; gap: 10px;">
-                                <input type="text" id="new-category-name" class="form-control" placeholder="Nova Categoria..." style="margin-bottom:0;">
-                                <button class="btn-outline" style="border-radius: 8px;" onclick="window.addCategory()">Adicionar</button>
-                            </div>
-                        </div>
-
-                        <div style="background: #000; padding: 2rem; border-radius: 12px; border: 1px solid var(--color-border);">
-                            <h3 id="admin-form-title" style="color: var(--color-accent); margin-bottom: 1.5rem; font-family: var(--font-display); font-size: 2rem;">Novo Drop (Produto)</h3>
-                            <div class="form-group"><input type="text" id="add-title" class="form-control" placeholder="Nome do Produto"></div>
-                            <div class="form-group"><input type="text" id="add-image" class="form-control" placeholder="Link da Imagem HTTPs"></div>
-                            <div class="form-group"><select id="add-category" class="form-control"></select></div>
-                            <div class="form-group"><input type="number" id="add-price" class="form-control" placeholder="Preço Base (ex: 50.00)"></div>
-                            <div class="form-group"><textarea id="add-desc" class="form-control" rows="2" placeholder="Descrição"></textarea></div>
-                            
-                            <div class="form-group" style="background: rgba(255,255,255,0.02); padding:1.5rem; border:1px solid #333; border-radius:8px;">
-                                <label style="display:flex; align-items:center; gap: 10px; cursor: pointer;">
-                                    <input type="checkbox" id="add-has-subcats" onchange="window.toggleSubcatsUI()" style="width: 18px; height: 18px; accent-color: var(--color-primary);"> 
-                                    Ativar Variações (Ex: Elos, Ranks)
-                                </label>
-                                <div id="subcats-ui" style="display:none; margin-top: 15px;">
-                                    <div id="subcats-list"></div>
-                                    <div style="display:flex; gap:10px; margin-top: 15px;">
-                                        <input type="text" id="sub-name" class="form-control" placeholder="Ex: Ouro">
-                                        <input type="number" id="sub-price" class="form-control" placeholder="Preço">
-                                        <button class="btn-success" onclick="window.addSubcat()">Add</button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div style="display: flex; gap: 10px;">
-                                <button id="btn-save-prod" class="btn btn-primary" style="flex-grow: 1;" onclick="window.addProduct()"><span>Publicar Produto</span></button>
-                                <button id="btn-cancel-prod" class="btn-danger" style="display: none;" onclick="window.cancelEditP()">Cancelar</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 style="margin-bottom: 1rem; font-family: var(--font-display); font-size: 2rem;">Produtos Online</h3>
-                        <div id="admin-products-list" style="display: flex; flex-direction: column; gap: 10px; max-height: 800px; overflow-y:auto; padding-right: 10px;"></div>
-                    </div>
-                </div>
             </div>
 
             <div id="admin-tab-clientes" style="display: none;">
-                <h2 style="font-family: var(--font-display); font-size: 3rem; margin-bottom: 2rem;">Base de <span class="text-primary">Operadores</span></h2>
-                <div class="form-group"><input type="text" id="search-user" class="form-control" placeholder="Pesquisar operador por nick..." onkeyup="window.searchUsers(this.value)"></div>
+                <h2 class="section-title">Base de <span>Dados (CRM)</span></h2>
+                <div class="form-group"><input type="text" class="form-control" placeholder="Localizar operador pelo nick..." onkeyup="window.filterCrm(this.value)"></div>
                 <table class="data-table">
-                    <thead><tr><th>Avatar</th><th>Nick do Operador</th><th>Total XP (R$)</th><th>Patente</th></tr></thead>
-                    <tbody id="table-admin-users"></tbody>
+                    <thead><tr><th>Avatar</th><th>Nick</th><th>Investimento</th><th>Patente</th></tr></thead>
+                    <tbody id="admin-table-crm-body"></tbody>
                 </table>
             </div>
-        </div>
-    </div>
 
-    <div class="modal-overlay" id="edit-profile-modal">
-        <div class="modal-box">
-            <button class="close-modal" onclick="document.getElementById('edit-profile-modal').style.display='none'">×</button>
-            <h2 class="modal-title">Configurar Perfil</h2>
-            <p style="color: var(--color-warning); font-size: 0.8rem; margin-bottom: 1.5rem;">Atenção: O Nickname só pode ser alterado a cada 7 dias.</p>
-            <div class="form-group"><label>URL da Foto (Avatar)</label><input type="text" id="edit-avatar" class="form-control" placeholder="https://imgur.com/foto.jpg"></div>
-            <div class="form-group"><label>Nickname</label><input type="text" id="edit-nick" class="form-control" placeholder="Novo nick..."></div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="window.saveProfile()"><span>Salvar Alteraçoes</span></button>
-        </div>
-    </div>
+            <div id="admin-tab-estoque" style="display: none;">
+                <h2 class="section-title">Gerenciar <span>Estoque</span></h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;">
+                    <div style="background: #000; padding: 2.5rem; border-radius: 16px; border: 1px solid var(--color-border);">
+                        <h3 id="admin-form-title" style="margin-bottom: 2rem;">Novo Drop de Produto</h3>
+                        <div class="form-group"><label>Título</label><input type="text" id="p-title" class="form-control"></div>
+                        <div class="form-group"><label>URL Imagem</label><input type="text" id="p-img" class="form-control"></div>
+                        <div class="form-group"><label>Categoria</label><select id="p-cat" class="form-control"></select></div>
+                        <div class="form-group"><label>Preço Base</label><input type="number" id="p-price" class="form-control"></div>
+                        <div class="form-group"><label>Descrição Curta</label><textarea id="p-desc" class="form-control" rows="2"></textarea></div>
+                        
+                        <div style="margin-bottom: 2rem; background: rgba(255,255,255,0.02); padding: 1.5rem; border-radius: 8px;">
+                            <label style="display:flex; align-items:center; gap: 10px; cursor:pointer; margin-bottom: 15px;">
+                                <input type="checkbox" id="p-has-vars" onchange="window.toggleSubcatUI()" style="width: 18px; height: 18px;"> Ativar Subcategorias (Variações)
+                            </label>
+                            <div id="p-vars-ui" style="display: none;">
+                                <div id="p-vars-list" style="margin-bottom: 1rem;"></div>
+                                <div style="display: flex; gap: 10px;">
+                                    <input type="text" id="v-name" class="form-control" placeholder="Nome (Ex: Bronze)">
+                                    <input type="number" id="v-price" class="form-control" placeholder="Preço">
+                                    <button class="btn-success" onclick="window.addSubcatToList()">Add</button>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="modal-overlay" id="user-login-modal">
-        <div class="modal-box" style="padding: 3rem 2rem;">
-            <button class="close-modal" onclick="document.getElementById('user-login-modal').style.display='none'">×</button>
-            <h2 class="modal-title" id="auth-title">Entrar na Base</h2>
-            <div class="error-msg" id="user-error"></div>
-            
-            <div class="form-group"><label>Operador (Nick)</label><input type="text" id="user-username" class="form-control" placeholder="Seu nick..."></div>
-            <div class="form-group"><label>Senha</label><input type="password" id="user-password" class="form-control" placeholder="*******"></div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="window.handleAuth()"><span>Confirmar Acesso</span></button>
-            
-            <p style="text-align: center; margin-top: 1.5rem; font-size: 0.8rem; color: var(--color-text-muted);">Não tem conta? <a href="#" style="color: var(--color-primary); font-weight: bold;" onclick="window.toggleAuthMode()">Criar conta</a>.</p>
-
-            <div class="divider">ou entre com</div>
-            <div class="social-btns">
-                <button class="btn-social btn-google" onclick="window.loginWithGoogle()">
-                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google"> Google
-                </button>
-                <button class="btn-social btn-apple" onclick="window.loginWithApple()">
-                    <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" style="filter: brightness(0) invert(1);"> Apple
-                </button>
+                        <div style="display: flex; gap: 10px;">
+                            <button id="p-save-btn" class="btn btn-primary" style="flex: 1;" onclick="window.saveProductCloud()">Publicar Drop</button>
+                            <button id="p-cancel-btn" class="btn btn-danger" style="display: none;" onclick="window.cancelEditProduct()">Cancelar</button>
+                        </div>
+                    </div>
+                    <div id="admin-products-list" style="max-height: 800px; overflow-y: auto;">
+                        </div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="modal-overlay" id="admin-login-modal">
-        <div class="modal-box">
-            <button class="close-modal" onclick="document.getElementById('admin-login-modal').style.display='none'">×</button>
-            <h2 class="modal-title" style="color: var(--color-danger);">Acesso Restrito</h2>
-            <div class="form-group"><input type="password" id="secret-password" class="form-control" placeholder="Chave Mestra..."></div>
-            <button class="btn btn-danger" style="width: 100%; padding: 1rem; font-size: 1.1rem;" onclick="window.attemptAdminLogin()">ACESSAR SISTEMA</button>
+    <div class="auth-modal-overlay" id="profile-edit-modal">
+        <div class="auth-card-modern">
+            <button class="close-auth-modal" onclick="document.getElementById('profile-edit-modal').style.display='none'">×</button>
+            <h2 class="section-title" style="font-size: 2.5rem;">Editar <span>Perfil</span></h2>
+            <p style="color: var(--color-warning); font-size: 0.8rem; margin-bottom: 2rem;">A troca de Nickname tem 7 dias de cooldown.</p>
+            <div class="form-group"><label>Novo Nickname</label><input type="text" id="edit-p-nick" class="form-control"></div>
+            <div class="form-group"><label>Link Foto de Perfil (Avatar)</label><input type="text" id="edit-p-avatar" class="form-control"></div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="window.updateGamerProfile()">Salvar Dados</button>
         </div>
     </div>
+
+    <div class="auth-modal-overlay" id="admin-login-modal">
+        <div class="auth-card-modern">
+            <button class="close-auth-modal" onclick="document.getElementById('admin-login-modal').style.display='none'">×</button>
+            <h2 class="section-title" style="font-size: 2.5rem; color: var(--color-danger);">Comando <span>Geral</span></h2>
+            <div class="form-group">
+                <input type="password" id="admin-gate-pass" class="form-control" placeholder="Chave de Acesso..." autofocus>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; background: var(--color-danger);" onclick="window.loginToAdmin()">Acessar Painel</button>
+        </div>
+    </div>
+
+    <div class="auth-modal-overlay" id="auth-modal-main">
+        <div class="auth-card-modern">
+            <button class="close-auth-modal" onclick="document.getElementById('auth-modal-main').style.display='none'">×</button>
+            <h2 class="section-title" id="auth-ui-title" style="font-size: 2.5rem;">Entrar na <span>Base</span></h2>
+            <div class="form-group"><label>Seu Operador (Nick)</label><input type="text" id="auth-nick" class="form-control"></div>
+            <div class="form-group"><label>Senha da Conta</label><input type="password" id="auth-pass" class="form-control"></div>
+            <button class="btn btn-primary" style="width: 100%;" onclick="window.processAuthManual()">Confirmar Protocolo</button>
+            
+            <p style="margin-top: 1.5rem; font-size: 0.8rem; color: var(--color-text-muted);">Não possui acesso? <a href="#" style="color: var(--color-primary); font-weight: bold;" onclick="window.toggleAuthMode()">Criar conta aqui</a>.</p>
+            
+            <div class="divider">Ou use as redes</div>
+            <div class="social-btns">
+                <button class="btn-social btn-google" onclick="window.loginRedeSocial('google')"><img src="https://www.svgrepo.com/show/475656/google-color.svg" alt=""> Google</button>
+                <button class="btn-social btn-apple" onclick="window.loginRedeSocial('apple')"><img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="" style="filter: brightness(0) invert(1);"> Apple</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container" style="text-align: center;">
+            <div class="brand" style="font-size: 2rem; margin-bottom: 1.5rem;">DU<span>.</span>STORE</div>
+            <p style="color: var(--color-text-muted); font-size: 0.85rem;">© 2026 DU Store. Marketplace Independente de Serviços Gaming.</p>
+        </div>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, doc, deleteDoc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged, GoogleAuthProvider, OAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, getDocs, doc, getDoc, setDoc, updateDoc, deleteDoc, query, orderBy } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
 
+        // FIREBASE CONFIGURATION (AS SUAS CHAVES)
         const firebaseConfig = {
             apiKey: "AIzaSyARnKCFkE3irJWBPb5ivn7G-jfgieNlnJg",
             authDomain: "dust-e1c8b.firebaseapp.com",
@@ -744,682 +1305,433 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const MINHA_CHAVE_PIX = "13163607683"; 
-        const MEU_NOME_PIX = "Ulisses Faria Lourenco"; 
-        const MINHA_CIDADE_PIX = "Lavras";
-
+        // DATA STORE GLOBAL
         let products = [];
-        let categories = ['contas', 'boost', 'moedas']; 
+        let categories = ['contas', 'boost', 'moedas'];
+        let activeUser = null;
         let cart = [];
-        let allUsers = [];
-        let loggedInUser = null; 
-        let isRegisterMode = false;
-        let pendingCheckoutOrderId = null;
-        let activeCategoryFilter = 'all';
-        
-        let editProductId = null; 
-        let tempSubcats = []; 
-        let currentProductView = null;
+        let isRegister = false;
+        let tempSubcats = [];
+        let editProdId = null;
+        let crmUsers = [];
 
+        // PIX GLOBAL DATA
+        const PIX_KEY = "13163607683";
+        const PIX_NAME = "Ulisses Faria Lourenco";
+        const PIX_CITY = "Lavras";
+
+        // --------------------------------------------------------------------------
+        // SISTEMA DE NOTIFICAÇÕES (TOASTS)
+        // --------------------------------------------------------------------------
         window.showToast = function(msg, type = 'success') {
-            const container = document.getElementById('toast-container');
+            const container = document.getElementById('toast-master-container');
             const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
-            toast.innerHTML = `<span>${icon}</span> <span>${msg}</span>`;
+            toast.className = `toast-du ${type}`;
+            toast.innerHTML = `<span>${msg}</span>`;
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3500);
-        }
-
-        window.addEventListener('scroll', () => { document.getElementById('main-header').classList.toggle('scrolled', window.scrollY > 50); });
-        
-        const visualContainer = document.getElementById('hero-visual-container');
-        const box3D = document.getElementById('hero-3d-box');
-        if(visualContainer && box3D) {
-            visualContainer.addEventListener('mousemove', (e) => {
-                const r = visualContainer.getBoundingClientRect();
-                const x = e.clientX - r.left, y = e.clientY - r.top;
-                const rotateX = ((y - r.height/2)/r.height) * -20;
-                const rotateY = ((x - r.width/2)/r.width) * 20;
-                box3D.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-            visualContainer.addEventListener('mouseleave', () => box3D.style.transform = `rotateX(0deg) rotateY(0deg)`);
-        }
-
-        const revealOnScroll = () => { 
-            const reveals = document.querySelectorAll('.reveal');
-            let wh = window.innerHeight; 
-            reveals.forEach(r => { if (r.getBoundingClientRect().top < wh - 50) r.classList.add('active'); }); 
+            setTimeout(() => toast.remove(), 4000);
         };
-        window.addEventListener('scroll', revealOnScroll);
-        document.querySelectorAll('.faq-btn').forEach(btn => { btn.addEventListener('click', function() { this.classList.toggle('active'); let c = this.nextElementSibling; c.style.maxHeight = c.style.maxHeight ? null : c.scrollHeight + "px"; }); });
 
-        window.navegar = function(pageId) {
+        // --------------------------------------------------------------------------
+        // NAVEGAÇÃO SPA (SINGLE PAGE APPLICATION)
+        // --------------------------------------------------------------------------
+        window.navegar = function(id) {
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+            document.getElementById(id).classList.add('active');
             window.scrollTo(0,0);
-            document.getElementById('main-header').style.display = (pageId === 'app-home') ? 'block' : 'none';
-            if(pageId === 'app-home') setTimeout(revealOnScroll, 100); 
-            if(pageId === 'app-cliente') loadClientData();
-            if(pageId === 'app-admin') loadAdminData();
+            
+            // Controle da Header
+            const header = document.getElementById('main-header');
+            header.style.display = (id === 'app-view-home') ? 'block' : 'none';
         };
 
-        // Shift + P (Senha 5566)
+        // --------------------------------------------------------------------------
+        // LOGICA DE TECLADO (SHIFT+P E ENTER)
+        // --------------------------------------------------------------------------
         window.addEventListener('keydown', (e) => {
-            if (e.shiftKey && e.key.toLowerCase() === 'p') {
+            // Hotkey Admin: Shift + P
+            if(e.shiftKey && e.key.toLowerCase() === 'p') {
+                e.preventDefault(); // CORREÇÃO: Impede o 'P' de cair no campo
                 document.getElementById('admin-login-modal').style.display = 'flex';
-                document.getElementById('secret-password').focus();
+                document.getElementById('admin-gate-pass').value = '';
+                document.getElementById('admin-gate-pass').focus();
             }
         });
 
-        // BD PRODUTOS
-        async function loadStoreData() {
-            try {
-                const cDoc = await getDoc(doc(db, "config", "storeData"));
-                if(cDoc.exists() && cDoc.data().categories) categories = cDoc.data().categories;
-            } catch (e) { }
-            renderCategoriesUI();
-
-            try {
-                const qs = await getDocs(collection(db, "products"));
-                products = [];
-                qs.forEach(doc => {
-                    let data = doc.data();
-                    data.currentViews = Math.floor(Math.random() * 8) + 3; 
-                    products.push({ id: doc.id, ...data });
-                });
-                renderStoreFront();
-                revealOnScroll(); 
-            } catch (e) {
-                document.getElementById('products-container').innerHTML = '<div class="empty-state">Erro ao ler BD. Mude as regras do Firestore.</div>';
-                revealOnScroll(); 
-            }
-        }
-
-        function renderCategoriesUI() {
-            let html = `<button class="filter-btn active" onclick="window.setFilter('all', this)">Todos</button>`;
-            categories.forEach(c => html += `<button class="filter-btn" onclick="window.setFilter('${c}', this)">${c.toUpperCase()}</button>`);
-            document.getElementById('dynamic-filters').innerHTML = html;
-
-            let selectHtml = '';
-            categories.forEach(c => selectHtml += `<option value="${c}">${c.toUpperCase()}</option>`);
-            document.getElementById('add-category').innerHTML = selectHtml;
-
-            let adminCatHtml = '';
-            categories.forEach((c, index) => {
-                adminCatHtml += `
-                <div class="cat-manager-item">
-                    <span style="color:#fff; text-transform:uppercase;">${c}</span>
-                    <div><button onclick="window.moveCat(${index}, -1)">⬆</button><button onclick="window.moveCat(${index}, 1)">⬇</button></div>
-                </div>`;
-            });
-            document.getElementById('admin-cat-list').innerHTML = adminCatHtml;
-        }
-
-        window.setFilter = function(cat, btn) {
-            activeCategoryFilter = cat;
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            renderStoreFront();
-        }
-
-        function renderStoreFront() {
-            const cont = document.getElementById('products-container');
-            cont.innerHTML = '';
-            const list = activeCategoryFilter === 'all' ? products : products.filter(p => p.category === activeCategoryFilter);
-            if(list.length === 0) { cont.innerHTML = '<div class="empty-state">Sem estoque nesta categoria.</div>'; return; }
-
-            list.forEach(p => {
-                const img = p.imageUrl ? `<img src="${p.imageUrl}" class="card-img" onerror="this.src='https://via.placeholder.com/600x250?text=DU+Store'">` : `<div class="card-img" style="background:#222; display:flex; align-items:center; justify-content:center;">SEM FOTO</div>`;
-                
-                let priceLabel = `R$ ${p.price.toFixed(2)}`;
-                let actionBtn = `<button class="btn-add-cart solid" onclick="event.stopPropagation(); window.addToCart('${p.id}')">Adicionar</button>`;
-                
-                if(p.subcategories && p.subcategories.length > 0) {
-                    priceLabel = `<span>A partir de</span>R$ ${p.price.toFixed(2)}`;
-                    actionBtn = `<button class="btn-add-cart outline" onclick="event.stopPropagation(); window.openProductPage('${p.id}')">Opções</button>`;
-                }
-
-                cont.insertAdjacentHTML('beforeend', `
-                    <div class="product-card" onclick="window.openProductPage('${p.id}')">
-                        ${img}
-                        <div class="card-content">
-                            <div class="badge-container">
-                                <span class="badge">${p.category}</span>
-                                <span class="view-count" id="view-${p.id}">🔥 ${p.currentViews} pessoas olhando</span>
-                            </div>
-                            <h3 class="card-title">${p.title}</h3>
-                            <p class="card-desc">${p.description}</p>
-                            <div class="card-footer" style="margin-top:auto; align-items:center;">
-                                <div class="price" style="line-height:1;">${priceLabel}</div>
-                                ${actionBtn}
-                            </div>
-                        </div>
-                    </div>
-                `);
-            });
-        }
-
-        setInterval(() => {
-            products.forEach(p => {
-                if(Math.random() > 0.6) {
-                    const osc = Math.floor(Math.random() * 3) - 1; 
-                    p.currentViews = Math.max(2, p.currentViews + osc); 
-                    const vLabel = document.getElementById(`view-${p.id}`);
-                    if(vLabel) vLabel.innerHTML = `🔥 ${p.currentViews} pessoas olhando`;
-                }
-            });
-        }, 40000);
-
-        // NOVA TELA DE PRODUTO DEDICADA
-        window.openProductPage = function(id) {
-            const p = products.find(x => x.id === id);
-            if(!p) return;
-            currentProductView = p;
-            
-            document.getElementById('page-p-img').src = p.imageUrl || 'https://via.placeholder.com/600x600?text=DU+Store';
-            document.getElementById('page-p-img').onerror = function() { this.src='https://via.placeholder.com/600x600?text=Sem+Foto' };
-            document.getElementById('page-p-cat').innerText = p.category;
-            document.getElementById('page-p-title').innerText = p.title;
-            document.getElementById('page-p-desc').innerText = p.description;
-            
-            const subCont = document.getElementById('page-p-subcats-container');
-            const subList = document.getElementById('page-p-subcats-list');
-            
-            if(p.subcategories && p.subcategories.length > 0) {
-                let html = '';
-                p.subcategories.forEach((sub, i) => {
-                    html += `
-                    <label class="variation-tile">
-                        <input type="radio" name="page_subcat" value="${i}" ${i===0?'checked':''} onchange="window.updatePagePrice()">
-                        <div class="tile-content">
-                            <span class="tile-name">${sub.name}</span>
-                            <span class="tile-price">R$ ${parseFloat(sub.price).toFixed(2)}</span>
-                        </div>
-                    </label>`;
-                });
-                subList.innerHTML = html;
-                subCont.style.display = 'block';
-            } else {
-                subCont.style.display = 'none';
-            }
-
-            window.updatePagePrice();
-            
-            document.getElementById('page-p-add-btn').onclick = () => { window.addToCartFromPage(); };
-            window.navegar('app-product');
-        }
-
-        window.updatePagePrice = function() {
-            if(!currentProductView) return;
-            let price = parseFloat(currentProductView.price);
-            if(currentProductView.subcategories && currentProductView.subcategories.length > 0) {
-                const selected = document.querySelector('input[name="page_subcat"]:checked');
-                if(selected) price = parseFloat(currentProductView.subcategories[selected.value].price);
-            }
-            document.getElementById('page-p-price').innerText = `R$ ${price.toFixed(2)}`;
-        }
-
-        window.addToCartFromPage = function() {
-            if(!currentProductView) return;
-            let p = currentProductView;
-            let finalPrice = parseFloat(p.price);
-            let finalTitle = p.title;
-
-            if(p.subcategories && p.subcategories.length > 0) {
-                const selected = document.querySelector('input[name="page_subcat"]:checked');
-                if(!selected) return window.showToast('Escolha uma variação!', 'error');
-                const sub = p.subcategories[selected.value];
-                finalPrice = parseFloat(sub.price);
-                finalTitle = `${p.title} (${sub.name})`;
-            }
-
-            cart.push({ id: p.id, title: finalTitle, price: finalPrice, imageUrl: p.imageUrl });
-            updateCartUI();
-            window.showToast(`${finalTitle} adicionado!`, 'success');
-            window.toggleCart(); // Abre o carrinho pra ele ver
-        }
-
-        // ADD RAPIDO PELA VITRINE
-        window.addToCart = function(id) {
-            const p = products.find(x => x.id === id);
-            cart.push({ id: p.id, title: p.title, price: parseFloat(p.price), imageUrl: p.imageUrl });
-            updateCartUI();
-            window.showToast(`Adicionado ao arsenal!`, 'success');
-        }
-
-        window.toggleCart = function() { document.getElementById('cart-sidebar').classList.toggle('open'); }
-        
-        function updateCartUI() {
-            const count = document.getElementById('cart-count');
-            count.innerText = cart.length;
-            count.style.display = cart.length > 0 ? 'flex' : 'none';
-
-            const cont = document.getElementById('cart-items-container');
-            if(cart.length === 0) {
-                cont.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; margin-top: 50%;">Carrinho vazio.</p>';
-                document.getElementById('cart-total').innerText = 'R$ 0,00';
-                return;
-            }
-
-            cont.innerHTML = '';
-            let total = 0;
-            cart.forEach((p, i) => {
-                total += p.price;
-                const img = p.imageUrl ? `<img src="${p.imageUrl}" onerror="this.src='https://via.placeholder.com/60'">` : `<div style="width:60px;height:60px;background:#333;border-radius:4px;"></div>`;
-                cont.insertAdjacentHTML('beforeend', `
-                    <div class="cart-item">
-                        ${img}
-                        <div class="cart-item-info">
-                            <div class="cart-item-title">${p.title}</div>
-                            <div class="cart-item-price">R$ ${p.price.toFixed(2)}</div>
-                        </div>
-                        <button class="btn-danger" style="padding:0.3rem 0.5rem;" onclick="window.removeFromCart(${i})">X</button>
-                    </div>
-                `);
-            });
-            document.getElementById('cart-total').innerText = `R$ ${total.toFixed(2)}`;
-        }
-
-        window.removeFromCart = function(index) { cart.splice(index, 1); updateCartUI(); }
-
-        // PIX BLINDADO
-        window.checkoutCart = async function() {
-            if(cart.length === 0) return window.showToast('Seu carrinho está vazio!', 'error');
-            if(!loggedInUser) {
-                window.toggleCart();
-                document.getElementById('user-login-modal').style.display = 'flex';
-                return window.showToast('Faça o login para comprar', 'info');
-            }
-
-            try {
-                const total = cart.reduce((a,b)=>a+b.price, 0);
-                const titles = cart.map(p=>p.title).join(' + ');
-                
-                const docRef = await addDoc(collection(db, "pedidos"), {
-                    userId: loggedInUser.uid, userName: loggedInUser.username,
-                    productTitle: titles, price: total,
-                    status: 'pendente', date: new Date().toISOString()
-                });
-                
-                pendingCheckoutOrderId = docRef.id;
-                
-                const pad = (str) => { let s = String(str); return s.length < 2 ? '0' + s : s; };
-                const format = (id, value) => { let v = String(value); return id + pad(v.length) + v; };
-
-                const gui = format("00", "BR.GOV.BCB.PIX");
-                const key = format("01", MINHA_CHAVE_PIX);
-                const accInfo = format("26", gui + key);
-                const amount = format("54", total.toFixed(2));
-                const name = format("59", MEU_NOME_PIX.substring(0, 25).normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-                const city = format("60", MINHA_CIDADE_PIX.substring(0, 15).normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
-                const txid = format("62", format("05", "DU" + Math.floor(Math.random() * 1000)));
-                const payload = "000201" + accInfo + "52040000" + "5303986" + amount + "5802BR" + name + city + txid + "6304";
-
-                let crc = 0xFFFF;
-                for (let i = 0; i < payload.length; i++) {
-                    crc ^= payload.charCodeAt(i) << 8;
-                    for (let j = 0; j < 8; j++) {
-                        if ((crc & 0x8000) !== 0) crc = (crc << 1) ^ 0x1021;
-                        else crc = crc << 1;
-                    }
-                    crc &= 0xFFFF;
-                }
-                const payloadPix = payload + crc.toString(16).toUpperCase().padStart(4, '0');
-
-                document.getElementById('valor-pedido').innerText = `R$ ${total.toFixed(2).replace('.',',')}`;
-                document.getElementById('pix-codigo').value = payloadPix;
-                document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(payloadPix)}`;
-                document.getElementById('checkout-pedido-id').innerText = `#${docRef.id.substring(0,6).toUpperCase()}`;
-                
-                cart = []; updateCartUI(); window.toggleCart();
-                window.navegar('app-checkout');
-            } catch (e) { console.error(e); window.showToast('Erro ao criar Pix.', 'error'); }
-        }
-
-        // AUTH
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                try {
-                    const docSnap = await getDoc(doc(db, "users", user.uid));
-                    if (docSnap.exists()) {
-                        loggedInUser = { uid: user.uid, ...docSnap.data() };
-                    } else {
-                        let uname = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
-                        loggedInUser = { uid: user.uid, username: uname, totalSpent: 0, avatarUrl: user.photoURL || '' };
-                        await setDoc(doc(db, "users", user.uid), loggedInUser);
-                    }
-                    document.getElementById('header-btn-text').innerText = `Meu Perfil`;
-                } catch(e){ console.error(e); }
-            } else {
-                loggedInUser = null;
-                document.getElementById('header-btn-text').innerText = `Login / Cadastro`;
-            }
+        // Enter no Admin
+        document.getElementById('admin-gate-pass').addEventListener('keydown', (e) => {
+            if(e.key === 'Enter') window.loginToAdmin();
         });
 
-        window.openLoginOrDash = function() {
-            if(loggedInUser) window.navegar('app-cliente');
-            else document.getElementById('user-login-modal').style.display = 'flex';
-        }
-
-        window.toggleAuthMode = function() {
-            isRegisterMode = !isRegisterMode;
-            document.getElementById('auth-title').innerText = isRegisterMode ? "Alistar-se" : "Entrar na Base";
-        }
-
-        window.handleAuth = async function() {
-            const userText = document.getElementById('user-username').value.trim();
-            const pass = document.getElementById('user-password').value.trim();
-            if(!userText || pass.length < 6) return window.showToast("Senha mín 6 digitos.", "error");
-            const fakeEmail = `${userText}@dustore.com`;
-
-            try {
-                let userCred;
-                if(isRegisterMode) userCred = await createUserWithEmailAndPassword(auth, fakeEmail, pass);
-                else userCred = await signInWithEmailAndPassword(auth, fakeEmail, pass);
-                
-                try {
-                    if(isRegisterMode) await setDoc(doc(db, "users", userCred.user.uid), { username: userText, totalSpent: 0, avatarUrl: '' });
-                } catch(dbErr) {}
-
-                window.showToast("Acesso concedido!", "success");
-                document.getElementById('user-login-modal').style.display = 'none';
-                setTimeout(() => window.navegar('app-cliente'), 500);
-            } catch (e) { window.showToast("Credenciais incorretas.", "error"); }
-        }
-
-        window.loginWithGoogle = async function() {
-            try { await signInWithPopup(auth, new GoogleAuthProvider()); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado Google!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Libere dominios no Firebase Auth.", "error"); }
-        }
-        window.loginWithApple = async function() {
-            try { await signInWithPopup(auth, new OAuthProvider('apple.com')); document.getElementById('user-login-modal').style.display='none'; window.showToast("Logado Apple!", "success"); setTimeout(()=>window.navegar('app-cliente'), 500); } 
-            catch (e) { window.showToast("Libere dominios no Firebase Auth.", "error"); }
-        }
-
-        window.logoutUser = function() { auth.signOut(); window.navegar('app-home'); window.showToast("Desconectado.", "info"); }
-
-        // DASHBOARD CLIENTE
-        function getEloData(spent) {
-            if (spent < 50) return { name: 'BRONZE', c: 'elo-bronze', next: 50 };
-            if (spent < 150) return { name: 'PRATA', c: 'elo-prata', next: 150 };
-            if (spent < 300) return { name: 'ESMERALDA', c: 'elo-esmeralda', next: 300 };
-            return { name: 'DIAMANTE', c: 'elo-diamante', next: 9999 };
-        }
-
-        async function loadClientData() {
-            if(!loggedInUser) return;
-            const uDoc = await getDoc(doc(db, "users", loggedInUser.uid));
-            if(uDoc.exists()) loggedInUser = { uid: loggedInUser.uid, ...uDoc.data() };
-            
-            const spent = loggedInUser.totalSpent || 0;
-            document.getElementById('dash-client-name').innerText = loggedInUser.username || 'Operador';
-            document.getElementById('client-spent').innerText = spent.toFixed(2);
-            document.getElementById('dash-avatar').src = loggedInUser.avatarUrl || 'https://i.pinimg.com/736x/8f/c2/f7/8fc2f7902506e788bc5f22fce1ccab57.jpg';
-            
-            document.getElementById('edit-nick').value = loggedInUser.username || '';
-            document.getElementById('edit-avatar').value = loggedInUser.avatarUrl || '';
-
-            let elo = getEloData(spent);
-            const b = document.getElementById('client-elo-badge');
-            b.className = `elo-badge ${elo.c}`; b.innerText = elo.name;
-            
-            const pct = Math.min((spent / elo.next) * 100, 100);
-            setTimeout(() => { document.getElementById('client-progress').style.width = pct + '%'; }, 300);
-            document.getElementById('client-progress-text').innerText = elo.name === 'DIAMANTE' ? 'Patente Maxima!' : `${spent.toFixed(0)} XP / ${elo.next} XP para upar`;
-
-            const tbody = document.getElementById('table-client-orders');
-            tbody.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
-            try {
-                const qs = await getDocs(collection(db, "pedidos"));
-                let rows = '';
-                qs.forEach(doc => {
-                    const d = doc.data();
-                    if(d.userId === loggedInUser.uid) {
-                        const statusClass = d.status === 'concluido' ? 'status-concluido' : 'status-pendente';
-                        const price = d.price || 0;
-                        rows += `<tr><td style="color:#aaa">#${doc.id.substring(0,6).toUpperCase()}</td><td style="font-weight:bold;">${d.productTitle}</td><td class="text-accent">R$ ${price.toFixed(2)}</td><td><span class="status-badge ${statusClass}">${d.status}</span></td></tr>`;
-                    }
-                });
-                tbody.innerHTML = rows || '<tr><td colspan="4" style="text-align:center;">Nenhuma missão ainda.</td></tr>';
-            } catch(e) {}
-        }
-
-        window.saveProfile = async function() {
-            const newNick = document.getElementById('edit-nick').value.trim();
-            const newAvatar = document.getElementById('edit-avatar').value.trim();
-            const now = Date.now();
-            let updates = { avatarUrl: newAvatar };
-
-            if(newNick !== loggedInUser.username) {
-                if(loggedInUser.lastNickChange && (now - loggedInUser.lastNickChange < 7*24*60*60*1000)) {
-                    return window.showToast("Aguarde 7 dias para mudar o Nick.", "error");
-                }
-                updates.username = newNick;
-                updates.lastNickChange = now;
-            }
-
-            try {
-                await updateDoc(doc(db, "users", loggedInUser.uid), updates);
-                window.showToast("Perfil salvo!", "success");
-                document.getElementById('edit-profile-modal').style.display='none';
-                loadClientData();
-            } catch (e) { window.showToast("Erro ao salvar perfil.", "error"); }
-        }
-
-        // ADMIN AREA E SUBCATEGORIAS
-        const mySessionId = Math.random().toString(36).substring(2);
-        async function pingPresence() { try { await setDoc(doc(db, "presence", mySessionId), { lastActive: Date.now() }); } catch(e){} }
-        setInterval(pingPresence, 30000); pingPresence(); 
-
-        window.switchAdminTab = function(tabId) {
-            document.querySelectorAll('#app-admin .dash-content > div').forEach(d => d.style.display = 'none');
-            document.getElementById(`admin-tab-${tabId}`).style.display = 'block';
-            document.querySelectorAll('#app-admin .dash-menu button').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-        }
-
-        window.attemptAdminLogin = function() {
-            // Senha Admin
-            if(document.getElementById('secret-password').value === "5566") {
+        window.loginToAdmin = function() {
+            const pass = document.getElementById('admin-gate-pass').value;
+            if(pass === "5566") {
                 document.getElementById('admin-login-modal').style.display = 'none';
-                window.navegar('app-admin');
-            } else { window.showToast("Acesso Negado.", "error"); }
+                window.navegar('app-view-admin');
+                loadAdminStats();
+            } else {
+                window.showToast("Chave mestra inválida!", "error");
+            }
+        };
+
+        // --------------------------------------------------------------------------
+        // MOTOR DO PIX (CALCULADO E BLINDADO)
+        // --------------------------------------------------------------------------
+        function generatePixPayload(key, name, city, amount) {
+            // Conversao segura para String e contagem de caracteres
+            const fix = (v) => String(v);
+            const pad = (s) => fix(s).length < 2 ? '0' + fix(s).length : fix(s).length;
+            const f = (id, val) => id + pad(val) + fix(val);
+
+            const gui = f("00", "BR.GOV.BCB.PIX");
+            const k = f("01", key);
+            const acc = f("26", gui + k);
+            const amt = f("54", amount.toFixed(2));
+            const n = f("59", name.substring(0, 25).normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+            const c = f("60", city.substring(0, 15).normalize("NFD").replace(/[\u0300-\u036f]/g, ""));
+            const tid = f("62", f("05", "DUSTORE" + Math.floor(Math.random() * 999)));
+
+            const payload = "000201" + acc + "52040000" + "5303986" + amt + "5802BR" + n + c + tid + "6304";
+
+            // CRC16 Calculation
+            let crc = 0xFFFF;
+            for (let i = 0; i < payload.length; i++) {
+                crc ^= payload.charCodeAt(i) << 8;
+                for (let j = 0; j < 8; j++) {
+                    if ((crc & 0x8000) !== 0) crc = (crc << 1) ^ 0x1021;
+                    else crc = crc << 1;
+                }
+            }
+            const crcHex = (crc & 0xFFFF).toString(16).toUpperCase().padStart(4, '0');
+            return payload + crcHex;
         }
 
-        async function getLiveUsers() {
+        // --------------------------------------------------------------------------
+        // CARREGAMENTO DA VITRINE E CATEGORIAS
+        // --------------------------------------------------------------------------
+        async function loadStoreCore() {
             try {
-                const qs = await getDocs(collection(db, "presence"));
-                let count = 0; const now = Date.now();
-                qs.forEach(d => { if (now - d.data().lastActive < 60000) count++; }); 
-                const l = document.getElementById('live-count');
-                if(l) l.innerText = count;
-            } catch(e){}
-        }
-        setInterval(getLiveUsers, 15000);
+                // Carrega Configs (Categorias)
+                const confSnap = await getDoc(doc(db, "config", "storeData"));
+                if(confSnap.exists()) categories = confSnap.data().categories || categories;
+                renderFiltersUI();
 
-        async function loadAdminData() {
-            getLiveUsers();
-            
-            const pList = document.getElementById('admin-products-list');
-            pList.innerHTML = '';
-            products.forEach(p => {
-                const img = p.imageUrl ? `<img src="${p.imageUrl}" style="width:40px;height:40px;object-fit:cover;border-radius:4px;margin-right:10px;">` : '';
-                pList.insertAdjacentHTML('beforeend', `
-                <div class="product-list-item">
-                    <div style="display:flex;align-items:center;">
-                        ${img}
-                        <div><strong>${p.title}</strong><span style="display:block;font-size:0.8rem;color:#aaa">Cat: ${p.category} | R$ ${p.price}</span></div>
-                    </div>
-                    <div>
-                        <button class="btn-edit" onclick="window.editP('${p.id}')">✏️</button>
-                        <button class="btn-danger" onclick="window.delP('${p.id}')">X</button>
-                    </div>
-                </div>`);
-            });
-
-            const qsO = await getDocs(collection(db, "pedidos"));
-            allOrders = []; let rev = 0;
-            qsO.forEach(doc => { const d = doc.data(); allOrders.push({id: doc.id, ...d}); if(d.status==='concluido') rev+=(d.price || 0); });
-            document.getElementById('adm-rev').innerText = rev.toFixed(2);
-            document.getElementById('adm-orders').innerText = allOrders.length;
-            
-            const tbodyO = document.getElementById('table-admin-orders');
-            tbodyO.innerHTML = '';
-            allOrders.sort((a,b) => new Date(b.date) - new Date(a.date)).forEach(o => {
-                const action = o.status === 'pendente' ? `<button class="btn-success" onclick="window.aprovarPedidoAdmin('${o.id}')">Aprovar</button>` : '-';
-                const p = o.price || 0;
-                tbodyO.insertAdjacentHTML('beforeend', `<tr><td style="color:#aaa">#${o.id.substring(0,5).toUpperCase()}</td><td style="font-weight:bold">${o.userName}</td><td style="font-size:0.8rem;max-width:150px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${o.productTitle}</td><td style="color:var(--color-accent)">R$${p.toFixed(2)}</td><td><span class="status-badge ${o.status==='concluido'?'status-concluido':'status-pendente'}">${o.status}</span></td><td>${action}</td></tr>`);
-            });
-
-            const tbodyU = document.getElementById('table-admin-users');
-            tbodyU.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
-            try {
-                const qsU = await getDocs(collection(db, "users"));
-                allUsers = [];
-                qsU.forEach(doc => allUsers.push({id: doc.id, ...doc.data()}));
-                renderUserTable(allUsers);
-            } catch(e) { tbodyU.innerHTML = '<tr><td colspan="4">Erro ler users.</td></tr>'; }
+                // Carrega Produtos
+                const qs = await getDocs(collection(db, "products"));
+                products = qs.docs.map(d => ({ id: d.id, ...d.data(), currentViews: Math.floor(Math.random() * 12) + 4 }));
+                renderProductsUI();
+                renderReviewsSlider();
+            } catch (e) {
+                console.error(e);
+                window.showToast("Erro ao conectar com o banco Google.", "error");
+            }
         }
 
-        function renderUserTable(list) {
-            const tbodyU = document.getElementById('table-admin-users');
-            tbodyU.innerHTML = '';
-            list.forEach(u => {
+        function renderFiltersUI() {
+            const list = document.getElementById('dynamic-filters-list');
+            let html = `<button class="filter-btn-gaming active" onclick="window.applyFilter('all', this)">Todos</button>`;
+            categories.forEach(c => {
+                html += `<button class="filter-btn-gaming" onclick="window.applyFilter('${c}', this)">${c}</button>`;
+            });
+            list.innerHTML = html;
+
+            const select = document.getElementById('p-cat');
+            select.innerHTML = categories.map(c => `<option value="${c}">${c.toUpperCase()}</option>`).join('');
+        }
+
+        window.applyFilter = function(cat, btn) {
+            document.querySelectorAll('.filter-btn-gaming').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            activeCategoryFilter = cat;
+            renderProductsUI();
+        };
+
+        function renderProductsUI() {
+            const cont = document.getElementById('main-store-container');
+            const filtered = activeCategoryFilter === 'all' ? products : products.filter(p => p.category === activeCategoryFilter);
+            
+            cont.innerHTML = filtered.map(p => {
+                const price = p.subcategories?.length > 0 ? `<span>A partir de</span>R$ ${p.price.toFixed(2)}` : `R$ ${p.price.toFixed(2)}`;
+                return `
+                    <article class="du-product-card" onclick="window.openProductSolo('${p.id}')">
+                        <div class="card-image-wrapper"><img src="${p.imageUrl}" onerror="this.src='https://via.placeholder.com/400x200'"></div>
+                        <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                            <span class="card-tag">${p.category}</span>
+                            <span class="live-viewer-badge"><span class="live-dot"></span> ${p.currentViews} no drop</span>
+                        </div>
+                        <h3 class="card-title-text">${p.title}</h3>
+                        <p class="card-description-text">${p.description}</p>
+                        <div class="card-footer-action">
+                            <div class="card-price-box"><div class="price-value">${price}</div></div>
+                            <button class="btn btn-primary" style="padding: 0.7rem 1.2rem; font-size: 0.75rem;">Ver Detalhes</button>
+                        </div>
+                    </article>
+                `;
+            }).join('');
+        }
+
+        // --------------------------------------------------------------------------
+        // SLIDER DE REVIEWS (REALISTAS)
+        // --------------------------------------------------------------------------
+        function renderReviewsSlider() {
+            const reviews = [
+                {q: "comprei ontem de noite e hoje cedo ja tava tudo ok na conta, valeu demais", u: "xXrushzinXx"},
+                {q: "boost foi rapido msm, subi 2 divisoes kkk", u: "l0staim"},
+                {q: "peguei vbucks e caiu na hora, achei q ia demorar", u: "bruneraFPS"},
+                {q: "conta veio igual na descrição, skins top", u: "n4styplayer"},
+                {q: "mano papo reto achei q era golpe mas chegou normal", u: "darkzin_"},
+                {q: "entrega foi bem rapida, recomendo sim", u: "Kzinn"},
+                {q: "subi minha md5 inteira numa noite kkk", u: "frostyy"},
+                {q: "peguei moeda do game e funcionou de primeira", u: "pedrinOP"},
+                {q: "conta mt boa pelo preço", u: "shadowzin"},
+                {q: "já é a segunda vez q compro e deu bom dnv", u: "rxnzera"}
+            ];
+            const track = document.getElementById('infinite-review-slider');
+            // Duplicamos para o efeito de loop infinito ser imperceptivel
+            const doubleList = [...reviews, ...reviews, ...reviews];
+            track.innerHTML = doubleList.map(r => `
+                <div class="feedback-card-gamer">
+                    <p class="feedback-quote">"${r.q}"</p>
+                    <div class="feedback-user-nick">${r.u}</div>
+                </div>
+            `).join('');
+        }
+
+        // --------------------------------------------------------------------------
+        // CRM E GESTÃO DE OPERADORES (CORREÇÃO TOTAL)
+        // --------------------------------------------------------------------------
+        async function loadAdminStats() {
+            // Presenca Real
+            const presSnap = await getDocs(collection(db, "presence"));
+            let countLive = 0; const now = Date.now();
+            presSnap.forEach(d => { if(now - d.data().lastActive < 60000) countLive++; });
+            document.getElementById('live-users-count').innerText = countLive;
+
+            // CRM: Todos os usuarios registrados
+            const usersSnap = await getDocs(collection(db, "users"));
+            crmUsers = usersSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderCrmTable(crmUsers);
+
+            // Vendas: Todos os pedidos
+            const salesSnap = await getDocs(collection(db, "pedidos"));
+            const sales = salesSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            renderSalesTable(sales);
+
+            // Resumo
+            let rev = 0; let concluidas = 0;
+            sales.forEach(s => { if(s.status === 'concluido') { rev += (s.price || 0); concluidas++; }});
+            document.getElementById('adm-stat-revenue').innerText = `R$ ${rev.toFixed(2)}`;
+            document.getElementById('adm-stat-sales').innerText = concluidas;
+            
+            // Lista de produtos para editar
+            renderAdminProductsList();
+        }
+
+        function renderCrmTable(list) {
+            const tbody = document.getElementById('admin-table-crm-body');
+            tbody.innerHTML = list.map(u => {
                 const spent = u.totalSpent || 0;
-                let elo = getEloData(spent).name;
-                let avatar = u.avatarUrl ? `<img src="${u.avatarUrl}" style="width:30px;height:30px;border-radius:50%;object-fit:cover;">` : '🎮';
-                tbodyU.insertAdjacentHTML('beforeend', `<tr><td>${avatar}</td><td style="font-weight:bold;">${u.username || 'Google User'}</td><td style="color:var(--color-accent)">R$ ${spent.toFixed(2)}</td><td><span class="badge" style="background:#333;color:#fff;">${elo}</span></td></tr>`);
+                let rank = "BRONZE"; if(spent >= 50) rank = "PRATA"; if(spent >= 150) rank = "ESMERALDA"; if(spent >= 300) rank = "DIAMANTE";
+                const av = u.avatarUrl ? `<img src="${u.avatarUrl}" style="width:35px;height:35px;border-radius:50%;object-fit:cover;">` : '🎮';
+                return `<tr><td>${av}</td><td style="font-weight:bold;">${u.username || 'Desconhecido'}</td><td class="text-accent">R$ ${spent.toFixed(2)}</td><td><span class="card-tag">${rank}</span></td></tr>`;
+            }).join('');
+        }
+
+        function renderSalesTable(list) {
+            const tbody = document.getElementById('admin-table-sales-body');
+            tbody.innerHTML = list.sort((a,b) => new Date(b.date) - new Date(a.date)).map(s => {
+                const action = s.status === 'pendente' ? `<button class="btn-success" onclick="window.approveSale('${s.id}')">Aprovar</button>` : '-';
+                return `<tr><td>#${s.id.slice(0,5)}</td><td>${s.userName}</td><td>${s.productTitle}</td><td>R$ ${s.price.toFixed(2)}</td><td><span class="status-badge status-${s.status}">${s.status}</span></td><td>${action}</td></tr>`;
+            }).join('');
+        }
+
+        window.approveSale = async function(saleId) {
+            const snap = await getDoc(doc(db, "pedidos", saleId));
+            if(!snap.exists()) return;
+            const data = snap.data();
+            
+            await updateDoc(doc(db, "pedidos", saleId), { status: 'concluido' });
+            
+            const uRef = doc(db, "users", data.userId);
+            const uSnap = await getDoc(uRef);
+            if(uSnap.exists()) {
+                await updateDoc(uRef, { totalSpent: (uSnap.data().totalSpent || 0) + data.price });
+            }
+            
+            window.showToast("Venda aprovada e XP creditado!", "success");
+            loadAdminStats();
+        };
+
+        // --------------------------------------------------------------------------
+        // SPA: PAGINA DO PRODUTO (VARIACOES E PREÇO)
+        // --------------------------------------------------------------------------
+        let activeSoloProduct = null;
+
+        window.openProductSolo = function(id) {
+            activeSoloProduct = products.find(p => p.id === id);
+            if(!activeSoloProduct) return;
+
+            document.getElementById('ps-main-image').src = activeSoloProduct.imageUrl;
+            document.getElementById('ps-category-label').innerText = activeSoloProduct.category;
+            document.getElementById('ps-product-title').innerText = activeSoloProduct.title;
+            document.getElementById('ps-product-desc').innerText = activeSoloProduct.description;
+            
+            const varList = document.getElementById('ps-variations-list');
+            if(activeSoloProduct.subcategories?.length > 0) {
+                document.getElementById('ps-variations-section').style.display = 'block';
+                varList.innerHTML = activeSoloProduct.subcategories.map((v, i) => `
+                    <label class="variation-tile-label">
+                        <input type="radio" name="ps-var" class="variation-card-input" value="${i}" ${i === 0 ? 'checked' : ''} onchange="window.updateSoloPrice(${v.price})">
+                        <div class="tile-ui-box">
+                            <span class="tile-label-name">${v.name}</span>
+                            <span class="tile-label-price">R$ ${v.price.toFixed(2)}</span>
+                        </div>
+                    </label>
+                `).join('');
+                window.updateSoloPrice(activeSoloProduct.subcategories[0].price);
+            } else {
+                document.getElementById('ps-variations-section').style.display = 'none';
+                window.updateSoloPrice(activeSoloProduct.price);
+            }
+
+            document.getElementById('ps-add-to-cart-btn').onclick = () => window.addItemToCart(activeSoloProduct);
+            window.navegar('app-view-product');
+        };
+
+        window.updateSoloPrice = (p) => {
+            document.getElementById('ps-dynamic-price').innerText = `R$ ${p.toFixed(2)}`;
+        };
+
+        // --------------------------------------------------------------------------
+        // CARRINHO E CHECKOUT
+        // --------------------------------------------------------------------------
+        window.addItemToCart = function(prod) {
+            let finalPrice = prod.price;
+            let finalTitle = prod.title;
+
+            if(prod.subcategories?.length > 0) {
+                const idx = document.querySelector('input[name="ps-var"]:checked').value;
+                const v = prod.subcategories[idx];
+                finalPrice = v.price;
+                finalTitle += ` (${v.name})`;
+            }
+
+            cart.push({ title: finalTitle, price: finalPrice });
+            window.showToast("Adicionado ao arsenal!", "success");
+            window.updateCartUI();
+        };
+
+        window.processCartCheckout = async function() {
+            if(!activeUser) { window.navegar('app-view-home'); document.getElementById('auth-modal-main').style.display='flex'; return; }
+            if(cart.length === 0) return;
+
+            const total = cart.reduce((a,b) => a + b.price, 0);
+            const itemsName = cart.map(c => c.title).join(' + ');
+
+            const docRef = await addDoc(collection(db, "pedidos"), {
+                userId: activeUser.uid,
+                userName: activeUser.username,
+                productTitle: itemsName,
+                price: total,
+                status: 'pendente',
+                date: new Date().toISOString()
             });
-        }
-        window.searchUsers = function(term) { renderUserTable(allUsers.filter(u => (u.username || '').toLowerCase().includes(term.toLowerCase()))); }
 
-        window.moveCat = async function(index, dir) {
-            if(index + dir < 0 || index + dir >= categories.length) return;
-            const temp = categories[index]; categories[index] = categories[index + dir]; categories[index + dir] = temp;
-            try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Ordem salva!', 'success'); } catch(e) {}
-        }
+            const pix = generatePixPayload(PIX_KEY, PIX_NAME, PIX_CITY, total);
+            document.getElementById('checkout-order-id').innerText = `#${docRef.id.slice(0,8).toUpperCase()}`;
+            document.getElementById('checkout-final-value').innerText = `R$ ${total.toFixed(2)}`;
+            document.getElementById('checkout-qr-code').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(pix)}`;
+            document.getElementById('checkout-pix-input').value = pix;
 
-        window.addCategory = async function() {
-            const val = document.getElementById('new-category-name').value.trim().toLowerCase();
-            if(!val) return;
-            if(categories.includes(val)) return window.showToast("Essa já existe", "error");
-            categories.push(val);
-            try { await setDoc(doc(db, "config", "storeData"), { categories }, { merge: true }); renderCategoriesUI(); window.showToast('Categoria Criada!', 'success'); document.getElementById('new-category-name').value = ''; } catch(e) {}
-        }
+            cart = []; window.updateCartUI();
+            window.navegar('app-view-checkout');
+        };
 
-        window.aprovarPedidoAdmin = async function(pedidoId) {
-            try {
-                const pDoc = await getDoc(doc(db, "pedidos", pedidoId));
-                if(!pDoc.exists() || pDoc.data().status === 'concluido') return;
-                const pData = pDoc.data();
-                await updateDoc(doc(db, "pedidos", pedidoId), { status: 'concluido' });
-                
-                const uDoc = await getDoc(doc(db, "users", pData.userId));
-                const userSpent = uDoc.exists() ? (uDoc.data().totalSpent || 0) : 0;
-                await setDoc(doc(db, "users", pData.userId), { totalSpent: userSpent + (pData.price || 0) }, {merge: true});
-                
-                loadAdminData(); window.showToast("Pagamento Confirmado!", "success");
-            } catch(e) { window.showToast("Erro no servidor.", "error"); }
-        }
+        // --------------------------------------------------------------------------
+        // ESTOQUE: EDITAR PRODUTOS E SUBCATEGORIAS
+        // --------------------------------------------------------------------------
+        window.toggleSubcatUI = () => {
+            document.getElementById('p-vars-ui').style.display = document.getElementById('p-has-vars').checked ? 'block' : 'none';
+        };
 
-        // GERENCIADOR DE SUBCATEGORIAS & EDICAO
-        window.toggleSubcatsUI = function() {
-            const isChecked = document.getElementById('add-has-subcats').checked;
-            document.getElementById('subcats-ui').style.display = isChecked ? 'block' : 'none';
-        }
-
-        window.addSubcat = function() {
-            const n = document.getElementById('sub-name').value.trim();
-            const p = document.getElementById('sub-price').value;
+        window.addSubcatToList = () => {
+            const n = document.getElementById('v-name').value;
+            const p = document.getElementById('v-price').value;
             if(!n || !p) return;
             tempSubcats.push({ name: n, price: Number(p) });
-            renderSubcatsAdmin();
-            document.getElementById('sub-name').value = ''; document.getElementById('sub-price').value = '';
-        }
+            renderTempSubcats();
+            document.getElementById('v-name').value = ''; document.getElementById('v-price').value = '';
+        };
 
-        window.delSubcat = function(index) { tempSubcats.splice(index, 1); renderSubcatsAdmin(); }
-
-        function renderSubcatsAdmin() {
-            const div = document.getElementById('subcats-list');
-            div.innerHTML = '';
-            tempSubcats.forEach((s, i) => {
-                div.insertAdjacentHTML('beforeend', `<div style="display:flex; justify-content:space-between; background:#111; padding:10px 15px; margin-bottom:5px; border-radius:4px; border:1px solid #333;">
+        function renderTempSubcats() {
+            document.getElementById('p-vars-list').innerHTML = tempSubcats.map((s, i) => `
+                <div style="display:flex; justify-content:space-between; background:#111; padding:10px; border-radius:4px; margin-bottom:5px;">
                     <span>${s.name} - R$ ${s.price}</span>
-                    <button style="background:none; border:none; color:var(--color-danger); cursor:pointer; font-weight:bold;" onclick="window.delSubcat(${i})">X</button>
-                </div>`);
-            });
+                    <button onclick="tempSubcats.splice(${i},1); renderTempSubcats();" style="color:red">X</button>
+                </div>
+            `).join('');
         }
 
-        window.editP = function(id) {
+        window.editProduct = (id) => {
             const p = products.find(x => x.id === id);
-            if(!p) return;
-            editProductId = p.id;
-            document.getElementById('add-title').value = p.title;
-            document.getElementById('add-image').value = p.imageUrl || '';
-            document.getElementById('add-category').value = p.category;
-            document.getElementById('add-price').value = p.price;
-            document.getElementById('add-desc').value = p.description;
+            editProdId = p.id;
+            document.getElementById('p-title').value = p.title;
+            document.getElementById('p-img').value = p.imageUrl;
+            document.getElementById('p-price').value = p.price;
+            document.getElementById('p-desc').value = p.description;
+            document.getElementById('p-cat').value = p.category;
             
-            if(p.subcategories && p.subcategories.length > 0) {
-                document.getElementById('add-has-subcats').checked = true;
-                tempSubcats = [...p.subcategories];
+            tempSubcats = p.subcategories || [];
+            document.getElementById('p-has-vars').checked = tempSubcats.length > 0;
+            window.toggleSubcatUI();
+            renderTempSubcats();
+
+            document.getElementById('p-save-btn').innerText = "Atualizar Drop";
+            document.getElementById('p-cancel-btn').style.display = "block";
+            document.getElementById('admin-form-title').innerText = "Editando Operação";
+        };
+
+        window.saveProductCloud = async function() {
+            const t = document.getElementById('p-title').value;
+            const i = document.getElementById('p-img').value;
+            const c = document.getElementById('p-cat').value;
+            const p = Number(document.getElementById('p-price').value);
+            const d = document.getElementById('p-desc').value;
+            const hasVars = document.getElementById('p-has-vars').checked;
+
+            const obj = { title: t, imageUrl: i, category: c, price: p, description: d, subcategories: hasVars ? tempSubcats : [] };
+
+            if(editProdId) {
+                await updateDoc(doc(db, "products", editProdId), obj);
+                window.showToast("Produto atualizado na nuvem!", "success");
             } else {
-                document.getElementById('add-has-subcats').checked = false;
-                tempSubcats = [];
+                await addDoc(collection(db, "products"), obj);
+                window.showToast("Novo drop publicado!", "success");
             }
-            window.toggleSubcatsUI();
-            renderSubcatsAdmin();
+            window.cancelEditProduct();
+            loadStoreCore();
+        };
 
-            document.getElementById('btn-save-prod').innerHTML = '<span>Atualizar</span>';
-            document.getElementById('btn-cancel-prod').style.display = 'block';
-            document.getElementById('admin-form-title').innerText = 'Editando Produto';
-            
-            // Rola pro form
-            document.getElementById('admin-form-title').scrollIntoView({behavior: 'smooth'});
-        }
+        window.cancelEditProduct = () => {
+            editProdId = null; tempSubcats = [];
+            document.getElementById('p-title').value = ''; document.getElementById('p-price').value = '';
+            document.getElementById('p-img').value = ''; document.getElementById('p-desc').value = '';
+            document.getElementById('p-has-vars').checked = false; window.toggleSubcatUI();
+            document.getElementById('p-save-btn').innerText = "Publicar Drop";
+            document.getElementById('p-cancel-btn').style.display = "none";
+        };
 
-        window.cancelEditP = function() {
-            editProductId = null; tempSubcats = [];
-            document.getElementById('add-title').value=''; document.getElementById('add-price').value=''; document.getElementById('add-image').value=''; document.getElementById('add-desc').value='';
-            document.getElementById('add-has-subcats').checked = false; window.toggleSubcatsUI();
-            document.getElementById('btn-save-prod').innerHTML = '<span>Publicar Produto</span>';
-            document.getElementById('btn-cancel-prod').style.display = 'none';
-            document.getElementById('admin-form-title').innerText = 'Novo Drop (Produto)';
-        }
+        // --------------------------------------------------------------------------
+        // INICIALIZAÇÃO
+        // --------------------------------------------------------------------------
+        loadStoreCore();
 
-        window.addProduct = async function() {
-            const t = document.getElementById('add-title').value;
-            const img = document.getElementById('add-image').value;
-            const c = document.getElementById('add-category').value;
-            const p = document.getElementById('add-price').value;
-            const d = document.getElementById('add-desc').value;
-            const hasSub = document.getElementById('add-has-subcats').checked;
+        // Ping de presenca real para o Admin
+        const sessId = Math.random().toString(36).substring(7);
+        setInterval(() => {
+            setDoc(doc(db, "presence", sessId), { lastActive: Date.now() });
+        }, 30000);
 
-            if(!t || !p) return window.showToast("Preencha título e preço!", "error");
-            
-            const dataObj = { 
-                title: t, imageUrl: img, category: c, price: Number(p), description: d,
-                subcategories: hasSub ? tempSubcats : []
-            };
-
-            try {
-                if(editProductId) {
-                    await updateDoc(doc(db, "products", editProductId), dataObj);
-                    window.showToast("Atualizado!", "success");
-                } else {
-                    await addDoc(collection(db, "products"), dataObj);
-                    window.showToast("Enviado!", "success");
-                }
-                window.cancelEditP(); 
-                loadStoreData(); loadAdminData(); 
-            } catch(e) { window.showToast("Erro ao salvar.", "error"); }
-        }
-
-        window.delP = async function(id) { await deleteDoc(doc(db, "products", id)); loadStoreData(); loadAdminData(); window.showToast("Removido.", "info"); }
-
-        // Boot
-        loadStoreData();
     </script>
 </body>
 </html>
